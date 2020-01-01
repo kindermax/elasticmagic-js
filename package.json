@@ -1,0 +1,15 @@
+{
+  "name": "elasticmagic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "typescript": "^3.7.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kindritskiy.m@gmail.com",
+  "license": "ISC"
+}
