@@ -1,1 +1,3 @@
-console.log("hi")
+export function getQuery(): object {
+  return { bool: 'must' };
+}
