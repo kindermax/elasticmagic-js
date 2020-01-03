@@ -3,7 +3,7 @@ elasticmagic-js
 
 JS/Typescript DSL for Elasticsearch
 
-This lib is a port of original library written in `python` by [@anti-social]( https://github.com/anti-social )
+This lib is a port of original library written in `python` by [@anti-social]( https://github.com/anti-social/elasticmagic )
 
 # Getting Started
 
