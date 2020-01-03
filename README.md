@@ -69,3 +69,16 @@ It will output:
   size: 0
 }
 ```
+
+# TODO
+
+- [x] query generation
+- [ ] requests
+- [ ] scroll
+- [ ] aggregations
+- [ ] pagination
+- [ ] queryFilters
+- [ ] inline functions
+- [ ] compilers for different es versions
+- [ ] sub documents
+- [ ] more tests
