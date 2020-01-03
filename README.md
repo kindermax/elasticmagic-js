@@ -41,7 +41,7 @@ const query = index.searchQuery()
   )
   .limit(0);
 
-console.log(query.toDict())
+console.log(query.toJSON())
 ```
 
 It will output:

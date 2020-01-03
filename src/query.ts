@@ -142,7 +142,7 @@ export class SearchQuery {
     return this;
   }
 
-  public toDict(): Query {
+  public toJSON(): Query {
     return this.compile();
   }
 
