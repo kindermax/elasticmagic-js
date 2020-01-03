@@ -23,7 +23,7 @@ describe("Query generation", () => {
         )
       )
       .limit(0);
-    expect(query.toDict()).toStrictEqual({
+    expect(query.toJSON()).toStrictEqual({
       query: {
         bool: {
           filter: {
