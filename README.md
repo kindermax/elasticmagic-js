@@ -18,19 +18,23 @@ npm install elasticmagic-js
 Let's get started by writing a simple query.
 
 ```javascript
-import { Index } from "elasticmagic-js/index";
+import { Client } from '@elastic/elasticsearch';
+import { Cluster } from "elasticmagic-js/cluster";
 import { Field, Integer, Document } from "elasticmagic-js/document";
 import { Bool } from "elasticmagic-js/expression";
 
 class OrderDocument extends Document {
+  public static _docType = 'order;
+  
   public static companyId: Field = new Field(Integer, 'company_id')
   public static status: Field = new Field(Integer, 'status')
   public static source: Field = new Field(Integer, 'source')
 }
 
-const index = new Index();
+const client = new Client({ node: 'http://es6-test:9200' });
+const cluster = new Cluster(client, 'test_opinion_index');
 
-const query = index.searchQuery()
+const query = cluster.searchQuery({ routing: 123, docClass: OrderDocument })
   .source(false)
   .filter(
     Bool.must(
@@ -41,10 +45,10 @@ const query = index.searchQuery()
   )
   .limit(0);
 
-console.log(query.toJSON())
+console.log(query.toJSON()) // or console.log(query.body)
 ```
 
-It will output:
+It will print:
 
 ```bash
 {
@@ -68,6 +72,12 @@ It will output:
   _source: false,
   size: 0
 }
+```
+
+To fetch results from elasticsearch:
+
+```javascript
+const result = await query.getResult();
 ```
 
 # TODO
