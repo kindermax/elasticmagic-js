@@ -69,3 +69,18 @@ It will output:
   size: 0
 }
 ```
+
+# TODO
+
+- [x] query generation
+- [ ] elasticsearch must be devDep or peerDep, but not production dep
+- [ ] meta document creation
+- [ ] requests
+- [ ] scroll
+- [ ] aggregations
+- [ ] pagination
+- [ ] queryFilters
+- [ ] inline functions
+- [ ] compilers for different es versions
+- [ ] sub documents
+- [ ] more tests

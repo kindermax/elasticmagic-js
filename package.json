@@ -1,9 +1,10 @@
 {
   "name": "elasticmagic",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
-  "main": "dist/main.js",
-  "dependencies": {},
+  "dependencies": {
+    "@elastic/elasticsearch": "^6.8.4"
+  },
   "devDependencies": {
     "@types/jest": "^24.0.25",
     "jest": "^24.9.0",
@@ -12,8 +13,6 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "node ./dist/main.js",
-    "start:dev": "tsc -w",
     "test": "jest"
   },
   "author": "kindritskiy.m@gmail.com",

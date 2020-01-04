@@ -1,4 +1,5 @@
 import { Field } from "./document";
+import { cleanParams } from "./util";
 
 // TODO must be generic type with restrictions
 export type TermValue = number | string | boolean;
@@ -9,9 +10,9 @@ export type TermField = {
 
 // TODo this must be interface ???
 export class Expression {
-  public _visitName: string = 'notDefined_visitName';
-  public _queryName: string = 'notDefined_queryName';
-  public _queryKey: string = 'notDefined_queryKey';
+  public readonly _visitName: string = 'notDefined_visitName';
+  public readonly _queryName: string = 'notDefined_queryName';
+  public readonly _queryKey: string = 'notDefined_queryKey';
 }
 
 type BoolOptions = {
@@ -24,27 +25,12 @@ type BoolOptions = {
   disable_coord?: any;
 };
 
-type ParamsType = {
-  [key: string]: any // TODO maybe some type
+export type ParamsType = {
+  [key: string]: any; // TODO maybe some type
 }; 
 
-/**
-   * TODO add tests
-   * Filter keys having null or undefined values
-   */
-function cleanParams(params: ParamsType): ParamsType {
-  if (!params) return params;
 
-  return Object.entries<ParamsType>(params)
-    .reduce((acc: any, [key, val]: any) => {
-      if (val !== null && val !== undefined) {
-        acc[key] = val;
-      }
-      return acc;
-    }, {} as ParamsType);
-}
-
-type ParamKV = [string, any];
+export type ParamKV = [string, any];
 
 export class Params extends Expression {
   public _visitName = 'params';
@@ -53,21 +39,21 @@ export class Params extends Expression {
 
   // private pointer = 0;
 
-  constructor(params: ParamsType) {
+  constructor(params?: ParamsType) {
     super();
       this.params = cleanParams(params);
       this.paramsKvList = this.params ? Object.entries(this.params) : [];
   }
 
-  public getParamsKvList() {
+  public getParamsKvList(): Array<ParamKV> {
     return this.paramsKvList;
   }
 
-  public getParams() {
+  public getParams(): ParamsType {
     return this.params;
   }
 
-  get length() {
+  get length(): number {
     return this.paramsKvList.length;
   }
 
