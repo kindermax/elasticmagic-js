@@ -80,6 +80,23 @@ To fetch results from elasticsearch:
 const result = await query.getResult();
 ```
 
+# Development
+
+
+#### Tests
+
+First build base image
+
+```bash
+make build # 
+```
+
+Run all tests
+
+```bash
+make test
+```
+
 # TODO
 
 - [x] query generation
@@ -94,3 +111,7 @@ const result = await query.getResult();
 - [ ] compilers for different es versions
 - [ ] sub documents
 - [ ] more tests
+- [ ] indexing
+- [ ] delete
+- [ ] bulk
+
