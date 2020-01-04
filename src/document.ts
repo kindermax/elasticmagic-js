@@ -10,7 +10,7 @@ export class Integer extends FieldType {
 
 
 export class Field extends Expression {
-  public _visitName = 'field';
+  public readonly _visitName = 'field';
   
   constructor(
     private type: FieldType,
@@ -28,4 +28,14 @@ export class Field extends Expression {
   }
 }
 
-export class Document {}
+export interface IDocument {
+  _docType: string;
+  new (): Document;
+}
+
+// TODO maybe decorator can be used as an alternative to metaclass
+// https://github.com/Microsoft/TypeScript/issues/17454
+export class Document {
+  public static readonly _docType: string;
+  constructor() {};
+}

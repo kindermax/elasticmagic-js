@@ -73,6 +73,7 @@ It will output:
 # TODO
 
 - [x] query generation
+- [ ] meta document creation
 - [ ] requests
 - [ ] scroll
 - [ ] aggregations
