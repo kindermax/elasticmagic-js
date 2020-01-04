@@ -7,7 +7,7 @@ export class Index {
     private name: string,
     private cluster: Cluster,
   ) {}
-  // TODO add routing
+
   public searchQuery(searchQueryOptions: SearchQueryOptions): SearchQuery {
     return this.cluster.searchQuery(searchQueryOptions);
   }
