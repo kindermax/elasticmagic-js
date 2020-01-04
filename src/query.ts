@@ -20,7 +20,7 @@ export type SearchParams = {
   doc_type?: string;
 }
 
-type SourceField = boolean | Array<string>;
+type SourceField = boolean | Array<string> | null; // TODO create Source class as expression
 
 type MatchValue = string | number | boolean;
 type TermValue = string | number | boolean;
@@ -128,7 +128,7 @@ export class SearchQuery {
   private _fields: any = null; // TODO not used right now
   private _filters: Expression[] = [];
 
-  private _source: SourceField = true;
+  private _source: SourceField = null;
   private _query: QueryOverride = null;
   private _searchParams: Params = new Params(); // TODO maybe add subtype like SearchParams
   private _docClass?: IDocument;
@@ -230,6 +230,10 @@ export class SearchQuery {
 
   public get params(): any {
     return this.prepareSearchParams(cleanParams(this._searchParams.getParams()));
+  }
+
+  public get prettyBody(): string {
+    return JSON.stringify(this.compile(), null, 2);
   }
 
   public async getResult(): Promise<any> {
