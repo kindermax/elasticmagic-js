@@ -64,8 +64,8 @@ export class Cluster {
     });
   }
 
-  // TODO add generic type for processResult
   /**
+   * returns SearchResult instance with processed raw es response.
    * 
    * NOTE: If you want to type response body, pass a generic type.
    * @param rawResultBody \
@@ -80,8 +80,10 @@ export class Cluster {
     )
   };
 
-  // TODO T is not very useful now
-  // maybe should type Search
+  /**
+   * run search query against elasticsearch cluster and return processed result. 
+   * @param searchQuery 
+   */
   public async search<T extends Doc, TRaw>(searchQuery: SearchQuery): Promise<SearchResult<T>> {
     const rawResultResponse: ApiResponse<RawResultBody<TRaw>> = await this.doRequest<TRaw>(searchQuery.body, searchQuery.params);
     return this.processResult<T, TRaw>(
