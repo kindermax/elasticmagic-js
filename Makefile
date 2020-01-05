@@ -10,6 +10,3 @@ build:
 
 test: 
 	docker-compose run --rm test
-
-test-ci: build
-	docker-compose run --rm test

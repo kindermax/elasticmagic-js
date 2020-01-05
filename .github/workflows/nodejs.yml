@@ -20,6 +20,9 @@ jobs:
     - name: npm install and test
       run: |
         npm ci
-        make test-ci
+        docker-compose up -d es6
+        npm test
       env:
         CI: true
+    - name: stop elasticsearch docker container
+      run: docker-compose down
