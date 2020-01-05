@@ -26,6 +26,10 @@ export class Field extends Expression {
   public not_(term: TermValue): Bool {
     return Bool.mustNot(new Term(this, term));
   }
+
+  public getType(): FieldType {
+    return this.type;
+  }
 }
 
 export interface IDocument {

@@ -100,6 +100,7 @@ make test
 # TODO
 
 - [x] query generation
+- [ ] prettier
 - [ ] elasticsearch must be devDep or peerDep, but not production dep
 - [ ] meta document creation
 - [ ] requests
