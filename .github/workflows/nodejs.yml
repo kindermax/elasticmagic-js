@@ -21,6 +21,7 @@ jobs:
       run: |
         npm ci
         docker-compose up -d es6
+        ./scripts/wait_es.sh localhost:9200
         npm run test:ci
       env:
         CI: true
