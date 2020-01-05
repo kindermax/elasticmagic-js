@@ -8,5 +8,8 @@ export COMPOSE_DOCKER_CLI_BUILD=1
 build:
 	docker build -t base . -f Dockerfile
 
-test:
+test: 
+	docker-compose run --rm test
+
+test-ci: build
 	docker-compose run --rm test
