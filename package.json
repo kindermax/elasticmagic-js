@@ -4,13 +4,15 @@
   "description": "",
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "test": "ES_HOST=es6 jest",
+    "test:ci": "ES_HOST=localhost jest"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^6.8.4"
   },
   "devDependencies": {
     "@types/jest": "^24.0.25",
+    "@types/node": "^13.1.4",
     "jest": "^24.9.0",
     "ts-jest": "^24.2.0",
     "typescript": "^3.7.4"

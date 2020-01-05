@@ -165,6 +165,7 @@ make test
 - [x] query generation
 - [x] aggregations
 - [ ] get aggregations result
+- [ ] add support for es5, es7
 - [ ] work with Date type
 - [ ] return typed result of search
 - [ ] prettier, tslint

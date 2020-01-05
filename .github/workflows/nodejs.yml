@@ -21,7 +21,7 @@ jobs:
       run: |
         npm ci
         docker-compose up -d es6
-        npm test
+        npm run test:ci
       env:
         CI: true
     - name: stop elasticsearch docker container

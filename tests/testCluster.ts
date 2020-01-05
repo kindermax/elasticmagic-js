@@ -31,7 +31,7 @@ let client: Client;
 const userId = 1;
 const type = 'order';
 const indexName = 'test_order_index';
-const esHost = 'http://es6:9200';
+const esHost = `http://${process.env.ES_HOST}:9200`;
 
 const mapping = {
   "dynamic": "false",
