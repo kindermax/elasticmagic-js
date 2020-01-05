@@ -1,14 +1,14 @@
-import { ParamsExpression, ParamsType, Params, ParamKV, FieldExpression, Expression } from "./expression";
-import { Aggregations } from "./query";
+import { ParamsExpression, ParamsType, Params, Expression } from "./expression";
 import { isObject } from "./util";
 import { Field, FieldType } from "./document";
+import { KVList, Agg, AggBucket, Dictionary } from "./types";
 
 class Bucket {
   // TODO figure out _typed_key
 
-  private key: any;
-  private docCount: number;
-  private aggregations: Aggregations =  {};
+  public key: any;
+  public docCount: number;
+  public aggregations: Dictionary<string, AggResult> =  {};
 
   constructor(
     rawData: any,
@@ -23,6 +23,7 @@ class Bucket {
     aggExpr._aggregations.getParamsKvList().forEach((agg) => {
       const aggName: string = agg[0]
       const aggExpr: BucketAgg = agg[1];
+
       this.aggregations[aggName] = aggExpr.buildAggResult(
         rawData[aggName],
         docClsMap,
@@ -31,7 +32,7 @@ class Bucket {
     });
   }
 
-  public getAggregation(name: string): any {
+  public getAggregation(name: string): AggResult {
     return this.aggregations[name];
   }
 
@@ -41,7 +42,9 @@ class Bucket {
 }
 
 
-class AggResult {
+export class AggResult {
+  public buckets: Bucket[] = [];
+  public docCount: number = 0;
   constructor(public expr: BucketAgg) {}
 }
 
@@ -67,14 +70,12 @@ export class BucketAgg extends AggExpression {
     this._aggregations = new Params(aggs);
   }
 
-  public buildAggResult(rawData: any, docClsMap: any = null, mapperRegistry: any = null) {
+  public buildAggResult(rawData: Agg, docClsMap: any = null, mapperRegistry: any = null): AggResult {
     return new this.resultClass(this, rawData, docClsMap, mapperRegistry);
   }
 }
 
-type KV<T> = [T, any];
-
-function sortByKey(collection: object): Array<KV<string>> {
+function sortByKey(collection: object): Array<KVList<string>> {
   return Object.entries(collection).sort((a, b) => {
     const [keyA] = a;
     const [keyB] = b;
@@ -118,7 +119,7 @@ class SingleBucketAggResult extends AggResult {
   }
 }
 
-class MultiBucketAggResult extends AggResult {
+export class MultiBucketAggResult extends AggResult {
   private bucketClass: any = Bucket
   public buckets: any = [];
   private bucketsMap: any = {};
@@ -144,7 +145,7 @@ class MultiBucketAggResult extends AggResult {
       });
     }
 
-    rawBuckets.forEach((rawBucket: any) => {
+    rawBuckets.forEach((rawBucket: AggBucket) => {
       const bucket = new this.bucketClass(
         rawBucket,
         aggExpr,

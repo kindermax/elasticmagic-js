@@ -7,6 +7,8 @@ import {
   RangeExpr, 
   RangeValue,
 } from "./expression";
+import { SearchResult } from "./result";
+import { Hit } from "./types";
 
 export class FieldType {}
 
@@ -60,14 +62,35 @@ export class Field extends Expression {
   }
 }
 
+type DocOpts = {
+  hit: Hit;
+  result: SearchResult<any>;
+}
 export interface IDocument {
   _docType: string;
-  new (): Document;
+  new (opts: DocOpts): Doc;
 }
 
 // TODO maybe decorator can be used as an alternative to metaclass
 // https://github.com/Microsoft/TypeScript/issues/17454
-export class Document {
+export class Doc {
   public static readonly _docType: string;
-  constructor() {};
+  private hit: Hit;
+  private result: SearchResult<any>;
+
+  public _id: string | number;
+  constructor(opts: DocOpts) {
+    this.hit = opts.hit;
+    this.result = opts.result;
+
+    this._id = opts.hit._id;
+  };
+
+  /**
+   * If instanceMapper was defined for query then return instance mapped by instanceMapper
+   * else return null;
+   */
+  public get instance(): any | null {
+    return null;
+  }
 }

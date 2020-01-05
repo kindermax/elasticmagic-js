@@ -1,7 +1,8 @@
 import { Client } from '@elastic/elasticsearch';
-import { Field, Integer, Document, EsDate } from "../src/document";
+import { Field, Integer, Doc, EsDate } from "../src/document";
 import { Bool } from "../src/expression";
 import { Cluster } from "../src/cluster";
+import * as agg from '../src/agg';
 
 enum OrderStatus {
   new = 1,
@@ -15,7 +16,7 @@ enum OrderSource {
   mobile = 2,
 }
 
-class OrderDoc extends Document {
+class OrderDoc extends Doc {
   public static _docType: string = 'order';
 
   public static userId: Field = new Field(Integer, 'user_id');
@@ -119,10 +120,10 @@ describe("Cluster", () => {
       )
       .limit(0);
     
-    const result = await query.getResult();
-    expect(result.statusCode).toBe(200);
-    expect(result.body.hits.total).toBe(1);
-    expect(result.body.hits.hits.length).toBe(0);
+    const result = await query.getResult<OrderDoc>();
+    expect(result.error).toBeUndefined();
+    expect(result.total).toBe(1);
+    expect(result.hits.length).toBe(0);
   });
 
   test('should return response with a source', async () => {
@@ -138,16 +139,67 @@ describe("Cluster", () => {
         )
       );
     
-    const result = await query.getResult();
-    expect(result.statusCode).toBe(200);
-    expect(result.body.hits.total).toBe(1);
-    expect(result.body.hits.hits.length).toBe(1);
-    expect(result.body.hits.hits[0]).toStrictEqual({
-      "_id": "1",
-      "_index": indexName,
-      "_routing": `${userId}`,
-      "_score": 0,
-      "_type": type,
-    });
+    const result = await query.getResult<OrderDoc>();
+    expect(result.error).toBeUndefined();
+    expect(result.total).toBe(1);
+    expect(result.hits.length).toBe(1);
+    const hit = result.hits[0];
+    expect(hit).toBeInstanceOf(OrderDoc);
+    expect(hit._id).toBe("1");
+    // expect(hit.userId).toBe(1);
+    // expect(hit.status).toBe(1);
+    // expect(hit.source).toBe(1);
+    // expect(hit.price).toBe(5);
+    // expect(hit.dateCreated).toBe(5);
+  });
+
+  test('should return response with aggregations', async () => {
+    const cluster = new Cluster(client, indexName);
+
+    const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
+      .source(false)
+      .filter(
+        Bool.must(
+          OrderDoc.userId.in_([userId]),
+          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not_(OrderSource.mobile),
+        )
+      )
+      .aggregations({
+        users: new agg.Terms({
+          field: OrderDoc.userId,
+          size: 1,
+          aggs: {
+            total: new agg.Filter({
+              filter: OrderDoc.status.eq_(OrderStatus.new)
+            })
+          }
+        })
+      });
+    
+    const result = await query.getResult<OrderDoc>();
+    expect(result.error).toBeUndefined();
+    expect(result.total).toBe(1);
+    expect(result.hits.length).toBe(1);
+    const hit = result.hits[0];
+    expect(hit).toBeInstanceOf(OrderDoc);
+    expect(hit._id).toBe("1");
+    // expect(hit.userId).toBe(1);
+    // expect(hit.status).toBe(1);
+    // expect(hit.source).toBe(1);
+    // expect(hit.price).toBe(5);
+
+    expect(Object.keys(result.aggregations).length).toBe(1);
+
+    const users = result.getAggregation('users');
+
+    expect(users.buckets.length).toBe(1);
+    expect(users.buckets[0].key).toBe(1);
+    expect(users.buckets[0].docCount).toBe(1);
+    expect(Object.keys(users.buckets[0].aggregations).length).toBe(1);
+
+    const totalBucket = users.buckets[0].getAggregation('total');
+
+    expect(totalBucket.docCount).toBe(1);
   });
 });

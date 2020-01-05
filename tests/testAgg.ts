@@ -1,4 +1,4 @@
-import { Field, Integer, Document, EsDate } from "../src/document";
+import { Field, Integer, Doc, EsDate } from "../src/document";
 import { SearchQuery } from "../src/query";
 import { Bool } from "../src/expression";
 import * as agg from '../src/agg';
@@ -15,7 +15,7 @@ enum OrderSource {
   mobile = 2,
 }
 
-class OrderDoc extends Document {
+class OrderDoc extends Doc {
   public static _docType: string = 'order';
 
   public static userId: Field = new Field(Integer, 'user_id');
