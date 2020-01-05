@@ -2,6 +2,7 @@ import { Client } from '@elastic/elasticsearch';
 import { Field, Integer, Document, EsDate } from "../src/document";
 import { Bool } from "../src/expression";
 import { Cluster } from "../src/cluster";
+import * as agg from '../src/agg';
 
 enum OrderStatus {
   new = 1,
@@ -148,6 +149,58 @@ describe("Cluster", () => {
       "_routing": `${userId}`,
       "_score": 0,
       "_type": type,
+    });
+  });
+
+  test('should return response with aggregations', async () => {
+    const cluster = new Cluster(client, indexName);
+
+    const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
+      .source(false)
+      .filter(
+        Bool.must(
+          OrderDoc.userId.in_([userId]),
+          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not_(OrderSource.mobile),
+        )
+      )
+      .aggregations({
+        users: new agg.Terms({
+          field: OrderDoc.userId,
+          size: 1,
+          aggs: {
+            total: new agg.Filter({
+              filter: OrderDoc.status.eq_(OrderStatus.new)
+            })
+          }
+        })
+      });
+    
+    const result = await query.getResult();
+    expect(result.statusCode).toBe(200);
+    expect(result.body.hits.total).toBe(1);
+    expect(result.body.hits.hits.length).toBe(1);
+    expect(result.body.hits.hits[0]).toStrictEqual({
+      "_id": "1",
+      "_index": indexName,
+      "_routing": `${userId}`,
+      "_score": 0,
+      "_type": type,
+    });    
+    expect(result.body.aggregations).toStrictEqual({
+      users: {
+        buckets: [
+          {
+            doc_count: 1,
+            key: 1,
+            total: {
+              doc_count: 1
+            }
+          }
+        ],
+        doc_count_error_upper_bound: 0,
+        sum_other_doc_count: 0,
+      }
     });
   });
 });
