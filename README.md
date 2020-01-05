@@ -169,6 +169,8 @@ make test
 - [ ] work with Date type
 - [ ] return typed result of search
 - [ ] prettier, tslint
+- [ ] generate doc with jsDoc
+- [ ] generate doc like ttag has
 - [ ] elasticsearch must be devDep or peerDep, but not production dep
 - [ ] meta document creation
 - [ ] requests
