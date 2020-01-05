@@ -1,8 +1,17 @@
 import { SearchQueryContext, Query, QueryOverride } from "./query";
-import { Bool, QueryExpression, FieldQueryExpression, Params, Literal, Term, Terms } from "./expression";
+import { 
+  Bool,
+  QueryExpression, 
+  FieldQueryExpression, 
+  Params, 
+  Literal, 
+  Term, 
+  Terms, 
+  RangeExpr,
+ } from "./expression";
 import { Field } from "./document";
 import { arrayKVToDict, isObject } from "./util";
-import { AggExpression, BucketAgg } from "./agg";
+import { AggExpression, BucketAgg, Filter } from "./agg";
 
 
 export class CompilerVisitor {
@@ -43,7 +52,11 @@ export class CompilerVisitor {
       case 'agg':
         return this.visitAgg(expression);
       case 'bucketAgg':
-        return this.visitBucketAgg(expression);
+        return this.visitBucketAgg(expression);    
+      case 'filterAgg':
+        return this.visitFilterAgg(expression);
+      case 'range':
+        return this.visitRange(expression);
       default:
     }
 
@@ -100,7 +113,7 @@ export class CompilerVisitor {
       params.size = queryContext.limit;
     }
 
-    if (Object.keys(queryContext.aggregations).length > 0) {
+    if (queryContext.aggregations.length > 0) {
       params.aggregations = this.visit(queryContext.aggregations);
     }
 
@@ -198,5 +211,24 @@ export class CompilerVisitor {
       params.aggregations = this.visit(agg._aggregations);
     }
     return params;
+  }
+
+  private visitFilterAgg(agg: Filter): any {
+    const params = this.visitBucketAgg(agg);
+    params[agg._aggName] = this.visit(agg.filter);
+    return params;
+  }
+
+  private visitRange(expr: RangeExpr): any {
+    const fieldParams: any = {
+      [this.visit(expr.field)]: this.visit(expr.params)
+    };
+
+    return {
+      range: {
+        ...this.visit(expr.rangeParams),
+        ...fieldParams,
+      }
+    };
   }
 }

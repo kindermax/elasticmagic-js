@@ -1,13 +1,27 @@
-import { Field, Integer, Document } from "../src/document";
+import { Field, Integer, Document, EsDate } from "../src/document";
 import { SearchQuery } from "../src/query";
 import { Bool } from "../src/expression";
 
-class OpinionDocument extends Document {
-  public static _docType: string = 'opinion';
+enum OrderStatus {
+  new = 1,
+  paid = 2,
+  handled = 3,
+  canceled = 4,
+}
 
-  public static companyId: Field = new Field(Integer, 'company_id')
-  public static status: Field = new Field(Integer, 'status') // TODO how can we get names in runtime? like python metaclass
-  public static source: Field = new Field(Integer, 'source')
+enum OrderSource {
+  desktop = 1,
+  mobile = 2,
+}
+
+class OrderDoc extends Document {
+  public static _docType: string = 'order';
+
+  public static userId: Field = new Field(Integer, 'user_id');
+  public static status: Field = new Field(Integer, 'status'); // TODO how can we get names in runtime? like python metaclass
+  public static source: Field = new Field(Integer, 'source');
+  public static price: Field = new Field(Integer, 'price');
+  public static dateCreated: Field = new Field(EsDate, 'date_created');
 }
 
 
@@ -19,13 +33,13 @@ describe("Query compile", () => {
   
   test('with terms expression in bool must', () => {
     const searchQuery = new SearchQuery({})
-    const query = searchQuery.filter(Bool.must(OpinionDocument.companyId.in_([123])));
+    const query = searchQuery.filter(Bool.must(OrderDoc.userId.in_([1])));
     expect(query.body).toStrictEqual({
       query: {
         bool: {
           filter: {
             terms: {
-              company_id: [123]
+              user_id: [1]
             }
           }
         }
@@ -35,13 +49,13 @@ describe("Query compile", () => {
   
   test('with terms expression without bool must', () => {
     const searchQuery = new SearchQuery({})
-    const query = searchQuery.filter(OpinionDocument.companyId.in_([123]));
+    const query = searchQuery.filter(OrderDoc.userId.in_([1]));
     expect(query.body).toStrictEqual({
       query: {
         bool: {
           filter: {
             terms: {
-              company_id: [123]
+              user_id: [1]
             }
           }
         }
@@ -54,8 +68,8 @@ describe("Query compile", () => {
     const query = searchQuery
       .filter(
         Bool.must(
-          OpinionDocument.companyId.in_([123]),
-          OpinionDocument.status.in_([1, 5]),
+          OrderDoc.userId.in_([1]),
+          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
         )
       );
     expect(query.body).toStrictEqual({
@@ -64,8 +78,8 @@ describe("Query compile", () => {
           filter: {
             bool: {
               must: [
-                {terms: {company_id: [123]}},
-                {terms: {status: [1, 5]}},
+                {terms: {user_id: [1]}},
+                {terms: {status: [OrderStatus.new, OrderStatus.paid]}},
               ]
             }
           }
@@ -79,9 +93,9 @@ describe("Query compile", () => {
     const query = searchQuery
       .filter(
         Bool.must(
-          OpinionDocument.companyId.in_([123]),
-          OpinionDocument.status.in_([1, 5]),
-          OpinionDocument.source.not_(16),
+          OrderDoc.userId.in_([1]),
+          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not_(OrderSource.mobile),
         )
       );
     expect(query.body).toStrictEqual({
@@ -90,11 +104,11 @@ describe("Query compile", () => {
           filter: {
             bool: {
               must: [
-                {terms: {company_id: [123]}},
-                {terms: {status: [1, 5]}},
+                {terms: {user_id: [1]}},
+                {terms: {status: [OrderStatus.new, OrderStatus.paid]}},
                 {bool: {
                   must_not: [
-                    {term: {source: 16}}
+                    {term: {source: OrderSource.mobile}}
                   ]
                 }}
               ]
@@ -117,9 +131,9 @@ describe("Query compile", () => {
     const query = searchQuery
       .filter(
         Bool.must(
-          OpinionDocument.companyId.in_([123]),
-          OpinionDocument.status.in_([1, 5]),
-          OpinionDocument.source.not_(16),
+          OrderDoc.userId.in_([1]),
+          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not_(OrderSource.mobile),
         )
       )
       .source(false);
@@ -130,11 +144,11 @@ describe("Query compile", () => {
           filter: {
             bool: {
               must: [
-                {terms: {company_id: [123]}},
-                {terms: {status: [1, 5]}},
+                {terms: {user_id: [1]}},
+                {terms: {status: [OrderStatus.new, OrderStatus.paid]}},
                 {bool: {
                   must_not: [
-                    {term: {source: 16}}
+                    {term: {source: OrderSource.mobile}}
                   ]
                 }}
               ]
@@ -158,9 +172,9 @@ describe("Query compile", () => {
     const query = searchQuery
       .filter(
         Bool.must(
-          OpinionDocument.companyId.in_([123]),
-          OpinionDocument.status.in_([1, 5]),
-          OpinionDocument.source.not_(16),
+          OrderDoc.userId.in_([1]),
+          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not_(OrderSource.mobile),
         )
       )
       .limit(0);
@@ -171,11 +185,11 @@ describe("Query compile", () => {
           filter: {
             bool: {
               must: [
-                {terms: {company_id: [123]}},
-                {terms: {status: [1, 5]}},
+                {terms: {user_id: [1]}},
+                {terms: {status: [OrderStatus.new, OrderStatus.paid]}},
                 {bool: {
                   must_not: [
-                    {term: {source: 16}}
+                    {term: {source: OrderSource.mobile}}
                   ]
                 }}
               ]
@@ -193,9 +207,9 @@ describe("Query compile", () => {
       .source(false)
       .filter(
         Bool.must(
-          OpinionDocument.companyId.in_([123]),
-          OpinionDocument.status.in_([1, 5]),
-          OpinionDocument.source.not_(16),
+          OrderDoc.userId.in_([1]),
+          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not_(OrderSource.mobile),
         )
       )
       .limit(0);
@@ -205,11 +219,11 @@ describe("Query compile", () => {
           filter: {
             bool: {
               must: [
-                {terms: {company_id: [123]}},
-                {terms: {status: [1, 5]}},
+                {terms: {user_id: [1]}},
+                {terms: {status: [OrderStatus.new, OrderStatus.paid]}},
                 {bool: {
                   must_not: [
-                    {term: {source: 16}}
+                    {term: {source: OrderSource.mobile}}
                   ]
                 }}
               ]
@@ -224,23 +238,23 @@ describe("Query compile", () => {
 
   test('valid query with _routing', () => {
     const searchQuery = new SearchQuery({
-      routing: 123,
-      docClass: OpinionDocument,
-      docType: 'opinion',
+      routing: 1,
+      docClass: OrderDoc,
+      docType: 'order',
     })
     const query = searchQuery
       .source(false)
       .filter(
         Bool.must(
-          OpinionDocument.companyId.in_([123]),
-          OpinionDocument.status.in_([1, 5]),
-          OpinionDocument.source.not_(16),
+          OrderDoc.userId.in_([1]),
+          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not_(OrderSource.mobile),
         )
       )
       .limit(0);
     expect(query.params).toStrictEqual({
-      routing: '123',
-      type: 'opinion'
+      routing: '1',
+      type: 'order'
     })
   });
 });

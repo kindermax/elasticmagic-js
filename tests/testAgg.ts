@@ -1,17 +1,38 @@
-import { Field, Integer, Document } from "../src/document";
+import { Field, Integer, Document, EsDate } from "../src/document";
 import { SearchQuery } from "../src/query";
 import { Bool } from "../src/expression";
 import * as agg from '../src/agg';
 
-class OpinionDocument extends Document {
-  public static _docType: string = 'opinion';
-
-  public static companyId: Field = new Field(Integer, 'company_id')
-  public static status: Field = new Field(Integer, 'status') // TODO how can we get names in runtime? like python metaclass
-  public static source: Field = new Field(Integer, 'source')
+enum OrderStatus {
+  new = 1,
+  paid = 2,
+  handled = 3,
+  canceled = 4,
 }
 
-const companyIds = [123];
+enum OrderSource {
+  desktop = 1,
+  mobile = 2,
+}
+
+class OrderDoc extends Document {
+  public static _docType: string = 'order';
+
+  public static userId: Field = new Field(Integer, 'user_id');
+  public static status: Field = new Field(Integer, 'status'); // TODO how can we get names in runtime? like python metaclass
+  public static source: Field = new Field(Integer, 'source');
+  public static price: Field = new Field(Integer, 'price');
+  public static dateCreated: Field = new Field(EsDate, 'date_created');
+  
+  public static conditionSourceDesktop() {
+    return OrderDoc.source.in_([OrderSource.desktop]);
+  }
+
+  public static conditionLowPrice() {
+    return OrderDoc.price.lt_(10);
+  }
+}
+
 
 describe("Aggregations compile", () => {
   test('valid aggregations', () => {
@@ -20,15 +41,44 @@ describe("Aggregations compile", () => {
       .source(false)
       .filter(
         Bool.must(
-          OpinionDocument.companyId.in_(companyIds),
-          OpinionDocument.status.in_([1, 5]),
-          OpinionDocument.source.not_(16),
+          OrderDoc.userId.in_([1]),
+          OrderDoc.status.in_([OrderStatus.new, OrderStatus.handled, OrderStatus.paid]),
+          OrderDoc.source.not_(OrderSource.mobile),
         )
       )
       .aggregations({
-        companies: new agg.Terms({
-          field: OpinionDocument.companyId,
-          size: companyIds.length,
+        usersOrders: new agg.Terms({
+          field: OrderDoc.userId,
+          size: 1,
+          aggs: {
+            total: new agg.Filter({
+              filter: OrderDoc.conditionSourceDesktop(),
+              aggs: {
+                selled: new agg.Filter({
+                  filter: Bool.must(
+                    OrderDoc.status.in_([OrderStatus.paid, OrderStatus.handled]),
+                  ),
+                  aggs: {
+                    paid: new agg.Filter({
+                      filter: OrderDoc.status.eq_(OrderStatus.paid)
+                    }), 
+                    handled: new agg.Filter({
+                      filter: OrderDoc.status.eq_(OrderStatus.handled)
+                    }),
+                  }
+                }),
+                canceled: new agg.Filter({
+                  filter: OrderDoc.status.eq_(OrderStatus.canceled),
+                }),
+                new: new agg.Filter({
+                  filter: OrderDoc.status.eq_(OrderStatus.new)
+                })
+              }
+            }),
+            lowcost: new agg.Filter({
+              filter: OrderDoc.conditionLowPrice()
+            })
+          }
         })
       })
       .limit(0);
@@ -40,8 +90,8 @@ describe("Aggregations compile", () => {
               must: [
                 {
                   terms: {
-                    company_id: [
-                      123
+                    user_id: [
+                      1
                     ]
                   }
                 },
@@ -49,7 +99,8 @@ describe("Aggregations compile", () => {
                   terms: {
                     status: [
                       1,
-                      5
+                      3,
+                      2 // order is a must
                     ]
                   }
                 },
@@ -58,7 +109,7 @@ describe("Aggregations compile", () => {
                     must_not: [
                       {
                         term: {
-                          source: 16
+                          source: 2
                         }
                       }
                     ]
@@ -71,169 +122,65 @@ describe("Aggregations compile", () => {
       },
       _source: false,
       aggregations: {
-        companies: {
+        usersOrders: {
           terms: {
-            field: "company_id",
+            field: "user_id",
             size: 1
           },
           aggregations: {
             total: {
               filter: {
                 terms: {
-                  status: [
-                    1,
-                    5
+                  source: [
+                    1
                   ]
                 }
               },
               aggregations: {
-                with_rating: {
+                selled: {
                   filter: {
-                    bool: {
-                      must: [
-                        {
-                          bool: {
-                            must_not: [
-                              {
-                                term: {
-                                  rating: 3
-                                }
-                              }
-                            ]
-                          }
-                        },
-                        {
-                          term: {
-                            published_without_rating: false
-                          }
-                        }
-                      ]
+                    terms: {
+                      status: [2, 3]
                     }
                   },
                   aggregations: {
-                    positive: {
+                    paid: {
                       filter: {
-                        range: {
-                          rating: {
-                            gt: 3
-                          }
+                        term: {
+                          status: 2
                         }
                       }
                     },
-                    negative: {
+                    handled: {
                       filter: {
-                        range: {
-                          rating: {
-                            lt: 3
-                          }
+                        term: {
+                          status: 3
                         }
                       }
                     }
                   }
                 },
-                neutral: {
+                canceled: {
                   filter: {
-                    bool: {
-                      must: [
-                        {
-                          term: {
-                            rating: 3
-                          }
-                        },
-                        {
-                          term: {
-                            published_without_rating: false
-                          }
-                        }
-                      ]
+                    term: {
+                      status: 4
+                    }
+                  }
+                },
+                new: {
+                  filter: {
+                    term: {
+                      status: 1
                     }
                   }
                 }
               }
             },
-            total_short: {
+            lowcost: {
               filter: {
-                bool: {
-                  must: [
-                    {
-                      terms: {
-                        status: [
-                          1,
-                          5
-                        ]
-                      }
-                    },
-                    {
-                      range: {
-                        date_created: {
-                          gte: "2019-01-04T23:59:59.999999"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              aggregations: {
-                with_rating: {
-                  filter: {
-                    bool: {
-                      must: [
-                        {
-                          bool: {
-                            must_not: [
-                              {
-                                term: {
-                                  rating: 3
-                                }
-                              }
-                            ]
-                          }
-                        },
-                        {
-                          term: {
-                            published_without_rating: false
-                          }
-                        }
-                      ]
-                    }
-                  },
-                  aggregations: {
-                    positive: {
-                      filter: {
-                        range: {
-                          rating: {
-                            gt: 3
-                          }
-                        }
-                      }
-                    },
-                    negative: {
-                      filter: {
-                        range: {
-                          rating: {
-                            lt: 3
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                neutral: {
-                  filter: {
-                    bool: {
-                      must: [
-                        {
-                          term: {
-                            rating: 3
-                          }
-                        },
-                        {
-                          term: {
-                            published_without_rating: false
-                          }
-                        }
-                      ]
-                    }
+                range: {
+                  price: {
+                    lt: 10
                   }
                 }
               }

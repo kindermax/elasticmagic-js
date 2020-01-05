@@ -1,4 +1,4 @@
-import { ParamsExpression, ParamsType, Params, ParamKV } from "./expression";
+import { ParamsExpression, ParamsType, Params, ParamKV, FieldExpression, Expression } from "./expression";
 import { Aggregations } from "./query";
 import { isObject } from "./util";
 import { Field, FieldType } from "./document";
@@ -82,6 +82,42 @@ function sortByKey(collection: object): Array<KV<string>> {
   });
 }
 
+class SingleBucketAggResult extends AggResult {
+  private bucketClass: any = Bucket
+  private bucketsMap: any = {};
+  private mapperRegistry: any = {};
+
+  public buckets: any = [];
+  public docCount: number = 0;
+  public aggregations: any = {};
+
+  constructor(
+    aggExpr: BucketAgg,
+    rawData: any,
+    docClsMap: any,
+    mapperRegistry: any,
+    private instanceMapper: any,
+  ) {
+    super(aggExpr);
+    
+    this.docCount = rawData.doc_count;
+
+    aggExpr._aggregations.getParamsKvList().forEach((agg) => {
+      const aggName: string = agg[0]
+      const aggExpr: BucketAgg = agg[1];
+      this.aggregations[aggName] = aggExpr.buildAggResult(
+        rawData[aggName],
+        docClsMap,
+        mapperRegistry,
+      );;
+    });
+  }
+
+  public getAggregation(name: string): any {
+    return this.aggregations[name];
+  }
+}
+
 class MultiBucketAggResult extends AggResult {
   private bucketClass: any = Bucket
   public buckets: any = [];
@@ -146,8 +182,19 @@ class MultiBucketAggResult extends AggResult {
 
 }
 
+export class SingleBucketAgg extends BucketAgg {
+  public _aggName: any; // TODO hack so compiler sees this field for generic type
+
+  constructor(
+    aggs: any,
+    params: any, // TODO probably not appropriate type as MultiBucketAgg is parent class, replace with more generic
+  ) {
+    super(aggs, params, SingleBucketAggResult);
+  }
+}
+
 export class MultiBucketAgg extends BucketAgg {
-  public _aggName: any; // TODO hach so compiler sees this field for generic type
+  public _aggName: any; // TODO hack so compiler sees this field for generic type
 
   constructor(
     aggs: any,
@@ -168,7 +215,9 @@ type TermsOptions = {
   script?: any;
   size?: number;
   type?: FieldType;
-  aggs?: TermsOptions; // TODO not quite right type? think
+  aggs?: {
+    [agg: string]: Filter
+  };
   instanceMapper?: any;
 };
 
@@ -182,27 +231,38 @@ function getType(type: any, field: any): any {
   return type || (field ? field.getType() : null);
 };
 
-function filterUnrelatedParams(termsOptions: TermsOptions): TermsOptionsShrink {
-  const {
-    type,
-    instanceMapper,
-    aggs,
-    ...params
-  } = termsOptions;
-  return params;
-};
-
 export class Terms extends MultiBucketAgg {
   public _aggName = 'terms';
 
-  constructor(termsOptions: TermsOptions) {
+  constructor({ field, type, aggs, instanceMapper, ...opts }: TermsOptions) {
     super(
-      termsOptions.aggs,
-      filterUnrelatedParams(termsOptions),
-      getType(termsOptions.type, termsOptions.field),
-      termsOptions.instanceMapper,
+      aggs,
+      { field, ...opts },
+      getType(type, field),
+      instanceMapper,
     );
 
-    this.instanceMapper = termsOptions.instanceMapper;
+    this.instanceMapper = instanceMapper;
+  }
+}
+
+type FilterOptions = {
+  filter: Expression;
+  aggs?: {
+    [agg: string]: Filter
+  };
+};
+
+
+export class Filter extends SingleBucketAgg {
+  public _visitName = 'filterAgg';
+  public _aggName = 'filter';
+
+  public filter: Expression;
+  constructor({ filter, aggs, ...opts }: FilterOptions) {
+    super(aggs, opts);
+
+    this.filter = filter;
+
   }
 }
