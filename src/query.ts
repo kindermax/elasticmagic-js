@@ -2,8 +2,9 @@ import { Expression, Params, ParamsType } from "./expression";
 import { CompilerVisitor } from "./compiler";
 import { Cluster, Index } from "./cluster";
 import { cleanParams } from './util';
-import { IDocument } from './document';
+import { IDocument, Doc } from './document';
 import { AggExpression } from "./agg";
+import { SearchResult } from "./result";
 
 export type SearchQueryOptions = {
   routing?: number;
@@ -98,6 +99,8 @@ export type Query = {
 export type QueryOverride = object | null;
 export type Limit = number | null;
 
+export type InstanceMapper<T1, T2> = (ids: T1[]) => T2;
+
 export class SearchQueryContext {
   public _visitName: string = 'searchQueryContext';
 
@@ -110,6 +113,7 @@ export class SearchQueryContext {
     public searchParams: Params,
     public aggregations: Params,
     public docClass?: IDocument, // TODO maybe we should pass entire SearchQuery ?
+    public instanceMapper?: InstanceMapper<any, any>,
   ) {
     if (!docClass) {
       // TODO collect_doc_classes
@@ -138,6 +142,7 @@ export class SearchQuery {
   private _searchParams: Params = new Params(); // TODO maybe add subtype like SearchParams
   private _docClass?: IDocument;
   private _docType?: string;
+  private _instanceMapper?: InstanceMapper<any, any>;
 
   constructor(
     searchQueryOptions: ClusterSearchQueryOptions,
@@ -177,6 +182,7 @@ export class SearchQuery {
       this._searchParams,
       this._aggregations,
       this._docClass,
+      this._instanceMapper,
     )
   }
 
@@ -228,6 +234,11 @@ export class SearchQuery {
     return this;
   }
 
+  public withInstanceMapper<T1, T2>(instanceMapper: InstanceMapper<T1, T2>): SearchQuery {
+    this._instanceMapper = instanceMapper;
+    return this;
+  }
+
   public toJSON(): Query {
     return this.compile();
   }
@@ -257,11 +268,11 @@ export class SearchQuery {
     return JSON.stringify(this.compile(), null, 2);
   }
 
-  public async getResult(): Promise<any> {
+  public async getResult<T extends Doc = any, TRaw = any>(): Promise<SearchResult<T>> {
     // TODO add cache
     if (!this.cluster) {
       throw new Error('getResult: no cluster specified, can not make a query');
     }
-    return this.cluster.search(this);
+    return this.cluster.search<T, TRaw>(this);
   }
 }

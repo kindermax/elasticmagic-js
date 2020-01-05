@@ -1,6 +1,6 @@
 import { ParamsType } from "./expression";
 
-export function arrayKVToDict(array: any[][]): object {
+export function arrayKVToDict<T = any>(array: any[][]): T {
   return array.reduce((acc: any, [key, val]) => {
     acc[key] = val;
     return acc;

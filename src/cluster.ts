@@ -1,6 +1,8 @@
-import { Client } from "@elastic/elasticsearch";
-import { SearchQuery, Query, SearchQueryOptions, SearchParams } from "./query";
-
+import { Client, ApiResponse } from "@elastic/elasticsearch";
+import { SearchQuery, Query, SearchQueryOptions, SearchQueryContext } from "./query";
+import { SearchResult } from "./result";
+import { RawResultBody } from "./types";
+import { Doc } from "./document";
 
 export class Index {
   constructor(
@@ -43,16 +45,48 @@ export class Cluster {
     return this.index;
   }
 
-  private async doRequest(compiledQuery: Query, params: any): Promise<any> {
+  
+
+  /**
+   * Make a request using underlying es client.
+   * 
+   * NOTE: If you want to type response body, pass a generic type.
+   * @param compiledQuery 
+   * @param params 
+   */
+  private async doRequest<T = any>(compiledQuery: Query, params: any): Promise<ApiResponse<RawResultBody<T>>> {
+    // TODO for now we hardcoded search method
     // TODO get client method to call, must be a accep-like function in searchQuery
     return this.client.search({
       index: this.index.getName(),
       body: compiledQuery,
       ...params
-    })
+    });
   }
 
-  public async search(searchQuery: SearchQuery): Promise<any> {
-    return this.doRequest(searchQuery.body, searchQuery.params);
+  // TODO add generic type for processResult
+  /**
+   * 
+   * NOTE: If you want to type response body, pass a generic type.
+   * @param rawResultBody \
+   * @param searchQueryContext 
+   */
+  private processResult<T extends Doc, TRaw>(rawResultBody: RawResultBody<TRaw>, searchQueryContext: SearchQueryContext): SearchResult<T> {
+    return new SearchResult<T, TRaw>(
+      rawResultBody,
+      searchQueryContext.aggregations,
+      searchQueryContext.docClass,
+      searchQueryContext.instanceMapper
+    )
+  };
+
+  // TODO T is not very useful now
+  // maybe should type Search
+  public async search<T extends Doc, TRaw>(searchQuery: SearchQuery): Promise<SearchResult<T>> {
+    const rawResultResponse: ApiResponse<RawResultBody<TRaw>> = await this.doRequest<TRaw>(searchQuery.body, searchQuery.params);
+    return this.processResult<T, TRaw>(
+      rawResultResponse.body,
+      searchQuery.getQueryContext(),
+    );
   }
 }

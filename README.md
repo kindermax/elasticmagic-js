@@ -164,16 +164,16 @@ make test
 
 - [x] query generation
 - [x] aggregations
-- [ ] get aggregations result
+- [x] get aggregations result
 - [ ] add support for es5, es7
+- [ ] collect doc classes
 - [ ] work with Date type
-- [ ] return typed result of search
+- [x] return typed result of search +-
 - [ ] prettier, tslint
 - [ ] generate doc with jsDoc
 - [ ] generate doc like ttag has
 - [ ] elasticsearch must be devDep or peerDep, but not production dep
 - [ ] meta document creation
-- [ ] requests
 - [ ] scroll
 - [ ] pagination
 - [ ] queryFilters

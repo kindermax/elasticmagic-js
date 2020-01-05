@@ -10,6 +10,9 @@
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "disableOptimisticBPs": true,
+      "env": {
+        "ES_HOST": "localhost"
+      },
       "windows": {
         "program": "${workspaceFolder}/node_modules/jest/bin/jest",
       }
