@@ -3,6 +3,7 @@ import { CompilerVisitor } from "./compiler";
 import { Cluster, Index } from "./cluster";
 import { cleanParams } from './util';
 import { IDocument } from './document';
+import { AggExpression } from "./agg";
 
 export type SearchQueryOptions = {
   routing?: number;
@@ -72,6 +73,15 @@ type BoolRootField = {
   filter?: FilterRootField;
 };
 
+// TODO probably must move types to relevant modules
+type AggregationsField = {
+  [agg: string]: any;
+}
+
+export type Aggregations = { // TODO maybe one of types is obsolete
+  [agg: string]: AggExpression;
+}
+
 type QueryRootField = {
   bool?: BoolRootField;
   match?: any;
@@ -81,22 +91,15 @@ export type Query = {
   query?: QueryRootField;
   size?: number;
   _source?: SourceField;
+  aggregations?: AggregationsField;
   // TODO complete this type
-}
-
-type FilterContext = {
-  filter: FilterRootField;
-}
-
-type BoolContext = {
-  bool: BoolRootField;
 }
 
 export type QueryOverride = object | null;
 export type Limit = number | null;
 
 export class SearchQueryContext {
-  public _visitName = 'searchQueryContext';
+  public _visitName: string = 'searchQueryContext';
 
   constructor(
     public query: QueryOverride,
@@ -105,6 +108,7 @@ export class SearchQueryContext {
     public filters: any,
     public limit: Limit,
     public searchParams: Params,
+    public aggregations: Params,
     public docClass?: IDocument, // TODO maybe we should pass entire SearchQuery ?
   ) {
     if (!docClass) {
@@ -127,6 +131,7 @@ export class SearchQuery {
   private _limit: Limit = null;
   private _fields: any = null; // TODO not used right now
   private _filters: Expression[] = [];
+  private _aggregations: Params = new Params();
 
   private _source: SourceField = null;
   private _query: QueryOverride = null;
@@ -170,6 +175,7 @@ export class SearchQuery {
       this._filters,
       this._limit,
       this._searchParams,
+      this._aggregations,
       this._docClass,
     )
   }
@@ -204,6 +210,21 @@ export class SearchQuery {
 
   public query(query: QueryOverride): SearchQuery {
     this._query = query;
+    return this;
+  }
+
+  /**
+   * Adds `aggregations <https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html>`_
+   * to the search query.
+   * 
+   * After executing the query you can get aggregation result by its name 
+   * calling :meth:`SearchResult.get_aggregation` method.
+   * 
+   * @param aggs objects with aggregations. Can be ``null`` that cleans up previous aggregations.
+   */
+  public aggregations(aggs: Aggregations): SearchQuery {
+    // TODO implement null cleaning
+    this._aggregations = new Params(aggs);
     return this;
   }
 

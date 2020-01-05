@@ -23,3 +23,29 @@ export function cleanParams(params?: ParamsType): ParamsType {
     }, {} as ParamsType);
 }
   
+
+
+// TODO maybe rewrite all to Map. Could it be slow ??
+export function isObject(value: any): boolean {
+  const isObjectLike = typeof value === 'object' && value !== null;
+  
+  let tag = null;
+
+  if (value == null) {
+    tag = value === undefined ? '[object Undefined]' : '[object Null]';
+  } else {
+    tag = toString.call(value);
+  }
+
+  if (!isObjectLike || tag != '[object Object]') {
+    return false
+  }
+  if (Object.getPrototypeOf(value) === null) {
+    return true
+  }
+  let proto = value
+  while (Object.getPrototypeOf(proto) !== null) {
+    proto = Object.getPrototypeOf(proto)
+  }
+  return Object.getPrototypeOf(value) === proto
+}

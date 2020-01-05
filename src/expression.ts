@@ -122,21 +122,57 @@ export class Term extends FieldQueryExpression {
   }
 }
 
+type TermsOptions = {
+  mininum_should_match?: any;
+  boost?: any;
+}
+
 export class Terms extends FieldExpression {
   public _visitName = 'terms';
 
   constructor(
     field: Field,
-    public terms: TermValue[]
+    public terms: TermValue[],
+    termsOptions?: TermsOptions,
   ) {
-    super(field, {
-      mininum_should_match: null,
-      boost: null
-    }); // TODO this fields must be passed from Terms
+    super(field, termsOptions);
   }
 }
 
-// TODO must extend QueryExpression
+export type RangeValue = number | string | Date;
+
+type RangeOptions = {
+  gte?: RangeValue;
+  lte?: RangeValue;
+  gt?: RangeValue;
+  lt?: RangeValue;
+  from?: RangeValue;
+  to?: RangeValue;
+  includeLower?: boolean;
+  includeUpper?: boolean;
+};
+
+type RangeSettings = {
+  execution?: any;
+  name?: string;
+  cache?: string;
+  cacheKey?: string; // TOD maybe make kwargs
+};
+
+export class RangeExpr extends FieldExpression {
+  public _visitName = 'range';
+  public rangeParams: Params = new Params();
+
+  constructor(
+    field: Field,
+    rangeOpts: RangeOptions,
+    rangeSettings?: RangeSettings,
+  ) {
+    super(field, rangeOpts);
+    this.rangeParams = new Params(rangeSettings)
+  }
+}
+
 export class Bool extends QueryExpression {
   public _queryName = 'bool';
 
@@ -163,3 +199,6 @@ export class Bool extends QueryExpression {
     return new Bool({ should: expressions });
   } 
 }
+
+
+// TODO add Exists, Missing, Limit, Sort, Not, Ids, Script, Match, HasChild, HasParent

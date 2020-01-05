@@ -1,7 +1,17 @@
 import { SearchQueryContext, Query, QueryOverride } from "./query";
-import { Bool, QueryExpression, FieldQueryExpression, Params, Literal, Term, Terms } from "./expression";
+import { 
+  Bool,
+  QueryExpression, 
+  FieldQueryExpression, 
+  Params, 
+  Literal, 
+  Term, 
+  Terms, 
+  RangeExpr,
+ } from "./expression";
 import { Field } from "./document";
-import { arrayKVToDict } from "./util";
+import { arrayKVToDict, isObject } from "./util";
+import { AggExpression, BucketAgg, Filter } from "./agg";
 
 
 export class CompilerVisitor {
@@ -38,7 +48,15 @@ export class CompilerVisitor {
       case 'terms':
         return this.visitTerms(expression);
       case 'literal':
-        return this.visitLiteral(expression);
+        return this.visitLiteral(expression);    
+      case 'agg':
+        return this.visitAgg(expression);
+      case 'bucketAgg':
+        return this.visitBucketAgg(expression);    
+      case 'filterAgg':
+        return this.visitFilterAgg(expression);
+      case 'range':
+        return this.visitRange(expression);
       default:
     }
 
@@ -47,7 +65,7 @@ export class CompilerVisitor {
     }
 
     // if this is object
-    if (expression !== null && expression !== undefined && typeof expression === 'object') {
+    if (isObject(expression)) {
       return this.visitObject(expression);
     }
 
@@ -93,6 +111,10 @@ export class CompilerVisitor {
     }
     if (queryContext.limit !== null) {
       params.size = queryContext.limit;
+    }
+
+    if (queryContext.aggregations.length > 0) {
+      params.aggregations = this.visit(queryContext.aggregations);
     }
 
     return params;
@@ -173,5 +195,40 @@ export class CompilerVisitor {
       return [this.visit(key), this.visit(value)];
     });
     return arrayKVToDict(visited);
+  }
+
+  private visitAgg(agg: AggExpression): any {
+    return {
+      [agg._aggName]: this.visit(agg.params)
+    };
+  }
+
+  private visitBucketAgg(agg: BucketAgg): any {
+    const params: any = {
+      [agg._aggName]: this.visit(agg.params),
+    };
+    if (agg._aggregations.length > 0) {
+      params.aggregations = this.visit(agg._aggregations);
+    }
+    return params;
+  }
+
+  private visitFilterAgg(agg: Filter): any {
+    const params = this.visitBucketAgg(agg);
+    params[agg._aggName] = this.visit(agg.filter);
+    return params;
+  }
+
+  private visitRange(expr: RangeExpr): any {
+    const fieldParams: any = {
+      [this.visit(expr.field)]: this.visit(expr.params)
+    };
+
+    return {
+      range: {
+        ...this.visit(expr.rangeParams),
+        ...fieldParams,
+      }
+    };
   }
 }

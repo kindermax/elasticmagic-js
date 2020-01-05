@@ -23,24 +23,38 @@ import { Cluster } from "elasticmagic-js/cluster";
 import { Field, Integer, Document } from "elasticmagic-js/document";
 import { Bool } from "elasticmagic-js/expression";
 
-class OrderDocument extends Document {
-  public static _docType = 'order;
-  
-  public static companyId: Field = new Field(Integer, 'company_id')
-  public static status: Field = new Field(Integer, 'status')
-  public static source: Field = new Field(Integer, 'source')
+enum OrderStatus {
+  new = 1,
+  paid = 2,
+  handled = 3,
+  canceled = 4,
+}
+
+enum OrderSource {
+  desktop = 1,
+  mobile = 2,
+}
+
+class OrderDoc extends Document {
+  public static _docType: string = 'order';
+
+  public static userId: Field = new Field(Integer, 'user_id');
+  public static status: Field = new Field(Integer, 'status'); // TODO how can we get names in runtime? like python metaclass
+  public static source: Field = new Field(Integer, 'source');
+  public static price: Field = new Field(Integer, 'price');
+  public static dateCreated: Field = new Field(EsDate, 'date_created');
 }
 
 const client = new Client({ node: 'http://es6-test:9200' });
-const cluster = new Cluster(client, 'test_opinion_index');
+const cluster = new Cluster(client, 'test_order_index');
 
-const query = cluster.searchQuery({ routing: 123, docClass: OrderDocument })
+const query = cluster.searchQuery({ routing: 1, docClass: OrderDoc })
   .source(false)
   .filter(
     Bool.must(
-      OrderDocument.companyId.in_([123]),
-      OrderDocument.status.in_([1, 5]),
-      OrderDocument.source.not_(16),
+      OrderDoc.user_id.in_([1]),
+      OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
+      OrderDoc.source.not_(OrderSource.mobile),
     )
   )
   .limit(0);
@@ -57,11 +71,11 @@ It will print:
       filter: {
         bool: {
           must: [
-            {terms: {company_id: [123]}},
-            {terms: {status: [1, 5]}},
+            {terms: {user_id: [1]}},
+            {terms: {status: [1, 2]}},
             {bool: {
               must_not: [
-                {term: {source: 16}}
+                {term: {source: 2}}
               ]
             }}
           ]
@@ -78,6 +92,55 @@ To fetch results from elasticsearch:
 
 ```javascript
 const result = await query.getResult();
+```
+
+#### Aggregations
+
+```javascript
+const query = searchQuery
+  .source(false)
+  .filter(
+    Bool.must(
+      OrderDoc.userId.in_([1]),
+      OrderDoc.status.in_([OrderStatus.new, OrderStatus.handled, OrderStatus.paid]),
+      OrderDoc.source.not_(OrderSource.mobile),
+    )
+  )
+  .aggregations({
+    usersOrders: new agg.Terms({
+      field: OrderDoc.userId,
+      size: 1,
+      aggs: {
+        total: new agg.Filter({
+          filter: OrderDoc.conditionSourceDesktop(),
+          aggs: {
+            selled: new agg.Filter({
+              filter: Bool.must(
+                OrderDoc.status.in_([OrderStatus.paid, OrderStatus.handled]),
+              ),
+              aggs: {
+                paid: new agg.Filter({
+                  filter: OrderDoc.status.eq_(OrderStatus.paid)
+                }), 
+                handled: new agg.Filter({
+                  filter: OrderDoc.status.eq_(OrderStatus.handled)
+                }),
+              }
+            }),
+            canceled: new agg.Filter({
+              filter: OrderDoc.status.eq_(OrderStatus.canceled),
+            }),
+            new: new agg.Filter({
+              filter: OrderDoc.status.eq_(OrderStatus.new)
+            })
+          }
+        }),
+        lowcost: new agg.Filter({
+          filter: OrderDoc.conditionLowPrice()
+        })
+      }
+    })
+  });
 ```
 
 # Development
@@ -100,11 +163,15 @@ make test
 # TODO
 
 - [x] query generation
+- [x] aggregations
+- [ ] get aggregations result
+- [ ] work with Date type
+- [ ] return typed result of search
+- [ ] prettier, tslint
 - [ ] elasticsearch must be devDep or peerDep, but not production dep
 - [ ] meta document creation
 - [ ] requests
 - [ ] scroll
-- [ ] aggregations
 - [ ] pagination
 - [ ] queryFilters
 - [ ] inline functions
@@ -114,4 +181,6 @@ make test
 - [ ] indexing
 - [ ] delete
 - [ ] bulk
+- [ ] replace any type with proper types
+- [ ] drop unused fields
 
