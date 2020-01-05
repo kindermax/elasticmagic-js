@@ -20,7 +20,7 @@ Let's get started by writing a simple query.
 ```javascript
 import { Client } from '@elastic/elasticsearch';
 import { Cluster } from "elasticmagic-js/cluster";
-import { Field, Integer, Document } from "elasticmagic-js/document";
+import { Field, Integer, Doc } from "elasticmagic-js/document";
 import { Bool } from "elasticmagic-js/expression";
 
 enum OrderStatus {
@@ -35,7 +35,7 @@ enum OrderSource {
   mobile = 2,
 }
 
-class OrderDoc extends Document {
+class OrderDoc extends Doc {
   public static _docType: string = 'order';
 
   public static userId: Field = new Field(Integer, 'user_id');
@@ -91,7 +91,7 @@ It will print:
 To fetch results from elasticsearch:
 
 ```javascript
-const result = await query.getResult();
+const result = await query.getResult<OrderDoc>();
 ```
 
 #### Aggregations
@@ -141,6 +141,20 @@ const query = searchQuery
       }
     })
   });
+```
+
+Now you can get aggregation data
+
+```javascript
+
+const result = await query.getResult<OrderDoc>();
+
+const usersOrders = result.getAggregation("usersOrders");
+console.log(usersOrders.buckets[0].key) // prints 1
+console.log(usersOrders.buckets[0].docCount) // prints 1
+
+const total = usersOrders.buckets[0].getAggregation("total")
+console.log(total.docCount) // # prints 1
 ```
 
 # Development
