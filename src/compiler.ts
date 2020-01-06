@@ -1,3 +1,6 @@
+import { Field } from "./document";
+import { arrayKVToDict, isObject } from "./util";
+import { AggExpression, BucketAgg, Filter } from "./agg";
 import { SearchQueryContext, Query, QueryOverride } from "./query";
 import { 
   Bool,
@@ -9,9 +12,7 @@ import {
   Terms, 
   RangeExpr,
  } from "./expression";
-import { Field } from "./document";
-import { arrayKVToDict, isObject } from "./util";
-import { AggExpression, BucketAgg, Filter } from "./agg";
+
 
 
 export class CompilerVisitor {
@@ -28,7 +29,7 @@ export class CompilerVisitor {
       visitName = expression._visitName;
     }
     
-    // visitName must be constant
+    // TODO visitName must be constant
     switch (visitName) {
       case 'searchQueryContext':
         return this.visitSearchQueryContext(expression);
@@ -36,9 +37,6 @@ export class CompilerVisitor {
         return this.visitQueryExpression(expression);
       case 'params':
         return this.visitParams(expression);
-      case 'fieldExpression':
-        console.log('in python it is not implemented')
-        return;
       case 'fieldQuery':
         return this.visitFieldQuery(expression);
       case 'field':
@@ -64,12 +62,10 @@ export class CompilerVisitor {
       return this.visitArray(expression);
     }
 
-    // if this is object
     if (isObject(expression)) {
       return this.visitObject(expression);
     }
 
-    // return as is, mostly for simple types
     return expression;
   }
 
@@ -96,7 +92,7 @@ export class CompilerVisitor {
   }
 
   /**
-   * This is where we start and finish building our query (doc must be rewrited)
+   * This is where we start building our query
    * @param queryContext 
    */
   private visitSearchQueryContext(queryContext: SearchQueryContext): Query {
@@ -155,18 +151,14 @@ export class CompilerVisitor {
   }
 
   private visitTerm(term: Term): any {
-    // TODO in python there is a visit call to field type but we do not have it yet
-    // const fieldName = term.field;
-    // TODO if field_name == '_id':
     return this.visitFieldQuery(term);
   }
 
   private visitTerms(expression: Terms): any {
     const fieldName = this.visit(expression.field);
     let params = { [fieldName]: this.visit(expression.terms)};
-    params = { ...params, ...this.visit(expression.params) }; // { company_id: [123] }
     return {
-      'terms': params
+      'terms': { ...params, ...this.visit(expression.params) }
     }
   }
 

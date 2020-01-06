@@ -1,5 +1,6 @@
 import { Field } from "./document";
 import { cleanParams } from "./util";
+import { Nullable } from "./types";
 
 // TODO must be generic type with restrictions
 export type TermValue = number | string | boolean;
@@ -10,20 +11,10 @@ export type TermField = {
 
 // TODo this must be interface ???
 export class Expression {
-  public readonly _visitName: string = 'notDefined_visitName';
-  public readonly _queryName: string = 'notDefined_queryName';
-  public readonly _queryKey: string = 'notDefined_queryKey';
+  public readonly _visitName: string = 'notDefined'; // TODO hack, is there some way to not init this fields ? interface ?
+  public readonly _queryName: string = 'notDefined';
+  public readonly _queryKey: string = 'notDefined';
 }
-
-type BoolOptions = {
-  must?: any;
-  filter?: any; // Bool can be here
-  must_not?: any; // TODO snake or camel case ???
-  should?: any;
-  mininum_should_match?: any;
-  boost?: any;
-  disable_coord?: any;
-};
 
 export type ParamsType = {
   [key: string]: any; // TODO maybe some type
@@ -36,8 +27,6 @@ export class Params extends Expression {
   public _visitName = 'params';
   private params: ParamsType;
   private paramsKvList: Array<ParamKV>;
-
-  // private pointer = 0;
 
   constructor(params?: ParamsType) {
     super();
@@ -83,7 +72,7 @@ export class QueryExpression extends ParamsExpression {
 export class FieldExpression extends QueryExpression {
   public _visitName = 'fieldExpression';
 
-  // TODO maybe later it will be FieldType but for now it simple string
+  // TODO maybe later it will be Field but for now it Expression
   public field: Expression;
 
   // TODO field is an AttributeField, OrderedAttributes
@@ -115,8 +104,8 @@ export class Term extends FieldQueryExpression {
   public _queryKey = 'value';
 
   constructor(
-    field: Field, // TODO possibly a cyclic import
-    term: TermValue // value
+    field: Field,
+    term: TermValue
   ) {
     super(field, term);
   }
@@ -139,6 +128,7 @@ export class Terms extends FieldExpression {
   }
 }
 
+// TODO is type correct, for date?
 export type RangeValue = number | string | Date;
 
 type RangeOptions = {
@@ -172,6 +162,16 @@ export class RangeExpr extends FieldExpression {
     this.rangeParams = new Params(rangeSettings)
   }
 }
+
+type BoolOptions = {
+  must?: Nullable<Expression[]>;
+  filter?: Nullable<Expression[]>;
+  must_not?: Nullable<Expression[]>;
+  should?: Nullable<Expression[]>;
+  mininum_should_match?: any; // TODO finish this props
+  boost?: any;
+  disable_coord?: any;
+};
 
 export class Bool extends QueryExpression {
   public _queryName = 'bool';

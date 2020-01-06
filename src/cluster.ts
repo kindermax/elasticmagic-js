@@ -1,5 +1,5 @@
 import { Client, ApiResponse } from "@elastic/elasticsearch";
-import { SearchQuery, Query, SearchQueryOptions, SearchQueryContext } from "./query";
+import { SearchQuery, Query, SearchQueryOptions, SearchQueryContext, SearchParams } from "./query";
 import { SearchResult } from "./result";
 import { RawResultBody } from "./types";
 import { Doc } from "./document";
@@ -79,7 +79,7 @@ export class Cluster {
    * @param compiledQuery 
    * @param params 
    */
-  private async doRequest<T = any>(compiledQuery: Query, params: any): Promise<ApiResponse<RawResultBody<T>>> {
+  private async doRequest<T = any>(compiledQuery: Query, params: SearchParams): Promise<ApiResponse<RawResultBody<T>>> {
     // TODO for now we hardcoded search method
     // TODO get client method to call, must be a accep-like function in searchQuery
     return this.client.search({

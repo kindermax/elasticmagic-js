@@ -1,3 +1,5 @@
+export type Nullable<T> = T | null;
+
 export type Dictionary<T1 extends string | number, T2 = any> = {
   [key in T1]: T2 
 };
@@ -10,7 +12,7 @@ export function isPlainObject(obj: any): obj is PlainObject {
 }
 
 
-// TODO add generic type for fields behind s_ource
+// TODO add generic type for fields behind _source
 export type Hit<T = any> = {
   _id: string;
   _index?: string;

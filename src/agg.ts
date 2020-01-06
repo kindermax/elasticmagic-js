@@ -3,10 +3,12 @@ import { isObject } from "./util";
 import { Field, FieldType } from "./document";
 import { KVList, Agg, AggBucket, Dictionary } from "./types";
 
+type BucketKey = string | number;
+
 class Bucket {
   // TODO figure out _typed_key
 
-  public key: any;
+  public key: BucketKey;
   public docCount: number;
   public aggregations: Dictionary<string, AggResult> =  {};
 
@@ -50,16 +52,16 @@ export class AggResult {
 
 export class AggExpression extends ParamsExpression {
   public _visitName = 'agg';
-  public _aggName: any; // TODO hach so compiler sees this field for generic type
+  public _aggName: any; // TODO hack so compiler sees this field for generic type
 
-  public buildAggResult(rawData: any, docClsMap: any = null, mapperRegistry: any = null) {
+  public buildAggResult(_rawData: any, _docClsMap: any = null, _mapperRegistry: any = null) {
     throw new Error('AggExpression: buildAggResult not implemented');
   }
 }
 
 export class BucketAgg extends AggExpression {
   public _visitName = 'bucketAgg';
-  public _aggName: any; // TODO hach so compiler sees this field for generic type
+  public _aggName: any; // TODO hack so compiler sees this field for generic type
 
   public _aggregations: Params;
   
@@ -84,10 +86,6 @@ function sortByKey(collection: object): Array<KVList<string>> {
 }
 
 class SingleBucketAggResult extends AggResult {
-  private bucketClass: any = Bucket
-  private bucketsMap: any = {};
-  private mapperRegistry: any = {};
-
   public buckets: any = [];
   public docCount: number = 0;
   public aggregations: any = {};
@@ -97,7 +95,6 @@ class SingleBucketAggResult extends AggResult {
     rawData: any,
     docClsMap: any,
     mapperRegistry: any,
-    private instanceMapper: any,
   ) {
     super(aggExpr);
     
