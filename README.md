@@ -179,7 +179,7 @@ make test
 - [x] query generation
 - [x] aggregations
 - [x] get aggregations result
-- [ ] license, Apache License ? MIT ?
+- [x] documentation (https://typedoc.org, docusaurus, js.org)
 - [ ] add support for es5, es7
 - [ ] collect doc classes
 - [ ] work with Date type
