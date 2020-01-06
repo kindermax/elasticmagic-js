@@ -14,6 +14,7 @@
   "scripts": {
     "build": "tsc",
     "test": "ES_HOST=es6 jest",
+    "test:integ": "ES_HOST=es6 jest tests/testCluster.spec.ts",
     "test:ci": "ES_HOST=localhost jest"
   },
   "dependencies": {

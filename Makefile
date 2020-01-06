@@ -10,3 +10,6 @@ build:
 
 test: 
 	docker-compose run --rm test
+
+test-integ: 
+	docker-compose run --rm test-integ
