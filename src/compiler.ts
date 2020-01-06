@@ -24,7 +24,7 @@ export class CompilerVisitor {
   private visit(expression: any): any {
     let visitName;
 
-    if (expression && expression._visitName) {
+    if (expression?._visitName) {
       visitName = expression._visitName;
     }
     
