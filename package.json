@@ -15,10 +15,12 @@
     "build": "tsc",
     "test": "ES_HOST=es6 jest",
     "test:integ": "ES_HOST=es6 jest tests/testCluster.spec.ts",
-    "test:ci": "ES_HOST=localhost jest"
+    "test:ci": "ES_HOST=localhost jest",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^6.8.4"
+    "@elastic/elasticsearch": "^6.8.4",
+    "tslint": "^5.20.1"
   },
   "devDependencies": {
     "@types/jest": "^24.0.25",
