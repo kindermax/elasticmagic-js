@@ -39,7 +39,7 @@ class OrderDoc extends Doc {
   public static _docType: string = 'order';
 
   public static userId: Field = new Field(IntegerType, 'user_id');
-  public static status: Field = new Field(IntegerType, 'status'); // TODO how can we get names in runtime? like python metaclass
+  public static status: Field = new Field(IntegerType, 'status');
   public static source: Field = new Field(IntegerType, 'source');
   public static price: Field = new Field(IntegerType, 'price');
   public static dateCreated: Field = new Field(DateType, 'date_created');
@@ -179,7 +179,7 @@ make test
 - [x] query generation
 - [x] aggregations
 - [x] get aggregations result
-- [x] documentation (https://typedoc.org, docusaurus, js.org)
+- [ ] documentation (https://typedoc.org, docusaurus, js.org)
 - [ ] add support for es5, es7
 - [ ] collect doc classes
 - [ ] work with Date type
