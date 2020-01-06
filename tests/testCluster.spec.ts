@@ -202,4 +202,11 @@ describe("Cluster", () => {
 
     expect(totalBucket.docCount).toBe(1);
   });
+
+  test('should return es version', async () => {
+    const cluster = new Cluster(client, indexName);
+
+    const esVersion = await cluster.getEsVersion();
+    expect(esVersion.major).toBe(6);
+  });
 });
