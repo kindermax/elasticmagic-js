@@ -1,9 +1,16 @@
 {
   "name": "elasticmagic",
   "version": "0.0.1",
-  "description": "",
+  "description": "JS orm for elasticsearch.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kindritskyiMax/elasticmagic-js"
+  },
   "main": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "ES_HOST=es6 jest",
@@ -19,11 +26,12 @@
     "ts-jest": "^24.2.0",
     "typescript": "^3.7.4"
   },
-  "author": "kindritskiy.m@gmail.com",
-  "license": "ISC",
+  "author": "Kindritskiy Maksym <kindritskiy.m@gmail.com>",
+  "license": "Apache License 2.0",
   "keywords": [
     "elasticsearch",
     "elastic",
+    "dsl",
     "kibana",
     "mapping",
     "REST",
