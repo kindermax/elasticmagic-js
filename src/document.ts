@@ -1,3 +1,5 @@
+import { Hit } from "./types";
+import { SearchResult } from "./result";
 import { 
   Terms, 
   Term, 
@@ -7,16 +9,14 @@ import {
   RangeExpr, 
   RangeValue,
 } from "./expression";
-import { SearchResult } from "./result";
-import { Hit } from "./types";
 
 export class FieldType {}
 
-export class Integer extends FieldType {}
+export class IntegerType extends FieldType {}
 
-export class EsBoolean extends FieldType {}
+export class BooleanType extends FieldType {}
 
-export class EsDate extends FieldType {}
+export class DateType extends FieldType {}
 
 export class Field extends Expression {
   public readonly _visitName = 'field';
@@ -37,11 +37,11 @@ export class Field extends Expression {
   }
 
   public eq_(other: TermValue): Term {
-    // TODO add  if other is None: return self.missing()
+    // TODO add if other is None: return self.missing()
     return new Term(this, other);
   }
 
-  public lt_(other: RangeValue): RangeExpr { // TODO is other's type correct ?
+  public lt_(other: RangeValue): RangeExpr {
     return new RangeExpr(this, { lt: other });
   }
 
@@ -87,7 +87,8 @@ export class Doc {
   };
 
   /**
-   * If instanceMapper was defined for query then return instance mapped by instanceMapper
+   * If instanceMapper was defined for query 
+   * then return instance mapped by instanceMapper
    * else return null;
    */
   public get instance(): any | null {

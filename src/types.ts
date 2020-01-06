@@ -1,3 +1,5 @@
+export type Nullable<T> = T | null | undefined;
+
 export type Dictionary<T1 extends string | number, T2 = any> = {
   [key in T1]: T2 
 };
@@ -10,7 +12,7 @@ export function isPlainObject(obj: any): obj is PlainObject {
 }
 
 
-// TODO add generic type for fields behind s_ource
+// TODO add generic type for fields behind _source
 export type Hit<T = any> = {
   _id: string;
   _index?: string;
@@ -18,37 +20,30 @@ export type Hit<T = any> = {
   _score?: number;
   _type?: string;
   _source: T;
+  fields: PlainObject;
 }
 
 // TODo not sure if we need this fields in type
-type AggOpts = {
+type RawAggOpts = {
   doc_count_error_upper_bound: number;
   sum_other_doc_count: number;
 };
 
-export type BucketAgg = {
-  [key: string]: Agg
-}
+type BucketFields = { doc_count: number; };
 
-type AggBucketChild = {
-  [key: string]: {
-    doc_count: number;
-  } & AggBucketChild
-};
+export type RawAggBucketChild = Dictionary<string, BucketFields | Dictionary<string, BucketFields>>;
 
-export type AggBucket = {
+export type RawAggBucket = {
   key: any;
   doc_count: number;
-} & AggBucketChild;
+} & RawAggBucketChild;
 
-export type Agg = {
+export type RawAgg = {
   doc_count_error_upper_bound: number;
   sum_other_doc_count: number;
-  buckets: Array<AggBucket>
-} & AggOpts;
-type Aggs = {
-  [key: string]: Agg
-};
+  buckets: Array<RawAggBucket>
+} & RawAggOpts;
+type RawAggs = Dictionary<string, RawAgg>;
 
 type SearchResponseBody<T> = {
   error?: string;
@@ -66,12 +61,10 @@ type SearchResponseBody<T> = {
     max_score: number;
     hits: Array<Hit<T>>
   },
-  aggregations?: Aggs;
+  aggregations?: RawAggs;
 }
 
 // TODO this is a temp type, must be replaces with user type after functionality done and tested
-type Source = {
-  [key: string]: any;
-}
+type Source = PlainObject;
 
 export type RawResultBody<T = Source> = SearchResponseBody<T>;

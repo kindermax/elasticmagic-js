@@ -1,5 +1,5 @@
 import { Client } from '@elastic/elasticsearch';
-import { Field, Integer, Doc, EsDate } from "../src/document";
+import { Field, IntegerType, Doc, DateType } from "../src/document";
 import { Bool } from "../src/expression";
 import { Cluster } from "../src/cluster";
 import * as agg from '../src/agg';
@@ -19,11 +19,11 @@ enum OrderSource {
 class OrderDoc extends Doc {
   public static _docType: string = 'order';
 
-  public static userId: Field = new Field(Integer, 'user_id');
-  public static status: Field = new Field(Integer, 'status'); // TODO how can we get names in runtime? like python metaclass
-  public static source: Field = new Field(Integer, 'source');
-  public static price: Field = new Field(Integer, 'price');
-  public static dateCreated: Field = new Field(EsDate, 'date_created');
+  public static userId: Field = new Field(IntegerType, 'user_id');
+  public static status: Field = new Field(IntegerType, 'status'); // TODO how can we get names in runtime? like python metaclass
+  public static source: Field = new Field(IntegerType, 'source');
+  public static price: Field = new Field(IntegerType, 'price');
+  public static dateCreated: Field = new Field(DateType, 'date_created');
   
 }
 
@@ -201,5 +201,12 @@ describe("Cluster", () => {
     const totalBucket = users.buckets[0].getAggregation('total');
 
     expect(totalBucket.docCount).toBe(1);
+  });
+
+  test('should return es version', async () => {
+    const cluster = new Cluster(client, indexName);
+
+    const esVersion = await cluster.getEsVersion();
+    expect(esVersion.major).toBe(6);
   });
 });

@@ -5,6 +5,7 @@ import { cleanParams } from './util';
 import { IDocument, Doc } from './document';
 import { AggExpression } from "./agg";
 import { SearchResult } from "./result";
+import { Dictionary, PlainObject } from "./types";
 
 export type SearchQueryOptions = {
   routing?: number;
@@ -18,8 +19,8 @@ type ClusterSearchQueryOptions = {
 } & SearchQueryOptions
 
 export type SearchParams = {
-  routing?: number;
-  doc_type?: string;
+  routing?: string;
+  type?: string;
 }
 
 type SourceField = boolean | Array<string> | null; // TODO create Source class as expression
@@ -29,33 +30,23 @@ type TermValue = string | number | boolean;
 type ExistsValue = string | number | boolean;
 
 type MatchFilter = {
-  match: {
-    [field: string]: MatchValue
-  }
+  match: Dictionary<string, MatchValue>;
 };
 
 type MatchPhraseFilter = {
-  match: {
-    [field: string]: MatchValue
-  }
+  match: Dictionary<string, MatchValue>;
 };
 
 type TermFilter = {
-  term: {
-    [field: string]: TermValue
-  }
+  term: Dictionary<string, TermValue>;
 };
 
 type TermsFilter = {
-  terms: {
-    [field: string]: Array<TermValue>
-  }
+  terms: Dictionary<string, Array<TermValue>>;
 };
 
 type ExistsFilter = {
-  exists: {
-    [field: string]: ExistsValue
-  };
+  exists: Dictionary<string, ExistsValue>;
 };
 
 type BoolField = {
@@ -75,13 +66,9 @@ type BoolRootField = {
 };
 
 // TODO probably must move types to relevant modules
-type AggregationsField = {
-  [agg: string]: any;
-}
+type AggregationsField = PlainObject;
 
-export type Aggregations = { // TODO maybe one of types is obsolete
-  [agg: string]: AggExpression;
-}
+export type Aggregations = Dictionary<string, AggExpression>;
 
 type QueryRootField = {
   bool?: BoolRootField;
@@ -96,7 +83,7 @@ export type Query = {
   // TODO complete this type
 }
 
-export type QueryOverride = object | null;
+export type QueryOverride = any | null; // TODO this type is incorrect, hack
 export type Limit = number | null;
 
 export type InstanceMapper<T1, T2> = (ids: T1[]) => T2;
@@ -130,7 +117,12 @@ function getDocType(docType?: string, docClass?: IDocument): string | null {
 
 export class SearchQuery {
   private cluster?: Cluster;
-  private index?: Index;
+  /**
+   * TODO this field needed when SearchQuery created on its own and hence not bound to cluster or query
+   * * implement check _index_or_cluster
+   * * add method for bound, like withIndex, withCluster
+   */
+  private index?: Index; 
   
   private _limit: Limit = null;
   private _fields: any = null; // TODO not used right now
@@ -139,7 +131,7 @@ export class SearchQuery {
 
   private _source: SourceField = null;
   private _query: QueryOverride = null;
-  private _searchParams: Params = new Params(); // TODO maybe add subtype like SearchParams
+  private _searchParams: Params = new Params();
   private _docClass?: IDocument;
   private _docType?: string;
   private _instanceMapper?: InstanceMapper<any, any>;
@@ -214,6 +206,7 @@ export class SearchQuery {
     return this;
   }
 
+   // TODO QueryOverride type is incorrect, hack
   public query(query: QueryOverride): SearchQuery {
     this._query = query;
     return this;
@@ -248,7 +241,7 @@ export class SearchQuery {
     return compiler.compile(this.getQueryContext());
   }
 
-  private prepareSearchParams(params: ParamsType): any {
+  private prepareSearchParams(params: ParamsType): SearchParams {
     return {
       routing: `${params.routing}`,
       type: params.docType,
@@ -260,7 +253,7 @@ export class SearchQuery {
     return this.toJSON();
   }
 
-  public get params(): any {
+  public get params(): SearchParams {
     return this.prepareSearchParams(cleanParams(this._searchParams.getParams()));
   }
 

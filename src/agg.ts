@@ -1,26 +1,29 @@
-import { ParamsExpression, ParamsType, Params, Expression } from "./expression";
+import { ParamsExpression, ParamsType, Params, Expression, ParamKV } from "./expression";
 import { isObject } from "./util";
-import { Field, FieldType } from "./document";
-import { KVList, Agg, AggBucket, Dictionary } from "./types";
+import { Field, FieldType, IDocument } from "./document";
+import { KVList, Dictionary, RawAggBucket, RawAgg } from "./types";
+import { InstanceMapper } from "./query";
+
+type BucketKey = string | number;
 
 class Bucket {
   // TODO figure out _typed_key
 
-  public key: any;
+  public key: BucketKey;
   public docCount: number;
   public aggregations: Dictionary<string, AggResult> =  {};
 
   constructor(
-    rawData: any,
+    rawData: RawAggBucket,
     aggExpr: BucketAgg,
-    private parent: any,
-    docClsMap: any,
+    private parent: AggResult, // TODO used by self.parent._populate_instances()
+    docClsMap: Dictionary<string, IDocument>,
     mapperRegistry: any,
   ) {
     this.key = rawData.key; // TODO check if has property
     this.docCount = rawData.doc_count;
 
-    aggExpr._aggregations.getParamsKvList().forEach((agg) => {
+    aggExpr._aggregations.getParamsKvList().forEach((agg: ParamKV) => {
       const aggName: string = agg[0]
       const aggExpr: BucketAgg = agg[1];
 
@@ -50,29 +53,37 @@ export class AggResult {
 
 export class AggExpression extends ParamsExpression {
   public _visitName = 'agg';
-  public _aggName: any; // TODO hach so compiler sees this field for generic type
+  public _aggName: any; // TODO hack so compiler sees this field for generic type
 
-  public buildAggResult(rawData: any, docClsMap: any = null, mapperRegistry: any = null) {
+  public buildAggResult(_rawData: Dictionary<string, any>, _docClsMap: Dictionary<string, IDocument> = {}, _mapperRegistry: any = {}): AggResult {
     throw new Error('AggExpression: buildAggResult not implemented');
   }
 }
 
 export class BucketAgg extends AggExpression {
   public _visitName = 'bucketAgg';
-  public _aggName: any; // TODO hach so compiler sees this field for generic type
+  public _aggName: any; // TODO hack so compiler sees this field for generic type
 
   public _aggregations: Params;
   
   // TODO here must be interfact for resultClass, but in typescript it is hard to reason abount how to do this properly
-  constructor(aggs: any, params: ParamsType, private resultClass: any) { 
+  constructor(
+    aggs?: Dictionary<string, Filter>, 
+    params?: ParamsType, 
+    // private resultClass?: any
+  ) { 
     super(params);
     // TODO kwargs.pop('aggregations', {})
     this._aggregations = new Params(aggs);
   }
 
-  public buildAggResult(rawData: Agg, docClsMap: any = null, mapperRegistry: any = null): AggResult {
-    return new this.resultClass(this, rawData, docClsMap, mapperRegistry);
-  }
+  // /**
+  //  * TODO if we would know how to pass resultClass properly we can uncomment this method
+  //  * but for now we are implementing buildAggResult in childs, its easier
+  //  */
+  // public buildAggResult(rawData: RawAggBucket, docClsMap: Dictionary<string, IDocument> = {}, mapperRegistry: any = {}): AggResult {
+  //   return new this.resultClass(this, rawData, docClsMap, mapperRegistry);
+  // }
 }
 
 function sortByKey(collection: object): Array<KVList<string>> {
@@ -84,20 +95,14 @@ function sortByKey(collection: object): Array<KVList<string>> {
 }
 
 class SingleBucketAggResult extends AggResult {
-  private bucketClass: any = Bucket
-  private bucketsMap: any = {};
-  private mapperRegistry: any = {};
-
-  public buckets: any = [];
   public docCount: number = 0;
-  public aggregations: any = {};
+  public aggregations: Dictionary<string, AggResult> = {};
 
   constructor(
-    aggExpr: BucketAgg,
-    rawData: any,
-    docClsMap: any,
+    aggExpr: SingleBucketAgg, // TODO maybe later we will need to pass wider type
+    rawData: RawAggBucket,
+    docClsMap: Dictionary<string, IDocument>,
     mapperRegistry: any,
-    private instanceMapper: any,
   ) {
     super(aggExpr);
     
@@ -114,23 +119,23 @@ class SingleBucketAggResult extends AggResult {
     });
   }
 
-  public getAggregation(name: string): any {
+  public getAggregation(name: string): AggResult {
     return this.aggregations[name];
   }
 }
 
 export class MultiBucketAggResult extends AggResult {
-  private bucketClass: any = Bucket
-  public buckets: any = [];
-  private bucketsMap: any = {};
-  private mapperRegistry: any = {};
+  private bucketClass: any = Bucket // TODO add type
+  public buckets: Bucket[] = [];
+  private bucketsMap: Dictionary<string, Bucket> = {};
+  private mapperRegistry: any = {}; // TODO add type
 
   constructor(
-    aggExpr: BucketAgg,
-    rawData: any,
-    docClsMap: any,
+    aggExpr: MultiBucketAgg,
+    rawData: RawAgg,
+    docClsMap: Dictionary<string, IDocument>,
     mapperRegistry: any,
-    private instanceMapper: any,
+    private instanceMapper?: InstanceMapper<any, any>,
   ) {
     super(aggExpr);
     
@@ -145,7 +150,7 @@ export class MultiBucketAggResult extends AggResult {
       });
     }
 
-    rawBuckets.forEach((rawBucket: AggBucket) => {
+    rawBuckets.forEach((rawBucket: RawAggBucket) => {
       const bucket = new this.bucketClass(
         rawBucket,
         aggExpr,
@@ -161,21 +166,22 @@ export class MultiBucketAggResult extends AggResult {
     }
 
     if (this.instanceMapper) {
-      if (!(this.instanceMapper in this.mapperRegistry)) {
+      // TOOD this piece of code is broken, as mapperRegistry must use sring as key, not instanceMapper itself
+      if (!(this.instanceMapper as any in this.mapperRegistry)) {
         this.mapperRegistry[this.mapperRegistry] = [];
       }
       this.mapperRegistry[this.mapperRegistry].push(this);
     }
   }
 
-  public addBucket(bucket: any) {
+  public addBucket(bucket: Bucket) {
     this.buckets.push(bucket);
     if (bucket.key) {
       this.bucketsMap[bucket.key] = bucket;
     }
   }
 
-  public getBucket(key: any) {
+  public getBucket(key: BucketKey) {
     return this.bucketsMap[key];
   }
 
@@ -187,10 +193,16 @@ export class SingleBucketAgg extends BucketAgg {
   public _aggName: any; // TODO hack so compiler sees this field for generic type
 
   constructor(
-    aggs: any,
-    params: any, // TODO probably not appropriate type as MultiBucketAgg is parent class, replace with more generic
+    aggs?: Dictionary<string, Filter>,
+    params?: Dictionary<string, any>,
   ) {
-    super(aggs, params, SingleBucketAggResult);
+    super(aggs, params);
+  }
+
+  // TODO in python we just pass result_cls and parent call buildAggResult
+  // but for any reason we do not do this right now, maybe we will do this later
+  public buildAggResult(rawData: RawAggBucket, docClsMap: Dictionary<string, IDocument> = {}, mapperRegistry: any = null): SingleBucketAggResult {
+    return new SingleBucketAggResult(this, rawData, docClsMap, mapperRegistry);
   }
 }
 
@@ -198,28 +210,26 @@ export class MultiBucketAgg extends BucketAgg {
   public _aggName: any; // TODO hack so compiler sees this field for generic type
 
   constructor(
-    aggs: any,
-    params: TermsOptionsShrink, // TODO probably not appropriate type as MultiBucketAgg is parent class, replace with more generic
-    private type?: FieldType,
-    protected instanceMapper?: any,
+    aggs?: Dictionary<string, Filter>,
+    params?: TermsOptionsShrink, // TODO probably not appropriate type as MultiBucketAgg is parent class, replace with more generic
+    private type?: FieldType, // TODO used by def clone
+    protected instanceMapper?: InstanceMapper<any, any>,
   ) {
-    super(aggs, params, MultiBucketAggResult);
+    super(aggs, params);
   }
 
-  public buildAggResult(rawData: any, docClsMap: any = null, mapperRegistry: any = null): MultiBucketAggResult {
+  public buildAggResult(rawData: RawAgg, docClsMap: Dictionary<string, IDocument> = {}, mapperRegistry: any = null): MultiBucketAggResult {
     return new MultiBucketAggResult(this, rawData, docClsMap, mapperRegistry, this.instanceMapper);
   }
 }
 
 type TermsOptions = {
-  field?: Field;
+  field: Field;
   script?: any;
   size?: number;
   type?: FieldType;
-  aggs?: {
-    [agg: string]: Filter
-  };
-  instanceMapper?: any;
+  aggs?: Dictionary<string, Filter>;
+  instanceMapper?: InstanceMapper<any, any>;
 };
 
 type TermsOptionsShrink = { // TODO not nice hack to differ types
@@ -228,8 +238,8 @@ type TermsOptionsShrink = { // TODO not nice hack to differ types
   size?: number;
 };
 
-function getType(type: any, field: any): any {
-  return type || (field ? field.getType() : null);
+function getType(field: Field, type?: FieldType): FieldType {
+  return type || (field?.getType() ?? null);
 };
 
 export class Terms extends MultiBucketAgg {
@@ -239,7 +249,7 @@ export class Terms extends MultiBucketAgg {
     super(
       aggs,
       { field, ...opts },
-      getType(type, field),
+      getType(field, type),
       instanceMapper,
     );
 
@@ -249,9 +259,7 @@ export class Terms extends MultiBucketAgg {
 
 type FilterOptions = {
   filter: Expression;
-  aggs?: {
-    [agg: string]: Filter
-  };
+  aggs?: Dictionary<string, Filter>;
 };
 
 

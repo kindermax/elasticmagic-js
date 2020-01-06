@@ -20,7 +20,7 @@ Let's get started by writing a simple query.
 ```javascript
 import { Client } from '@elastic/elasticsearch';
 import { Cluster } from "elasticmagic-js/cluster";
-import { Field, Integer, Doc } from "elasticmagic-js/document";
+import { Field, IntegerType, Doc } from "elasticmagic-js/document";
 import { Bool } from "elasticmagic-js/expression";
 
 enum OrderStatus {
@@ -38,11 +38,11 @@ enum OrderSource {
 class OrderDoc extends Doc {
   public static _docType: string = 'order';
 
-  public static userId: Field = new Field(Integer, 'user_id');
-  public static status: Field = new Field(Integer, 'status'); // TODO how can we get names in runtime? like python metaclass
-  public static source: Field = new Field(Integer, 'source');
-  public static price: Field = new Field(Integer, 'price');
-  public static dateCreated: Field = new Field(EsDate, 'date_created');
+  public static userId: Field = new Field(IntegerType, 'user_id');
+  public static status: Field = new Field(IntegerType, 'status');
+  public static source: Field = new Field(IntegerType, 'source');
+  public static price: Field = new Field(IntegerType, 'price');
+  public static dateCreated: Field = new Field(DateType, 'date_created');
 }
 
 const client = new Client({ node: 'http://es6-test:9200' });
@@ -179,6 +179,7 @@ make test
 - [x] query generation
 - [x] aggregations
 - [x] get aggregations result
+- [ ] documentation (https://typedoc.org, docusaurus, js.org)
 - [ ] add support for es5, es7
 - [ ] collect doc classes
 - [ ] work with Date type
