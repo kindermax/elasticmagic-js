@@ -1,16 +1,15 @@
 export type Nullable<T> = T | null | undefined;
 
 export type Dictionary<T1 extends string | number, T2 = any> = {
-  [key in T1]: T2 
+  [key in T1]: T2
 };
 export type KVList<T1, T2 = any> = [T1, T2];
 
-export type PlainObject = { [name: string]: any }
+export type PlainObject = { [name: string]: any };
 
 export function isPlainObject(obj: any): obj is PlainObject {
   return obj && obj.constructor === Object || false;
 }
-
 
 // TODO add generic type for fields behind _source
 export type Hit<T = any> = {
@@ -21,7 +20,7 @@ export type Hit<T = any> = {
   _type?: string;
   _source: T;
   fields: PlainObject;
-}
+};
 
 // TODo not sure if we need this fields in type
 type RawAggOpts = {
@@ -41,7 +40,7 @@ export type RawAggBucket = {
 export type RawAgg = {
   doc_count_error_upper_bound: number;
   sum_other_doc_count: number;
-  buckets: Array<RawAggBucket>
+  buckets: RawAggBucket[]
 } & RawAggOpts;
 type RawAggs = Dictionary<string, RawAgg>;
 
@@ -62,7 +61,7 @@ type SearchResponseBody<T> = {
     hits: Array<Hit<T>>
   },
   aggregations?: RawAggs;
-}
+};
 
 // TODO this is a temp type, must be replaces with user type after functionality done and tested
 type Source = PlainObject;

@@ -1,8 +1,8 @@
-import { ParamsExpression, ParamsType, Params, Expression, ParamKV } from "./expression";
-import { isObject } from "./util";
 import { Field, FieldType, IDocument } from "./document";
-import { KVList, Dictionary, RawAggBucket, RawAgg } from "./types";
+import { Expression, ParamKV, Params, ParamsExpression, ParamsType } from "./expression";
 import { InstanceMapper } from "./query";
+import { Dictionary, KVList, RawAgg, RawAggBucket } from "./types";
+import { isObject } from "./util";
 
 type BucketKey = string | number;
 
@@ -24,14 +24,14 @@ class Bucket {
     this.docCount = rawData.doc_count;
 
     aggExpr._aggregations.getParamsKvList().forEach((agg: ParamKV) => {
-      const aggName: string = agg[0]
+      const aggName: string = agg[0];
       const aggExpr: BucketAgg = agg[1];
 
       this.aggregations[aggName] = aggExpr.buildAggResult(
         rawData[aggName],
         docClsMap,
         mapperRegistry,
-      );;
+      );
     });
   }
 
@@ -44,7 +44,6 @@ class Bucket {
   }
 }
 
-
 export class AggResult {
   public buckets: Bucket[] = [];
   public docCount: number = 0;
@@ -52,26 +51,26 @@ export class AggResult {
 }
 
 export class AggExpression extends ParamsExpression {
-  public _visitName = 'agg';
+  public _visitName = "agg";
   public _aggName: any; // TODO hack so compiler sees this field for generic type
 
   public buildAggResult(_rawData: Dictionary<string, any>, _docClsMap: Dictionary<string, IDocument> = {}, _mapperRegistry: any = {}): AggResult {
-    throw new Error('AggExpression: buildAggResult not implemented');
+    throw new Error("AggExpression: buildAggResult not implemented");
   }
 }
 
 export class BucketAgg extends AggExpression {
-  public _visitName = 'bucketAgg';
+  public _visitName = "bucketAgg";
   public _aggName: any; // TODO hack so compiler sees this field for generic type
 
   public _aggregations: Params;
-  
+
   // TODO here must be interfact for resultClass, but in typescript it is hard to reason abount how to do this properly
   constructor(
-    aggs?: Dictionary<string, Filter>, 
-    params?: ParamsType, 
+    aggs?: Dictionary<string, Filter>,
+    params?: ParamsType,
     // private resultClass?: any
-  ) { 
+  ) {
     super(params);
     // TODO kwargs.pop('aggregations', {})
     this._aggregations = new Params(aggs);
@@ -105,17 +104,17 @@ class SingleBucketAggResult extends AggResult {
     mapperRegistry: any,
   ) {
     super(aggExpr);
-    
+
     this.docCount = rawData.doc_count;
 
     aggExpr._aggregations.getParamsKvList().forEach((agg) => {
-      const aggName: string = agg[0]
+      const aggName: string = agg[0];
       const aggExpr: BucketAgg = agg[1];
       this.aggregations[aggName] = aggExpr.buildAggResult(
         rawData[aggName],
         docClsMap,
         mapperRegistry,
-      );;
+      );
     });
   }
 
@@ -125,7 +124,7 @@ class SingleBucketAggResult extends AggResult {
 }
 
 export class MultiBucketAggResult extends AggResult {
-  private bucketClass: any = Bucket // TODO add type
+  private bucketClass: any = Bucket; // TODO add type
   public buckets: Bucket[] = [];
   private bucketsMap: Dictionary<string, Bucket> = {};
   private mapperRegistry: any = {}; // TODO add type
@@ -138,12 +137,12 @@ export class MultiBucketAggResult extends AggResult {
     private instanceMapper?: InstanceMapper<any, any>,
   ) {
     super(aggExpr);
-    
+
     let rawBuckets = rawData.buckets || [];
     if (isObject(rawBuckets)) {
       const rawBucketsMap = rawBuckets;
       rawBuckets = sortByKey(rawBucketsMap).map(([key, rawBucket]) => {
-        if (!('key' in rawBucket)) {
+        if (!("key" in rawBucket)) {
           rawBucket.key = key;
         }
         return rawBucket;
@@ -240,10 +239,10 @@ type TermsOptionsShrink = { // TODO not nice hack to differ types
 
 function getType(field: Field, type?: FieldType): FieldType {
   return type || (field?.getType() ?? null);
-};
+}
 
 export class Terms extends MultiBucketAgg {
-  public _aggName = 'terms';
+  public _aggName = "terms";
 
   constructor({ field, type, aggs, instanceMapper, ...opts }: TermsOptions) {
     super(
@@ -262,10 +261,9 @@ type FilterOptions = {
   aggs?: Dictionary<string, Filter>;
 };
 
-
 export class Filter extends SingleBucketAgg {
-  public _visitName = 'filterAgg';
-  public _aggName = 'filter';
+  public _visitName = "filterAgg";
+  public _aggName = "filter";
 
   public filter: Expression;
   constructor({ filter, aggs, ...opts }: FilterOptions) {

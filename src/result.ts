@@ -1,12 +1,11 @@
+import { AggResult, BucketAgg } from "./agg";
+import { Doc, IDocument } from "./document";
+import { ParamKV, Params } from "./expression";
 import { InstanceMapper } from "./query";
-import { IDocument, Doc } from "./document";
-import { Params, ParamKV } from "./expression";
-import { Dictionary, RawResultBody, Hit } from "./types";
+import { Dictionary, Hit, RawResultBody } from "./types";
 import { arrayKVToDict } from "./util";
-import { BucketAgg, AggResult } from "./agg";
 
-
-const DOC_TYPE_FIELD = '_doc_type'
+const DOC_TYPE_FIELD = "_doc_type";
 const DOC_TYPE_NAME_FIELD = `${DOC_TYPE_FIELD}.name`;
 
 function docClsMap(docCls: IDocument | IDocument[] | null | undefined): Dictionary<string, IDocument> {
@@ -19,7 +18,7 @@ function docClsMap(docCls: IDocument | IDocument[] | null | undefined): Dictiona
     docClasses = docCls;
   }
   return arrayKVToDict<Dictionary<string, IDocument>>(
-    docClasses.map((cls) => [cls._docType, cls])
+    docClasses.map((cls) => [cls._docType, cls]),
   );
 }
 
@@ -32,11 +31,11 @@ function getDocTypeForHit(hit: Hit): string {
 type InstanceMapperDict = Dictionary<string, InstanceMapper<IDocument, any>>;
 
 function isInstanceMapperDict(arg: any): arg is InstanceMapperDict {
-  return arg.constructor.name === 'Object';
+  return arg.constructor.name === "Object";
 }
 
 class Result {
-  constructor(public raw: any) {};
+  constructor(public raw: any) {}
 }
 
 export class SearchResult<T extends Doc, TRaw = any> extends Result {
@@ -91,7 +90,7 @@ export class SearchResult<T extends Doc, TRaw = any> extends Result {
       // the propblem is when having class type to create instance from it we need to know its type
       // but we have only interface
       // The solution unknown by now
-      this.hits.push(new docCls({ hit, result: this }) as T); 
+      this.hits.push(new docCls({ hit, result: this }) as T);
     });
 
     this.queryAggs.getParamsKvList().forEach((agg: ParamKV) => {
@@ -102,8 +101,8 @@ export class SearchResult<T extends Doc, TRaw = any> extends Result {
       this.aggregations[aggName] = aggExpr.buildAggResult(
         rawAggData,
         this.docClsMap,
-        this.mapperRegistry
-      )
+        this.mapperRegistry,
+      );
     });
 
     this.scrollId = rawResult._scroll_id;

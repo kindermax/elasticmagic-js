@@ -1,8 +1,8 @@
-import { Client, ApiResponse } from "@elastic/elasticsearch";
-import { SearchQuery, Query, SearchQueryOptions, SearchQueryContext, SearchParams } from "./query";
+import { ApiResponse, Client } from "@elastic/elasticsearch";
+import { Doc } from "./document";
+import { Query, SearchParams, SearchQuery, SearchQueryContext, SearchQueryOptions } from "./query";
 import { SearchResult } from "./result";
 import { RawResultBody } from "./types";
-import { Doc } from "./document";
 
 type RootRawResult = {
   name: string;
@@ -11,7 +11,7 @@ type RootRawResult = {
   version: {
     number: string;
   }
-}
+};
 
 export class Index {
   constructor(
@@ -33,7 +33,7 @@ export class Index {
 }
 
 class EsVersion {
-  constructor(public major: number, public minor: number, public patch: number) {};
+  constructor(public major: number, public minor: number, public patch: number) {}
 }
 
 export class Cluster {
@@ -44,14 +44,14 @@ export class Cluster {
     private client: Client,
     indexName: string, // TODO this param must be optional or omited or accept Index instance or accept list of indeces
   ) {
-    this.index = new Index(indexName, this)
+    this.index = new Index(indexName, this);
   }
 
   public searchQuery(searchQueryOptions: SearchQueryOptions): SearchQuery {
     return new SearchQuery({
-      cluster: this, 
-      index: this.index, 
-      ...searchQueryOptions
+      cluster: this,
+      index: this.index,
+      ...searchQueryOptions,
     });
   }
 
@@ -60,24 +60,24 @@ export class Cluster {
   }
 
   public async getEsVersion(): Promise<EsVersion> {
-    if (this.esVersion) return this.esVersion;
+    if (this.esVersion) { return this.esVersion; }
     const rawResult: ApiResponse<RootRawResult> = await this.client.info();
     return this.processEsVersionResult(rawResult.body);
   }
 
   private processEsVersionResult(rawResult: RootRawResult): EsVersion {
     const versionString = rawResult.version.number;
-    const [version] = versionString.split('-');
-    const [major, minor, patch] = version.split('.').map(Number);
+    const [version] = versionString.split("-");
+    const [major, minor, patch] = version.split(".").map(Number);
     return new EsVersion(major, minor, patch);
   }
 
   /**
    * Make a request using underlying es client.
-   * 
+   *
    * NOTE: If you want to type response body, pass a generic type.
-   * @param compiledQuery 
-   * @param params 
+   * @param compiledQuery
+   * @param params
    */
   private async doRequest<T = any>(compiledQuery: Query, params: SearchParams): Promise<ApiResponse<RawResultBody<T>>> {
     // TODO for now we hardcoded search method
@@ -85,29 +85,29 @@ export class Cluster {
     return this.client.search({
       index: this.index.getName(),
       body: compiledQuery,
-      ...params
+      ...params,
     });
   }
 
   /**
    * returns SearchResult instance with processed raw es response.
-   * 
+   *
    * NOTE: If you want to type response body, pass a generic type.
    * @param rawResultBody \
-   * @param searchQueryContext 
+   * @param searchQueryContext
    */
   private processResult<T extends Doc, TRaw>(rawResultBody: RawResultBody<TRaw>, searchQueryContext: SearchQueryContext): SearchResult<T> {
     return new SearchResult<T, TRaw>(
       rawResultBody,
       searchQueryContext.aggregations,
       searchQueryContext.docClass,
-      searchQueryContext.instanceMapper
-    )
-  };
+      searchQueryContext.instanceMapper,
+    );
+  }
 
   /**
-   * run search query against elasticsearch cluster and return processed result. 
-   * @param searchQuery 
+   * run search query against elasticsearch cluster and return processed result.
+   * @param searchQuery
    */
   public async search<T extends Doc, TRaw>(searchQuery: SearchQuery): Promise<SearchResult<T>> {
     const rawResultResponse: ApiResponse<RawResultBody<TRaw>> = await this.doRequest<TRaw>(searchQuery.body, searchQuery.params);

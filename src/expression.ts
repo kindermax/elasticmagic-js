@@ -1,39 +1,37 @@
 import { Field } from "./document";
+import { Dictionary, Nullable } from "./types";
 import { cleanParams } from "./util";
-import { Nullable, Dictionary } from "./types";
 
 // TODO must be generic type with restrictions
-export type TermValue = 
-  | number 
-  | string 
+export type TermValue =
+  | number
+  | string
   | boolean;
 export type TermField = Dictionary<string, TermValue>;
 
-
 // TODo this must be interface ???
 export class Expression {
-  public readonly _visitName: string = 'notDefined'; // TODO hack, is there some way to not init this fields ? interface ?
-  public readonly _queryName: string = 'notDefined';
-  public readonly _queryKey: string = 'notDefined';
+  public readonly _visitName: string = "notDefined"; // TODO hack, is there some way to not init this fields ? interface ?
+  public readonly _queryName: string = "notDefined";
+  public readonly _queryKey: string = "notDefined";
 }
 
 export type ParamsType = Dictionary<any, any>;
 
-
 export type ParamKV = [string, any];
 
 export class Params extends Expression {
-  public _visitName = 'params';
+  public _visitName = "params";
   private params: ParamsType;
-  private paramsKvList: Array<ParamKV>;
+  private paramsKvList: ParamKV[];
 
   constructor(params?: ParamsType) {
     super();
-      this.params = cleanParams(params);
-      this.paramsKvList = this.params ? Object.entries(this.params) : [];
+    this.params = cleanParams(params);
+    this.paramsKvList = this.params ? Object.entries(this.params) : [];
   }
 
-  public getParamsKvList(): Array<ParamKV> {
+  public getParamsKvList(): ParamKV[] {
     return this.paramsKvList;
   }
 
@@ -48,7 +46,7 @@ export class Params extends Expression {
 }
 
 export class Literal extends Expression {
-  public _visitName = 'literal';
+  public _visitName = "literal";
 
   constructor(public obj: any) {
     super();
@@ -60,16 +58,16 @@ export class ParamsExpression extends Expression {
 
   constructor(params?: Dictionary<any, any>) {
     super();
-    this.params = new Params(params)
+    this.params = new Params(params);
   }
 }
 
 export class QueryExpression extends ParamsExpression {
-  public _visitName = 'queryExpression';
+  public _visitName = "queryExpression";
 }
 
 export class FieldExpression extends QueryExpression {
-  public _visitName = 'fieldExpression';
+  public _visitName = "fieldExpression";
 
   // TODO maybe later it will be Field but for now it Expression
   public field: Expression;
@@ -84,19 +82,19 @@ export class FieldExpression extends QueryExpression {
     if (field instanceof Expression) {
       return field;
     }
-    return new Literal(field)
+    return new Literal(field);
   }
 }
 
-type FieldQueryValue = 
-  | string 
-  | number 
+type FieldQueryValue =
+  | string
+  | number
   | boolean
   | null;
 
 export class FieldQueryExpression extends FieldExpression {
-  public _visitName = 'fieldQuery';
-  public _queryKey = 'query';
+  public _visitName = "fieldQuery";
+  public _queryKey = "query";
 
   constructor(field: Field, public query: FieldQueryValue) {
     super(field, {});
@@ -104,13 +102,13 @@ export class FieldQueryExpression extends FieldExpression {
 }
 
 export class Term extends FieldQueryExpression {
-  public _visitName = 'term';
-  public _queryName = 'term';
-  public _queryKey = 'value';
+  public _visitName = "term";
+  public _queryName = "term";
+  public _queryKey = "value";
 
   constructor(
     field: Field,
-    term: TermValue
+    term: TermValue,
   ) {
     super(field, term);
   }
@@ -119,10 +117,10 @@ export class Term extends FieldQueryExpression {
 type TermsOptions = {
   mininum_should_match?: any;
   boost?: any;
-}
+};
 
 export class Terms extends FieldExpression {
-  public _visitName = 'terms';
+  public _visitName = "terms";
 
   constructor(
     field: Field,
@@ -155,7 +153,7 @@ type RangeSettings = {
 };
 
 export class RangeExpr extends FieldExpression {
-  public _visitName = 'range';
+  public _visitName = "range";
   public rangeParams: Params = new Params();
 
   constructor(
@@ -164,7 +162,7 @@ export class RangeExpr extends FieldExpression {
     rangeSettings?: RangeSettings,
   ) {
     super(field, rangeOpts);
-    this.rangeParams = new Params(rangeSettings)
+    this.rangeParams = new Params(rangeSettings);
   }
 }
 
@@ -179,7 +177,7 @@ type BoolOptions = {
 };
 
 export class Bool extends QueryExpression {
-  public _queryName = 'bool';
+  public _queryName = "bool";
 
   constructor(options: BoolOptions) {
     super(options);
@@ -195,15 +193,14 @@ export class Bool extends QueryExpression {
 
   public static mustNot(...expressions: Expression[]): Bool {
     return new Bool({ must_not: expressions });
-  } 
+  }
 
   public static should(...expressions: Expression[]): Expression {
     if (expressions.length === 1) {
       return expressions[0];
     }
     return new Bool({ should: expressions });
-  } 
+  }
 }
-
 
 // TODO add Exists, Missing, Limit, Sort, Not, Ids, Script, Match, HasChild, HasParent

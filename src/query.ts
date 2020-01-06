@@ -1,29 +1,29 @@
-import { Expression, Params, ParamsType } from "./expression";
-import { CompilerVisitor } from "./compiler";
-import { Cluster, Index } from "./cluster";
-import { cleanParams } from './util';
-import { IDocument, Doc } from './document';
 import { AggExpression } from "./agg";
+import { Cluster, Index } from "./cluster";
+import { CompilerVisitor } from "./compiler";
+import { Doc, IDocument } from "./document";
+import { Expression, Params, ParamsType } from "./expression";
 import { SearchResult } from "./result";
 import { Dictionary, PlainObject } from "./types";
+import { cleanParams } from "./util";
 
 export type SearchQueryOptions = {
   routing?: number;
-  docClass?: IDocument; 
-  docType?: string; 
-}
+  docClass?: IDocument;
+  docType?: string;
+};
 
 type ClusterSearchQueryOptions = {
   index?: Index;
   cluster?: Cluster;
-} & SearchQueryOptions
+} & SearchQueryOptions;
 
 export type SearchParams = {
   routing?: string;
   type?: string;
-}
+};
 
-type SourceField = boolean | Array<string> | null; // TODO create Source class as expression
+type SourceField = boolean | string[] | null; // TODO create Source class as expression
 
 type MatchValue = string | number | boolean;
 type TermValue = string | number | boolean;
@@ -42,7 +42,7 @@ type TermFilter = {
 };
 
 type TermsFilter = {
-  terms: Dictionary<string, Array<TermValue>>;
+  terms: Dictionary<string, TermValue[]>;
 };
 
 type ExistsFilter = {
@@ -54,7 +54,7 @@ type BoolField = {
   must_not?: Array<TermFilter | TermsFilter | MatchFilter | MatchPhraseFilter>;
 };
 
-type FilterRootField = BoolField | Array<ExistsFilter>;
+type FilterRootField = BoolField | ExistsFilter[];
 
 export type BoolMustFilter = Array<MatchFilter | MatchPhraseFilter>;
 type BoolMustNotFilter = Array<MatchFilter | MatchPhraseFilter>;
@@ -81,7 +81,7 @@ export type Query = {
   _source?: SourceField;
   aggregations?: AggregationsField;
   // TODO complete this type
-}
+};
 
 export type QueryOverride = any | null; // TODO this type is incorrect, hack
 export type Limit = number | null;
@@ -89,7 +89,7 @@ export type Limit = number | null;
 export type InstanceMapper<T1, T2> = (ids: T1[]) => T2;
 
 export class SearchQueryContext {
-  public _visitName: string = 'searchQueryContext';
+  public _visitName: string = "searchQueryContext";
 
   constructor(
     public query: QueryOverride,
@@ -110,9 +110,9 @@ export class SearchQueryContext {
 
 // UTIL
 function getDocType(docType?: string, docClass?: IDocument): string | null {
-  if (docType) return docType;
-  if (docClass) return docClass._docType;
-  return null
+  if (docType) { return docType; }
+  if (docClass) { return docClass._docType; }
+  return null;
 }
 
 export class SearchQuery {
@@ -122,8 +122,8 @@ export class SearchQuery {
    * * implement check _index_or_cluster
    * * add method for bound, like withIndex, withCluster
    */
-  private index?: Index; 
-  
+  private index?: Index;
+
   private _limit: Limit = null;
   private _fields: any = null; // TODO not used right now
   private _filters: Expression[] = [];
@@ -159,7 +159,7 @@ export class SearchQuery {
     }
 
     this._searchParams = new Params({
-      routing: routing,
+      routing,
       docType: getDocType(docType, docClass),
     });
   }
@@ -175,12 +175,12 @@ export class SearchQuery {
       this._aggregations,
       this._docClass,
       this._instanceMapper,
-    )
+    );
   }
 
   /**
    * Controls which fields of the document's ``_source`` field to retrieve.
-   * @param include 
+   * @param include
    */
   public source(fields: SourceField): SearchQuery {
     // TODO add exclude and include
@@ -189,18 +189,18 @@ export class SearchQuery {
   }
 
   // TODO later there can be multiple filter func declarations, one with variadic args
-  
+
   /**
    * TODO maybe we need clone Query instance on filter call?
-   * 
+   *
    * Multiple expressions may be specified, so they will be joined together using ``Bool.must`` expression.
-   * @param filters 
+   * @param filters
    */
   public filter(...filters: Expression[]): SearchQuery {
     this._filters.push(...filters);
     return this;
   }
-  
+
   public limit(limit: number): SearchQuery {
     this._limit = limit;
     return this;
@@ -215,10 +215,10 @@ export class SearchQuery {
   /**
    * Adds `aggregations <https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html>`_
    * to the search query.
-   * 
-   * After executing the query you can get aggregation result by its name 
+   *
+   * After executing the query you can get aggregation result by its name
    * calling :meth:`SearchResult.get_aggregation` method.
-   * 
+   *
    * @param aggs objects with aggregations. Can be ``null`` that cleans up previous aggregations.
    */
   public aggregations(aggs: Aggregations): SearchQuery {
@@ -245,7 +245,7 @@ export class SearchQuery {
     return {
       routing: `${params.routing}`,
       type: params.docType,
-    }
+    };
   }
   // TODO maybe reuse logic with Compiled.
   // Like hold class which can compile all on construction and then use that instance?
@@ -264,7 +264,7 @@ export class SearchQuery {
   public async getResult<T extends Doc = any, TRaw = any>(): Promise<SearchResult<T>> {
     // TODO add cache
     if (!this.cluster) {
-      throw new Error('getResult: no cluster specified, can not make a query');
+      throw new Error("getResult: no cluster specified, can not make a query");
     }
     return this.cluster.search<T, TRaw>(this);
   }
