@@ -1,7 +1,7 @@
 import { InstanceMapper } from "./query";
 import { IDocument, Doc } from "./document";
 import { Params, ParamKV } from "./expression";
-import { Dictionary, RawResultBody } from "./types";
+import { Dictionary, RawResultBody, Hit } from "./types";
 import { arrayKVToDict } from "./util";
 import { BucketAgg, AggResult } from "./agg";
 
@@ -23,7 +23,7 @@ function docClsMap(docCls: IDocument | IDocument[] | null | undefined): Dictiona
   );
 }
 
-function getDocTypeForHit(hit: any): string {
+function getDocTypeForHit(hit: Hit): string {
   const fields = hit.fields || {};
   const customDocType = fields[DOC_TYPE_NAME_FIELD];
   return customDocType ? customDocType[0] : hit._type;
@@ -83,7 +83,7 @@ export class SearchResult<T extends Doc, TRaw = any> extends Result {
     this.total = hits.total;
     this.maxScore = hits.max_score;
     // TODO add type for hit: any
-    hits.hits.forEach((hit: any) => {
+    hits.hits.forEach((hit: Hit) => {
       const docType = getDocTypeForHit(hit);
       const docCls = this.docClsMap[docType]; // TODO DynamicDocument
 

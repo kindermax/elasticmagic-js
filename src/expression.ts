@@ -1,12 +1,13 @@
 import { Field } from "./document";
 import { cleanParams } from "./util";
-import { Nullable } from "./types";
+import { Nullable, Dictionary } from "./types";
 
 // TODO must be generic type with restrictions
-export type TermValue = number | string | boolean;
-export type TermField = {
-  [field: string]: TermValue
-}
+export type TermValue = 
+  | number 
+  | string 
+  | boolean;
+export type TermField = Dictionary<string, TermValue>;
 
 
 // TODo this must be interface ???
@@ -16,9 +17,7 @@ export class Expression {
   public readonly _queryKey: string = 'notDefined';
 }
 
-export type ParamsType = {
-  [key: string]: any; // TODO maybe some type
-}; 
+export type ParamsType = Dictionary<any, any>;
 
 
 export type ParamKV = [string, any];
@@ -59,7 +58,7 @@ export class Literal extends Expression {
 export class ParamsExpression extends Expression {
   public params: Params;
 
-  constructor(params: any) {
+  constructor(params?: Dictionary<any, any>) {
     super();
     this.params = new Params(params)
   }
@@ -76,7 +75,7 @@ export class FieldExpression extends QueryExpression {
   public field: Expression;
 
   // TODO field is an AttributeField, OrderedAttributes
-  constructor(field: Field, params: any) {
+  constructor(field: Field, params?: Dictionary<any, any>) {
     super(params); // TODO pass null or field ???
     this.field = this.wrapLiteral(field);
   }
@@ -89,12 +88,18 @@ export class FieldExpression extends QueryExpression {
   }
 }
 
+type FieldQueryValue = 
+  | string 
+  | number 
+  | boolean
+  | null;
+
 export class FieldQueryExpression extends FieldExpression {
   public _visitName = 'fieldQuery';
   public _queryKey = 'query';
 
-  constructor(field: Field, public query: any) {
-    super(field, null);
+  constructor(field: Field, public query: FieldQueryValue) {
+    super(field, {});
   }
 }
 

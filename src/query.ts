@@ -5,6 +5,7 @@ import { cleanParams } from './util';
 import { IDocument, Doc } from './document';
 import { AggExpression } from "./agg";
 import { SearchResult } from "./result";
+import { Dictionary, PlainObject } from "./types";
 
 export type SearchQueryOptions = {
   routing?: number;
@@ -29,33 +30,23 @@ type TermValue = string | number | boolean;
 type ExistsValue = string | number | boolean;
 
 type MatchFilter = {
-  match: {
-    [field: string]: MatchValue
-  }
+  match: Dictionary<string, MatchValue>;
 };
 
 type MatchPhraseFilter = {
-  match: {
-    [field: string]: MatchValue
-  }
+  match: Dictionary<string, MatchValue>;
 };
 
 type TermFilter = {
-  term: {
-    [field: string]: TermValue
-  }
+  term: Dictionary<string, TermValue>;
 };
 
 type TermsFilter = {
-  terms: {
-    [field: string]: Array<TermValue>
-  }
+  terms: Dictionary<string, Array<TermValue>>;
 };
 
 type ExistsFilter = {
-  exists: {
-    [field: string]: ExistsValue
-  };
+  exists: Dictionary<string, ExistsValue>;
 };
 
 type BoolField = {
@@ -75,13 +66,9 @@ type BoolRootField = {
 };
 
 // TODO probably must move types to relevant modules
-type AggregationsField = {
-  [agg: string]: any;
-}
+type AggregationsField = PlainObject;
 
-export type Aggregations = { // TODO maybe one of types is obsolete
-  [agg: string]: AggExpression;
-}
+export type Aggregations = Dictionary<string, AggExpression>;
 
 type QueryRootField = {
   bool?: BoolRootField;
@@ -96,7 +83,7 @@ export type Query = {
   // TODO complete this type
 }
 
-export type QueryOverride = object | null;
+export type QueryOverride = any | null; // TODO this type is incorrect, hack
 export type Limit = number | null;
 
 export type InstanceMapper<T1, T2> = (ids: T1[]) => T2;
@@ -219,6 +206,7 @@ export class SearchQuery {
     return this;
   }
 
+   // TODO QueryOverride type is incorrect, hack
   public query(query: QueryOverride): SearchQuery {
     this._query = query;
     return this;
