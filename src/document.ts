@@ -12,11 +12,11 @@ import { Hit } from "./types";
 
 export class FieldType {}
 
-export class Integer extends FieldType {}
+export class IntegerType extends FieldType {}
 
-export class EsBoolean extends FieldType {}
+export class BooleanType extends FieldType {}
 
-export class EsDate extends FieldType {}
+export class DateType extends FieldType {}
 
 export class Field extends Expression {
   public readonly _visitName = 'field';

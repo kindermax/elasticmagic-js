@@ -2,6 +2,8 @@
   "name": "elasticmagic",
   "version": "0.0.1",
   "description": "",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "ES_HOST=es6 jest",
@@ -19,6 +21,19 @@
   },
   "author": "kindritskiy.m@gmail.com",
   "license": "ISC",
+  "keywords": [
+    "elasticsearch",
+    "elastic",
+    "kibana",
+    "mapping",
+    "REST",
+    "search",
+    "client",
+    "index"
+  ],
+  "engines": {
+    "node": ">=8"
+  },
   "jest": {
     "testURL": "http://localhost",
     "testEnvironment": "node",

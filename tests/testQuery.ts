@@ -1,4 +1,4 @@
-import { Field, Integer, Doc, EsDate } from "../src/document";
+import { Field, IntegerType, Doc, DateType } from "../src/document";
 import { SearchQuery } from "../src/query";
 import { Bool } from "../src/expression";
 
@@ -17,11 +17,11 @@ enum OrderSource {
 class OrderDoc extends Doc {
   public static _docType: string = 'order';
 
-  public static userId: Field = new Field(Integer, 'user_id');
-  public static status: Field = new Field(Integer, 'status'); // TODO how can we get names in runtime? like python metaclass
-  public static source: Field = new Field(Integer, 'source');
-  public static price: Field = new Field(Integer, 'price');
-  public static dateCreated: Field = new Field(EsDate, 'date_created');
+  public static userId: Field = new Field(IntegerType, 'user_id');
+  public static status: Field = new Field(IntegerType, 'status'); // TODO how can we get names in runtime? like python metaclass
+  public static source: Field = new Field(IntegerType, 'source');
+  public static price: Field = new Field(IntegerType, 'price');
+  public static dateCreated: Field = new Field(DateType, 'date_created');
 }
 
 
