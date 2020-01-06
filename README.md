@@ -179,7 +179,7 @@ make test
 - [x] query generation
 - [x] aggregations
 - [x] get aggregations result
-- [ ] license
+- [ ] license, Apache License ? MIT ?
 - [ ] add support for es5, es7
 - [ ] collect doc classes
 - [ ] work with Date type
