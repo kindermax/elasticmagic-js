@@ -1,24 +1,23 @@
 import {
   Cluster,
   Index,
-} from './cluster';
+} from "./cluster";
 import {
+  BooleanType,
+  DateType,
   Doc,
   Field,
   IntegerType,
-  BooleanType,
-  DateType,
-} from './document';
-import {
-  SearchQuery,
-} from './query';
+} from "./document";
 import {
   Bool,
   RangeExpr,
   Term,
   Terms,
-} from './expression';
-
+} from "./expression";
+import {
+  SearchQuery,
+} from "./query";
 
 export {
   Cluster,

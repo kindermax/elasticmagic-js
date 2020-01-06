@@ -21,7 +21,7 @@ enum OrderSource {
 }
 
 class OrderDoc extends Doc {
-  public static _docType: string = 'order';
+  public static docType: string = 'order';
 
   public static userId: Field = new Field(IntegerType, 'user_id');
   public static status: Field = new Field(IntegerType, 'status'); // TODO how can we get names in runtime? like python metaclass

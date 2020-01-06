@@ -1,19 +1,17 @@
-import { Field } from "./document";
-import { arrayKVToDict, isObject } from "./util";
 import { AggExpression, BucketAgg, Filter } from "./agg";
-import { SearchQueryContext, Query, QueryOverride } from "./query";
-import { 
+import { Field } from "./document";
+import {
   Bool,
-  QueryExpression, 
-  FieldQueryExpression, 
-  Params, 
-  Literal, 
-  Term, 
-  Terms, 
+  FieldQueryExpression,
+  Literal,
+  Params,
+  QueryExpression,
   RangeExpr,
+  Term,
+  Terms,
  } from "./expression";
-
-
+import { Query, QueryOverride, SearchQueryContext } from "./query";
+import { arrayKVToDict, isObject } from "./util";
 
 export class CompilerVisitor {
   public params: Query = {};
@@ -25,35 +23,35 @@ export class CompilerVisitor {
   private visit(expression: any): any {
     let visitName;
 
-    if (expression?._visitName) {
-      visitName = expression._visitName;
+    if (expression?.visitName) {
+      visitName = expression.visitName;
     }
-    
+
     // TODO visitName must be constant
     switch (visitName) {
-      case 'searchQueryContext':
+      case "searchQueryContext":
         return this.visitSearchQueryContext(expression);
-      case 'queryExpression':
+      case "queryExpression":
         return this.visitQueryExpression(expression);
-      case 'params':
+      case "params":
         return this.visitParams(expression);
-      case 'fieldQuery':
+      case "fieldQuery":
         return this.visitFieldQuery(expression);
-      case 'field':
+      case "field":
         return this.visitField(expression);
-      case 'term':
+      case "term":
         return this.visitTerm(expression);
-      case 'terms':
+      case "terms":
         return this.visitTerms(expression);
-      case 'literal':
-        return this.visitLiteral(expression);    
-      case 'agg':
+      case "literal":
+        return this.visitLiteral(expression);
+      case "agg":
         return this.visitAgg(expression);
-      case 'bucketAgg':
-        return this.visitBucketAgg(expression);    
-      case 'filterAgg':
+      case "bucketAgg":
+        return this.visitBucketAgg(expression);
+      case "filterAgg":
         return this.visitFilterAgg(expression);
-      case 'range':
+      case "range":
         return this.visitRange(expression);
       default:
     }
@@ -84,7 +82,7 @@ export class CompilerVisitor {
     if (filterClauses.length > 0) {
       // features.supports_bool_filter is always true for es > 2
       if (filterClauses.length === 1) {
-        return new Bool({ must: q, filter: filterClauses[0]})
+        return new Bool({ must: q, filter: filterClauses[0]});
       }
       return new Bool({ must: q, filter: filterClauses });
     }
@@ -93,11 +91,11 @@ export class CompilerVisitor {
 
   /**
    * This is where we start building our query
-   * @param queryContext 
+   * @param queryContext
    */
   private visitSearchQueryContext(queryContext: SearchQueryContext): Query {
     const params: Query = {};
-    const query = this.getFilteredQuery(queryContext)
+    const query = this.getFilteredQuery(queryContext);
     if (query) {
       params.query = this.visit(query);
     }
@@ -117,17 +115,17 @@ export class CompilerVisitor {
   }
 
   /**
-   * @param expression 
+   * @param expression
    */
   // TODO return type
   private visitQueryExpression(expression: QueryExpression): any {
     return {
-      [expression._queryName]: this.visit(expression.params)
-    }
+      [expression.queryName]: this.visit(expression.params),
+    };
   }
 
   /**
-   * @param expression 
+   * @param expression
    */
   // TODO return type
   private visitFieldQuery(expression: FieldQueryExpression): any {
@@ -135,19 +133,19 @@ export class CompilerVisitor {
     const exprParams = expression.params;
 
     if (exprParams.length > 0) { // TODO maybe implement iterator for Params
-      let params = { [expression._queryKey]: this.visit(expression.query) };
+      let params = { [expression.queryKey]: this.visit(expression.query) };
       params = { ...params, ...exprParams }; // TODo here can be broken line
       return {
-        [expression._queryName]: {
-          [this.visit(expression.field)]: params
-        }
-      }
+        [expression.queryName]: {
+          [this.visit(expression.field)]: params,
+        },
+      };
     }
     return {
-      [expression._queryName]: {
-        [this.visit(expression.field)]: this.visit(expression.query)
-      }
-    }
+      [expression.queryName]: {
+        [this.visit(expression.field)]: this.visit(expression.query),
+      },
+    };
   }
 
   private visitTerm(term: Term): any {
@@ -156,14 +154,14 @@ export class CompilerVisitor {
 
   private visitTerms(expression: Terms): any {
     const fieldName = this.visit(expression.field);
-    let params = { [fieldName]: this.visit(expression.terms)};
+    const params = { [fieldName]: this.visit(expression.terms)};
     return {
-      'terms': { ...params, ...this.visit(expression.params) }
-    }
+      terms: { ...params, ...this.visit(expression.params) },
+    };
   }
 
   private visitParams(params: Params): any {
-    const res: any = {}
+    const res: any = {};
     params.getParamsKvList().forEach(([key, val]) => {
       res[this.visit(key)] = this.visit(val);
     });
@@ -178,7 +176,7 @@ export class CompilerVisitor {
     return expression.obj;
   }
 
-  private visitArray(expression: Array<any>): any {
+  private visitArray(expression: any[]): any {
     return expression.map((exp) => this.visit(exp));
   }
 
@@ -191,36 +189,36 @@ export class CompilerVisitor {
 
   private visitAgg(agg: AggExpression): any {
     return {
-      [agg._aggName]: this.visit(agg.params)
+      [agg.aggName]: this.visit(agg.params),
     };
   }
 
   private visitBucketAgg(agg: BucketAgg): any {
     const params: any = {
-      [agg._aggName]: this.visit(agg.params),
+      [agg.aggName]: this.visit(agg.params),
     };
-    if (agg._aggregations.length > 0) {
-      params.aggregations = this.visit(agg._aggregations);
+    if (agg.aggregations.length > 0) {
+      params.aggregations = this.visit(agg.aggregations);
     }
     return params;
   }
 
   private visitFilterAgg(agg: Filter): any {
     const params = this.visitBucketAgg(agg);
-    params[agg._aggName] = this.visit(agg.filter);
+    params[agg.aggName] = this.visit(agg.filter);
     return params;
   }
 
   private visitRange(expr: RangeExpr): any {
     const fieldParams: any = {
-      [this.visit(expr.field)]: this.visit(expr.params)
+      [this.visit(expr.field)]: this.visit(expr.params),
     };
 
     return {
       range: {
         ...this.visit(expr.rangeParams),
         ...fieldParams,
-      }
+      },
     };
   }
 }

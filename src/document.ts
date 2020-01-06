@@ -1,14 +1,14 @@
-import { Hit } from "./types";
-import { SearchResult } from "./result";
-import { 
-  Terms, 
-  Term, 
-  Bool, 
-  Expression, 
-  TermValue, 
-  RangeExpr, 
+import {
+  Bool,
+  Expression,
+  RangeExpr,
   RangeValue,
+  Term,
+  Terms,
+  TermValue,
 } from "./expression";
+import { SearchResult } from "./result";
+import { Hit } from "./types";
 
 export class FieldType {}
 
@@ -19,12 +19,12 @@ export class BooleanType extends FieldType {}
 export class DateType extends FieldType {}
 
 export class Field extends Expression {
-  public readonly _visitName = 'field';
-  
+  public readonly visitName = "field";
+
   constructor(
     private type: FieldType,
     public name: string,
-  ){
+  ) {
     super();
   }
 
@@ -65,29 +65,29 @@ export class Field extends Expression {
 type DocOpts = {
   hit: Hit;
   result: SearchResult<any>;
-}
+};
 export interface IDocument {
-  _docType: string;
+  docType: string;
   new (opts: DocOpts): Doc;
 }
 
 // TODO maybe decorator can be used as an alternative to metaclass
 // https://github.com/Microsoft/TypeScript/issues/17454
 export class Doc {
-  public static readonly _docType: string;
+  public static readonly docType: string;
   private hit: Hit;
   private result: SearchResult<any>;
 
-  public _id: string | number;
+  public _id: string | number;  // tslint:disable-line
   constructor(opts: DocOpts) {
     this.hit = opts.hit;
     this.result = opts.result;
 
     this._id = opts.hit._id;
-  };
+  }
 
   /**
-   * If instanceMapper was defined for query 
+   * If instanceMapper was defined for query
    * then return instance mapped by instanceMapper
    * else return null;
    */
