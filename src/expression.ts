@@ -11,9 +11,9 @@ export type TermField = Dictionary<string, TermValue>;
 
 // TODo this must be interface ???
 export class Expression {
-  public readonly _visitName: string = "notDefined"; // TODO hack, is there some way to not init this fields ? interface ?
-  public readonly _queryName: string = "notDefined";
-  public readonly _queryKey: string = "notDefined";
+  public readonly visitName: string = "notDefined"; // TODO hack, is there some way to not init this fields ? interface ?
+  public readonly queryName: string = "notDefined";
+  public readonly queryKey: string = "notDefined";
 }
 
 export type ParamsType = Dictionary<any, any>;
@@ -21,7 +21,7 @@ export type ParamsType = Dictionary<any, any>;
 export type ParamKV = [string, any];
 
 export class Params extends Expression {
-  public _visitName = "params";
+  public visitName = "params";
   private params: ParamsType;
   private paramsKvList: ParamKV[];
 
@@ -46,7 +46,7 @@ export class Params extends Expression {
 }
 
 export class Literal extends Expression {
-  public _visitName = "literal";
+  public visitName = "literal";
 
   constructor(public obj: any) {
     super();
@@ -63,11 +63,11 @@ export class ParamsExpression extends Expression {
 }
 
 export class QueryExpression extends ParamsExpression {
-  public _visitName = "queryExpression";
+  public visitName = "queryExpression";
 }
 
 export class FieldExpression extends QueryExpression {
-  public _visitName = "fieldExpression";
+  public visitName = "fieldExpression";
 
   // TODO maybe later it will be Field but for now it Expression
   public field: Expression;
@@ -93,8 +93,8 @@ type FieldQueryValue =
   | null;
 
 export class FieldQueryExpression extends FieldExpression {
-  public _visitName = "fieldQuery";
-  public _queryKey = "query";
+  public visitName = "fieldQuery";
+  public queryKey = "query";
 
   constructor(field: Field, public query: FieldQueryValue) {
     super(field, {});
@@ -102,9 +102,9 @@ export class FieldQueryExpression extends FieldExpression {
 }
 
 export class Term extends FieldQueryExpression {
-  public _visitName = "term";
-  public _queryName = "term";
-  public _queryKey = "value";
+  public visitName = "term";
+  public queryName = "term";
+  public queryKey = "value";
 
   constructor(
     field: Field,
@@ -120,7 +120,7 @@ type TermsOptions = {
 };
 
 export class Terms extends FieldExpression {
-  public _visitName = "terms";
+  public visitName = "terms";
 
   constructor(
     field: Field,
@@ -153,7 +153,7 @@ type RangeSettings = {
 };
 
 export class RangeExpr extends FieldExpression {
-  public _visitName = "range";
+  public visitName = "range";
   public rangeParams: Params = new Params();
 
   constructor(
@@ -177,7 +177,7 @@ type BoolOptions = {
 };
 
 export class Bool extends QueryExpression {
-  public _queryName = "bool";
+  public queryName = "bool";
 
   constructor(options: BoolOptions) {
     super(options);

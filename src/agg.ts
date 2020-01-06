@@ -51,8 +51,8 @@ export class AggResult {
 }
 
 export class AggExpression extends ParamsExpression {
-  public _visitName = "agg";
-  public _aggName: any; // TODO hack so compiler sees this field for generic type
+  public visitName = "agg";
+  public aggName: any; // TODO hack so compiler sees this field for generic type
 
   public buildAggResult(_rawData: Dictionary<string, any>, _docClsMap: Dictionary<string, IDocument> = {}, _mapperRegistry: any = {}): AggResult {
     throw new Error("AggExpression: buildAggResult not implemented");
@@ -60,8 +60,8 @@ export class AggExpression extends ParamsExpression {
 }
 
 export class BucketAgg extends AggExpression {
-  public _visitName = "bucketAgg";
-  public _aggName: any; // TODO hack so compiler sees this field for generic type
+  public visitName = "bucketAgg";
+  public aggName: any; // TODO hack so compiler sees this field for generic type
 
   public _aggregations: Params;
 
@@ -189,7 +189,7 @@ export class MultiBucketAggResult extends AggResult {
 }
 
 export class SingleBucketAgg extends BucketAgg {
-  public _aggName: any; // TODO hack so compiler sees this field for generic type
+  public aggName: any; // TODO hack so compiler sees this field for generic type
 
   constructor(
     aggs?: Dictionary<string, Filter>,
@@ -206,7 +206,7 @@ export class SingleBucketAgg extends BucketAgg {
 }
 
 export class MultiBucketAgg extends BucketAgg {
-  public _aggName: any; // TODO hack so compiler sees this field for generic type
+  public aggName: any; // TODO hack so compiler sees this field for generic type
 
   constructor(
     aggs?: Dictionary<string, Filter>,
@@ -242,7 +242,7 @@ function getType(field: Field, type?: FieldType): FieldType {
 }
 
 export class Terms extends MultiBucketAgg {
-  public _aggName = "terms";
+  public aggName = "terms";
 
   constructor({ field, type, aggs, instanceMapper, ...opts }: TermsOptions) {
     super(
@@ -262,8 +262,8 @@ type FilterOptions = {
 };
 
 export class Filter extends SingleBucketAgg {
-  public _visitName = "filterAgg";
-  public _aggName = "filter";
+  public visitName = "filterAgg";
+  public aggName = "filter";
 
   public filter: Expression;
   constructor({ filter, aggs, ...opts }: FilterOptions) {

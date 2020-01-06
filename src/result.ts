@@ -71,7 +71,9 @@ export class SearchResult<T extends Doc, TRaw = any> extends Result {
       if (isInstanceMapperDict(instanceMapper)) {
         this.instanceMappers = instanceMapper;
       } else {
-        this.instanceMappers = arrayKVToDict<InstanceMapperDict>(this.docClasses.map((cls) => [cls._docType, instanceMapper]));
+        this.instanceMappers = arrayKVToDict<InstanceMapperDict>(
+          this.docClasses.map((cls) => [cls._docType, instanceMapper]),
+        );
       }
     }
     this.error = rawResult.error;

@@ -89,7 +89,7 @@ export type Limit = number | null;
 export type InstanceMapper<T1, T2> = (ids: T1[]) => T2;
 
 export class SearchQueryContext {
-  public _visitName: string = "searchQueryContext";
+  public visitName: string = "searchQueryContext";
 
   constructor(
     public query: QueryOverride,

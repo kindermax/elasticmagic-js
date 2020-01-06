@@ -19,7 +19,7 @@ export class BooleanType extends FieldType {}
 export class DateType extends FieldType {}
 
 export class Field extends Expression {
-  public readonly _visitName = "field";
+  public readonly visitName = "field";
 
   constructor(
     private type: FieldType,

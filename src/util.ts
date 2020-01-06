@@ -35,7 +35,7 @@ export function isObject(value: any): boolean {
     tag = toString.call(value);
   }
 
-  if (!isObjectLike || tag != "[object Object]") {
+  if (!isObjectLike || tag !== "[object Object]") {
     return false;
   }
   if (Object.getPrototypeOf(value) === null) {

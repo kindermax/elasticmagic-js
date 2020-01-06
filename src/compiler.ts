@@ -23,8 +23,8 @@ export class CompilerVisitor {
   private visit(expression: any): any {
     let visitName;
 
-    if (expression?._visitName) {
-      visitName = expression._visitName;
+    if (expression?.visitName) {
+      visitName = expression.visitName;
     }
 
     // TODO visitName must be constant
@@ -120,7 +120,7 @@ export class CompilerVisitor {
   // TODO return type
   private visitQueryExpression(expression: QueryExpression): any {
     return {
-      [expression._queryName]: this.visit(expression.params),
+      [expression.queryName]: this.visit(expression.params),
     };
   }
 
@@ -133,16 +133,16 @@ export class CompilerVisitor {
     const exprParams = expression.params;
 
     if (exprParams.length > 0) { // TODO maybe implement iterator for Params
-      let params = { [expression._queryKey]: this.visit(expression.query) };
+      let params = { [expression.queryKey]: this.visit(expression.query) };
       params = { ...params, ...exprParams }; // TODo here can be broken line
       return {
-        [expression._queryName]: {
+        [expression.queryName]: {
           [this.visit(expression.field)]: params,
         },
       };
     }
     return {
-      [expression._queryName]: {
+      [expression.queryName]: {
         [this.visit(expression.field)]: this.visit(expression.query),
       },
     };
@@ -189,13 +189,13 @@ export class CompilerVisitor {
 
   private visitAgg(agg: AggExpression): any {
     return {
-      [agg._aggName]: this.visit(agg.params),
+      [agg.aggName]: this.visit(agg.params),
     };
   }
 
   private visitBucketAgg(agg: BucketAgg): any {
     const params: any = {
-      [agg._aggName]: this.visit(agg.params),
+      [agg.aggName]: this.visit(agg.params),
     };
     if (agg._aggregations.length > 0) {
       params.aggregations = this.visit(agg._aggregations);
@@ -205,7 +205,7 @@ export class CompilerVisitor {
 
   private visitFilterAgg(agg: Filter): any {
     const params = this.visitBucketAgg(agg);
-    params[agg._aggName] = this.visit(agg.filter);
+    params[agg.aggName] = this.visit(agg.filter);
     return params;
   }
 
