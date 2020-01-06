@@ -11,7 +11,10 @@ export type TermField = Dictionary<string, TermValue>;
 
 // TODo this must be interface ???
 export class Expression {
-  public readonly visitName: string = "notDefined"; // TODO hack, is there some way to not init this fields ? interface ?
+  /**
+   * TODO hack, is there some way to not init this fields ? interface ?
+   */
+  public readonly visitName: string = "notDefined";
   public readonly queryName: string = "notDefined";
   public readonly queryKey: string = "notDefined";
 }

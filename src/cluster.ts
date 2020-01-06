@@ -79,12 +79,15 @@ export class Cluster {
    * @param compiledQuery
    * @param params
    */
-  private async doRequest<T = any>(compiledQuery: Query, params: SearchParams): Promise<ApiResponse<RawResultBody<T>>> {
+  private async doRequest<T = any>(
+    compiledQuery: Query,
+    params: SearchParams,
+  ): Promise<ApiResponse<RawResultBody<T>>> {
     // TODO for now we hardcoded search method
     // TODO get client method to call, must be a accep-like function in searchQuery
     return this.client.search({
-      index: this.index.getName(),
       body: compiledQuery,
+      index: this.index.getName(),
       ...params,
     });
   }
@@ -96,7 +99,10 @@ export class Cluster {
    * @param rawResultBody \
    * @param searchQueryContext
    */
-  private processResult<T extends Doc, TRaw>(rawResultBody: RawResultBody<TRaw>, searchQueryContext: SearchQueryContext): SearchResult<T> {
+  private processResult<T extends Doc, TRaw>(
+    rawResultBody: RawResultBody<TRaw>,
+    searchQueryContext: SearchQueryContext,
+  ): SearchResult<T> {
     return new SearchResult<T, TRaw>(
       rawResultBody,
       searchQueryContext.aggregations,
@@ -110,7 +116,10 @@ export class Cluster {
    * @param searchQuery
    */
   public async search<T extends Doc, TRaw>(searchQuery: SearchQuery): Promise<SearchResult<T>> {
-    const rawResultResponse: ApiResponse<RawResultBody<TRaw>> = await this.doRequest<TRaw>(searchQuery.body, searchQuery.params);
+    const rawResultResponse: ApiResponse<RawResultBody<TRaw>> = await this.doRequest<TRaw>(
+      searchQuery.body,
+      searchQuery.params,
+    );
     return this.processResult<T, TRaw>(
       rawResultResponse.body,
       searchQuery.getQueryContext(),

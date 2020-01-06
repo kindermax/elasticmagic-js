@@ -36,7 +36,7 @@ enum OrderSource {
 }
 
 class OrderDoc extends Doc {
-  public static _docType: string = 'order';
+  public static docType: string = 'order';
 
   public static userId: Field = new Field(IntegerType, 'user_id');
   public static status: Field = new Field(IntegerType, 'status');
@@ -184,7 +184,7 @@ make test
 - [ ] collect doc classes
 - [ ] work with Date type
 - [x] return typed result of search +-
-- [ ] prettier, tslint
+- [ ] precommit hooks
 - [ ] generate doc with jsDoc
 - [ ] generate doc like ttag has
 - [ ] elasticsearch must be devDep or peerDep, but not production dep

@@ -18,7 +18,7 @@ function docClsMap(docCls: IDocument | IDocument[] | null | undefined): Dictiona
     docClasses = docCls;
   }
   return arrayKVToDict<Dictionary<string, IDocument>>(
-    docClasses.map((cls) => [cls._docType, cls]),
+    docClasses.map((cls) => [cls.docType, cls]),
   );
 }
 
@@ -72,7 +72,7 @@ export class SearchResult<T extends Doc, TRaw = any> extends Result {
         this.instanceMappers = instanceMapper;
       } else {
         this.instanceMappers = arrayKVToDict<InstanceMapperDict>(
-          this.docClasses.map((cls) => [cls._docType, instanceMapper]),
+          this.docClasses.map((cls) => [cls.docType, instanceMapper]),
         );
       }
     }

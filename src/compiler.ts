@@ -197,8 +197,8 @@ export class CompilerVisitor {
     const params: any = {
       [agg.aggName]: this.visit(agg.params),
     };
-    if (agg._aggregations.length > 0) {
-      params.aggregations = this.visit(agg._aggregations);
+    if (agg.aggregations.length > 0) {
+      params.aggregations = this.visit(agg.aggregations);
     }
     return params;
   }

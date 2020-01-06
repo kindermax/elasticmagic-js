@@ -111,7 +111,7 @@ export class SearchQueryContext {
 // UTIL
 function getDocType(docType?: string, docClass?: IDocument): string | null {
   if (docType) { return docType; }
-  if (docClass) { return docClass._docType; }
+  if (docClass) { return docClass.docType; }
   return null;
 }
 
@@ -132,8 +132,9 @@ export class SearchQuery {
   private _source: SourceField = null;
   private _query: QueryOverride = null;
   private _searchParams: Params = new Params();
+  private docType?: string;
+
   private _docClass?: IDocument;
-  private _docType?: string;
   private _instanceMapper?: InstanceMapper<any, any>;
 
   constructor(
@@ -155,12 +156,12 @@ export class SearchQuery {
     }
 
     if (docType) {
-      this._docType = docType;
+      this.docType = docType;
     }
 
     this._searchParams = new Params({
-      routing,
       docType: getDocType(docType, docClass),
+      routing,
     });
   }
 

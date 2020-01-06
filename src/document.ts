@@ -67,18 +67,18 @@ type DocOpts = {
   result: SearchResult<any>;
 };
 export interface IDocument {
-  _docType: string;
+  docType: string;
   new (opts: DocOpts): Doc;
 }
 
 // TODO maybe decorator can be used as an alternative to metaclass
 // https://github.com/Microsoft/TypeScript/issues/17454
 export class Doc {
-  public static readonly _docType: string;
+  public static readonly docType: string;
   private hit: Hit;
   private result: SearchResult<any>;
 
-  public _id: string | number;
+  public _id: string | number;  // tslint:disable-line
   constructor(opts: DocOpts) {
     this.hit = opts.hit;
     this.result = opts.result;
