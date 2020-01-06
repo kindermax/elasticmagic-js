@@ -4,10 +4,10 @@
   "description": "JS orm for elasticsearch.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kindritskyiMax/elasticmagic-js"
+    "url": "git+https://github.com/kindritskyiMax/elasticmagic-js.git"
   },
-  "main": "./dist/src/index.js",
-  "types": "./dist/src/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "/dist"
   ],
@@ -43,6 +43,7 @@
     "node": ">=8"
   },
   "jest": {
+    "verbose": true,
     "testURL": "http://localhost",
     "testEnvironment": "node",
     "transform": {
