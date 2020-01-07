@@ -6,9 +6,9 @@ import {
   Term,
   Terms,
   TermValue,
-} from "./expression";
-import { SearchResult } from "./result";
-import { Hit } from "./types";
+} from './expression';
+import { SearchResult } from './result';
+import { Hit } from './types';
 
 export class FieldType {}
 
@@ -19,7 +19,7 @@ export class BooleanType extends FieldType {}
 export class DateType extends FieldType {}
 
 export class Field extends Expression {
-  public readonly visitName = "field";
+  public readonly visitName = 'field';
 
   constructor(
     private type: FieldType,

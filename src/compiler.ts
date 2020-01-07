@@ -1,5 +1,5 @@
-import { AggExpression, BucketAgg, Filter } from "./agg";
-import { Field } from "./document";
+import { AggExpression, BucketAgg, Filter } from './agg';
+import { Field } from './document';
 import {
   Bool,
   FieldQueryExpression,
@@ -9,9 +9,9 @@ import {
   RangeExpr,
   Term,
   Terms,
- } from "./expression";
-import { Query, QueryOverride, SearchQueryContext } from "./query";
-import { arrayKVToDict, isObject } from "./util";
+ } from './expression';
+import { Query, QueryOverride, SearchQueryContext } from './query';
+import { arrayKVToDict, isObject } from './util';
 
 export class CompilerVisitor {
   public params: Query = {};
@@ -29,29 +29,29 @@ export class CompilerVisitor {
 
     // TODO visitName must be constant
     switch (visitName) {
-      case "searchQueryContext":
+      case 'searchQueryContext':
         return this.visitSearchQueryContext(expression);
-      case "queryExpression":
+      case 'queryExpression':
         return this.visitQueryExpression(expression);
-      case "params":
+      case 'params':
         return this.visitParams(expression);
-      case "fieldQuery":
+      case 'fieldQuery':
         return this.visitFieldQuery(expression);
-      case "field":
+      case 'field':
         return this.visitField(expression);
-      case "term":
+      case 'term':
         return this.visitTerm(expression);
-      case "terms":
+      case 'terms':
         return this.visitTerms(expression);
-      case "literal":
+      case 'literal':
         return this.visitLiteral(expression);
-      case "agg":
+      case 'agg':
         return this.visitAgg(expression);
-      case "bucketAgg":
+      case 'bucketAgg':
         return this.visitBucketAgg(expression);
-      case "filterAgg":
+      case 'filterAgg':
         return this.visitFilterAgg(expression);
-      case "range":
+      case 'range':
         return this.visitRange(expression);
       default:
     }

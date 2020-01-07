@@ -1,5 +1,5 @@
-import { ParamsType, Expression, FieldQueryValue } from "./expression";
-import { DocClass } from "./document";
+import { DocClass } from './document';
+import { Expression, FieldQueryValue, ParamsType } from './expression';
 
 export function arrayKVToDict<T = any>(array: any[][]): T {
   return array.reduce((acc: any, [key, val]) => {

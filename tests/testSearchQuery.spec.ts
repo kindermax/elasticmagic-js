@@ -1,4 +1,4 @@
-import { SearchQuery } from "../src/query";
+import { SearchQuery } from '../src/query';
 import { OrderDoc } from './fixtures';
 
 describe('SearchQuery', () => {

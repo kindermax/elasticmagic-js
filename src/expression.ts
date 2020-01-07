@@ -1,6 +1,6 @@
-import { Field, DocClass } from "./document";
-import { Dictionary, Nullable } from "./types";
-import { cleanParams, collectDocClasses, uniqueArray } from "./util";
+import { DocClass, Field } from './document';
+import { Dictionary, Nullable } from './types';
+import { cleanParams, collectDocClasses, uniqueArray } from './util';
 
 // TODO must be generic type with restrictions
 export type TermValue =
@@ -14,9 +14,9 @@ export class Expression {
   /**
    * TODO hack, is there some way to not init this fields ? interface ?
    */
-  public readonly visitName: string = "notDefined";
-  public readonly queryName: string = "notDefined";
-  public readonly queryKey: string = "notDefined";
+  public readonly visitName: string = 'notDefined';
+  public readonly queryName: string = 'notDefined';
+  public readonly queryKey: string = 'notDefined';
 
   public collectDocClasses(): Readonly<DocClass[]> {
     return [];
@@ -28,7 +28,7 @@ export type ParamsType = Dictionary<any, any>;
 export type ParamKV = [string, any];
 
 export class Params extends Expression {
-  public visitName = "params";
+  public visitName = 'params';
   private params: ParamsType; // TODO maybe change this to Map
   private paramsKvList: ParamKV[];
 
@@ -57,7 +57,7 @@ export class Params extends Expression {
 }
 
 export class Literal extends Expression {
-  public visitName = "literal";
+  public visitName = 'literal';
 
   constructor(public obj: any) {
     super();
@@ -78,11 +78,11 @@ export class ParamsExpression extends Expression {
 }
 
 export class QueryExpression extends ParamsExpression {
-  public visitName = "queryExpression";
+  public visitName = 'queryExpression';
 }
 
 export class FieldExpression extends QueryExpression {
-  public visitName = "fieldExpression";
+  public visitName = 'fieldExpression';
 
   // TODO maybe later it will be Field but for now it Expression
   public field: Expression;
@@ -114,8 +114,8 @@ export type FieldQueryValue =
   | null;
 
 export class FieldQueryExpression extends FieldExpression {
-  public visitName = "fieldQuery";
-  public queryKey = "query";
+  public visitName = 'fieldQuery';
+  public queryKey = 'query';
 
   constructor(field: Field, public query: FieldQueryValue) {
     super(field, {});
@@ -129,9 +129,9 @@ export class FieldQueryExpression extends FieldExpression {
 }
 
 export class Term extends FieldQueryExpression {
-  public visitName = "term";
-  public queryName = "term";
-  public queryKey = "value";
+  public visitName = 'term';
+  public queryName = 'term';
+  public queryKey = 'value';
 
   constructor(
     field: Field,
@@ -147,7 +147,7 @@ type TermsOptions = {
 };
 
 export class Terms extends FieldExpression {
-  public visitName = "terms";
+  public visitName = 'terms';
 
   constructor(
     field: Field,
@@ -180,7 +180,7 @@ type RangeSettings = {
 };
 
 export class RangeExpr extends FieldExpression {
-  public visitName = "range";
+  public visitName = 'range';
   public rangeParams: Params = new Params();
 
   constructor(
@@ -204,7 +204,7 @@ type BoolOptions = {
 };
 
 export class Bool extends QueryExpression {
-  public queryName = "bool";
+  public queryName = 'bool';
 
   constructor(options: BoolOptions) {
     super(options);
