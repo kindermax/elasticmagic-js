@@ -176,6 +176,12 @@ Run all tests
 make test
 ```
 
+Run one test
+
+```bash
+make test TEST=tests/testSearchQuery.spec.ts
+```
+
 # TODO
 
 - [x] query generation
@@ -185,6 +191,7 @@ make test
 - [ ] add support for es5, es7
 - [ ] collect doc classes
 - [ ] work with Date type
+- [ ] clone query
 - [x] return typed result of search +-
 - [ ] precommit hooks
 - [ ] generate doc with jsDoc
