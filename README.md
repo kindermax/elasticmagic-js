@@ -5,6 +5,8 @@ JS/Typescript DSL for Elasticsearch
 
 This lib is a port of original library written in `python` by [@anti-social]( https://github.com/anti-social/elasticmagic )
 
+Supports Elasticsearch version 6.x
+
 # Getting Started
 
 Install elasticmagic-js using [`npm`](https://www.npmjs.com/):
