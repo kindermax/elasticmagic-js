@@ -21,9 +21,14 @@ Let's get started by writing a simple query.
 
 ```javascript
 import { Client } from '@elastic/elasticsearch';
-import { Cluster } from "elasticmagic-js/cluster";
-import { Field, IntegerType, Doc } from "elasticmagic-js/document";
-import { Bool } from "elasticmagic-js/expression";
+import { 
+  Cluster,
+  Field,
+  FieldProp,
+  IntegerType,
+  Doc,
+  Bool,
+} from "elasticmagic-js";
 
 enum OrderStatus {
   new = 1,
@@ -37,11 +42,18 @@ enum OrderSource {
   mobile = 2,
 }
 
+// You can either set property manually or use FieldProp decrator.
+// The later will bind parent for you and set field name as well.
+
 class OrderDoc extends Doc {
   public static docType: string = 'order';
 
-  public static userId: Field = new Field(IntegerType, 'user_id');
-  public static status: Field = new Field(IntegerType, 'status');
+  @FieldProp(IntegerType, 'user_id')
+  public static userId: Field;
+
+  @FieldProp(IntegerType)
+  public static status: Field;
+  
   public static source: Field = new Field(IntegerType, 'source');
   public static price: Field = new Field(IntegerType, 'price');
   public static dateCreated: Field = new Field(DateType, 'date_created');

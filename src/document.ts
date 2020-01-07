@@ -20,13 +20,17 @@ export class DateType extends FieldType {}
 
 export class Field extends Expression {
   public readonly visitName = 'field';
+  public name!: string;
 
   constructor(
     private type: FieldType,
-    public name: string, // TODO maybe replace 2 and 3 args with opts object
+    name?: string, // TODO maybe replace 2 and 3 args with opts object
     private parent?: DocClass,
   ) {
     super();
+    if (name) {
+      this.name = name;
+    }
   }
 
   public in_(terms: TermValue[]): Terms {
@@ -64,6 +68,10 @@ export class Field extends Expression {
 
   public collectDocClasses(): Readonly<DocClass[]> {
     return this.parent ? [this.parent] : [];
+  }
+
+  public setParent(parent: DocClass) {
+    this.parent = parent;
   }
 }
 

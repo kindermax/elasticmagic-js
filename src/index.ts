@@ -3,6 +3,9 @@ import {
   Index,
 } from './cluster';
 import {
+  FieldProp,
+} from './decorators';
+import {
   BooleanType,
   DateType,
   Doc,
@@ -32,4 +35,5 @@ export {
   RangeExpr,
   Term,
   Terms,
+  FieldProp,
 };

@@ -15,7 +15,9 @@ services:
       - ./tsconfig.json:/app/tsconfig.json
     command: |
       sh -c '
-          ./scripts/wait_es.sh es6:9200;
+          if [[ "$${ES}" != "false" ]]; then
+            ./scripts/wait_es.sh es6:9200;
+          fi
           if [[ -n $${TESTS} ]]; then
             npm run test -- $${TESTS};
           else
