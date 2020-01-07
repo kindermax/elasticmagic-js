@@ -9,6 +9,7 @@ import {
 } from './expression';
 import { SearchResult } from './result';
 import { Hit } from './types';
+import { isString } from './util';
 
 export class FieldType {}
 
@@ -18,15 +19,33 @@ export class BooleanType extends FieldType {}
 
 export class DateType extends FieldType {}
 
+export type FieldOpts = {
+  name?: string;
+  parent?: DocClass;
+};
+
+type FieldOptsArg = Required<Pick<FieldOpts, 'name'>> & { parent?: DocClass } | string;
+
 export class Field extends Expression {
   public readonly visitName = 'field';
+  public name!: string;
+  public parent!: DocClass;
 
   constructor(
     private type: FieldType,
-    public name: string, // TODO maybe replace 2 and 3 args with opts object
-    private parent?: DocClass,
+    fieldOpts: FieldOptsArg,
   ) {
     super();
+    if (isString(fieldOpts)) {
+      this.name = fieldOpts;
+    } else {
+      if (fieldOpts.name) {
+        this.name = fieldOpts.name;
+      }
+      if (fieldOpts.parent) {
+        this.parent = fieldOpts.parent;
+      }
+    }
   }
 
   public in_(terms: TermValue[]): Terms {
@@ -64,6 +83,10 @@ export class Field extends Expression {
 
   public collectDocClasses(): Readonly<DocClass[]> {
     return this.parent ? [this.parent] : [];
+  }
+
+  public setParent(parent: DocClass) {
+    this.parent = parent;
   }
 }
 

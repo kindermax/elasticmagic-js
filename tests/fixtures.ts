@@ -1,3 +1,4 @@
+import { FieldProp } from '../src/decorators';
 import { DateType, Doc, Field, IntegerType } from '../src/document';
 
 export enum OrderStatus {
@@ -15,11 +16,15 @@ export enum OrderSource {
 export class OrderDoc extends Doc {
   public static docType: string = 'order';
 
-  public static userId: Field = new Field(IntegerType, 'user_id', OrderDoc);
-  public static status: Field = new Field(IntegerType, 'status', OrderDoc);
-  public static source: Field = new Field(IntegerType, 'source', OrderDoc);
-  public static price: Field = new Field(IntegerType, 'price', OrderDoc);
-  public static dateCreated: Field = new Field(DateType, 'date_created', OrderDoc);
+  @FieldProp(IntegerType, { name: 'user_id' })
+  public static userId: Field;
+  @FieldProp(IntegerType)
+  public static status: Field;
+  @FieldProp(IntegerType)
+  public static source: Field;
+  @FieldProp(IntegerType)
+  public static price: Field;
+  public static dateCreated: Field = new Field(DateType, { name: 'date_created', parent: OrderDoc });
 
   public static conditionSourceDesktop() {
     return OrderDoc.source.in_([OrderSource.desktop]);
