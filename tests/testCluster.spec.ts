@@ -207,7 +207,7 @@ describe("Cluster", () => {
   test('should work with explicilty provided docClass via withDoc', async () => {
     const cluster = new Cluster(client, indexName);
     let query = new SearchQuery({ cluster });
-    // query = query.filter(OrderDoc.userId.in_([userId])).withDoc(Doc);
+    // TODO add test where withDoc(Doc) can accept only sublcasses of Doc
     query = query.filter(OrderDoc.userId.in_([userId])).withDoc(OrderDoc);
     const result = await query.getResult<OrderDoc>();
     expect(result.error).toBeUndefined();
