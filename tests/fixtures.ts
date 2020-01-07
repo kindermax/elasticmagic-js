@@ -16,7 +16,7 @@ export enum OrderSource {
 export class OrderDoc extends Doc {
   public static docType: string = 'order';
 
-  @FieldProp(IntegerType, 'user_id')
+  @FieldProp(IntegerType, { name: 'user_id' })
   public static userId: Field;
   @FieldProp(IntegerType)
   public static status: Field;
@@ -24,8 +24,7 @@ export class OrderDoc extends Doc {
   public static source: Field;
   @FieldProp(IntegerType)
   public static price: Field;
-  @FieldProp(DateType, 'date_created')
-  public static dateCreated: Field;
+  public static dateCreated: Field = new Field(DateType, { name: 'date_created', parent: OrderDoc });
 
   public static conditionSourceDesktop() {
     return OrderDoc.source.in_([OrderSource.desktop]);

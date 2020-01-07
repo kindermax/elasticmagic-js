@@ -48,15 +48,15 @@ enum OrderSource {
 class OrderDoc extends Doc {
   public static docType: string = 'order';
 
-  @FieldProp(IntegerType, 'user_id')
+  @FieldProp(IntegerType, { name: 'user_id' })
   public static userId: Field;
 
   @FieldProp(IntegerType)
   public static status: Field;
   
-  public static source: Field = new Field(IntegerType, 'source');
-  public static price: Field = new Field(IntegerType, 'price');
-  public static dateCreated: Field = new Field(DateType, 'date_created');
+  public static source: Field = new Field(IntegerType, { name: 'source', parent: OrderDoc });
+  public static price: Field = new Field(IntegerType, { name: 'price', parent: OrderDoc });
+  public static dateCreated: Field = new Field(DateType, { name: 'date_created', parent: OrderDoc });
 }
 
 const client = new Client({ node: 'http://es6-test:9200' });
