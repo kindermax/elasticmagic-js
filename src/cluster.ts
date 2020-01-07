@@ -1,8 +1,8 @@
-import { ApiResponse, Client } from "@elastic/elasticsearch";
-import { Doc } from "./document";
-import { Query, SearchParams, SearchQuery, SearchQueryContext, SearchQueryOptions } from "./query";
-import { SearchResult } from "./result";
-import { RawResultBody } from "./types";
+import { ApiResponse, Client } from '@elastic/elasticsearch';
+import { Doc } from './document';
+import { Query, SearchParams, SearchQuery, SearchQueryContext, SearchQueryOptions } from './query';
+import { SearchResult } from './result';
+import { RawResultBody } from './types';
 
 type RootRawResult = {
   name: string;
@@ -67,8 +67,8 @@ export class Cluster {
 
   private processEsVersionResult(rawResult: RootRawResult): EsVersion {
     const versionString = rawResult.version.number;
-    const [version] = versionString.split("-");
-    const [major, minor, patch] = version.split(".").map(Number);
+    const [version] = versionString.split('-');
+    const [major, minor, patch] = version.split('.').map(Number);
     return new EsVersion(major, minor, patch);
   }
 

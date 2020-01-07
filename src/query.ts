@@ -1,11 +1,11 @@
-import { AggExpression } from "./agg";
-import { Cluster, Index } from "./cluster";
-import { CompilerVisitor } from "./compiler";
-import { Doc, DocClass } from "./document";
-import { Expression, Params, ParamsType } from "./expression";
-import { SearchResult } from "./result";
-import { Dictionary, PlainObject } from "./types";
-import { cleanParams, isString, collectDocClasses, uniqueArray } from "./util";
+import { AggExpression } from './agg';
+import { Cluster, Index } from './cluster';
+import { CompilerVisitor } from './compiler';
+import { Doc, DocClass } from './document';
+import { Expression, Params, ParamsType } from './expression';
+import { SearchResult } from './result';
+import { Dictionary, PlainObject } from './types';
+import { cleanParams, collectDocClasses, isString, uniqueArray } from './util';
 
 export type SearchQueryOptions = {
   routing?: number;

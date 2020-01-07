@@ -1,11 +1,11 @@
-import { AggResult, BucketAgg } from "./agg";
-import { Doc, DocClass } from "./document";
-import { ParamKV, Params } from "./expression";
-import { InstanceMapper } from "./query";
-import { Dictionary, Hit, RawResultBody } from "./types";
-import { arrayKVToDict } from "./util";
+import { AggResult, BucketAgg } from './agg';
+import { Doc, DocClass } from './document';
+import { ParamKV, Params } from './expression';
+import { InstanceMapper } from './query';
+import { Dictionary, Hit, RawResultBody } from './types';
+import { arrayKVToDict } from './util';
 
-const DOC_TYPE_FIELD = "_doc_type";
+const DOC_TYPE_FIELD = '_doc_type';
 const DOC_TYPE_NAME_FIELD = `${DOC_TYPE_FIELD}.name`;
 
 function docClsMap(
@@ -25,7 +25,7 @@ function getDocTypeForHit(hit: Hit): string {
 type InstanceMapperDict = Dictionary<string, InstanceMapper<DocClass, any>>;
 
 function isInstanceMapperDict(arg: any): arg is InstanceMapperDict {
-  return arg.constructor.name === "Object";
+  return arg.constructor.name === 'Object';
 }
 
 class Result {
