@@ -254,10 +254,6 @@ export class SearchQuery {
   }
 
   public withDoc<T extends DocClass>(docClass: T): this {
-    // TODO finish (this if PoC and not works)
-    if (docClass.prototype instanceof Doc && docClass instanceof Doc) {
-      throw new Error('docClass must be a subclass of Doc');
-    }
     this._docClass = docClass;
     return this;
   }
@@ -306,8 +302,6 @@ export class SearchQuery {
   }
 
   private collectDocClasses(): Readonly<DocClass[]> {
-    // set
-    // union
     const expressions = [
       this._query,
       this._source,
