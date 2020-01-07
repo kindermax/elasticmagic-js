@@ -7,8 +7,6 @@ services:
   test: &test
     image: base
     working_dir: /app
-    depends_on:
-      - es6
     volumes:
       - ./src:/app/src
       - ./tests:/app/tests
@@ -16,10 +14,16 @@ services:
       - ./package.json:/app/package.json
       - ./tsconfig.json:/app/tsconfig.json
     command: |
-      sh -c "
-        ./scripts/wait_es.sh es6:9200
-        npm run test
-      "
+      sh -c '
+          ./scripts/wait_es.sh es6:9200;
+          if [[ -n $${TESTS} ]]; then
+            npm run test -- $${TESTS};
+          else
+            npm run test
+          fi;
+        '
+    depends_on:
+      - es6
 
   test-integ:
     <<: *test

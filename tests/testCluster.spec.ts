@@ -1,31 +1,9 @@
 import { Client } from '@elastic/elasticsearch';
-import { Field, IntegerType, Doc, DateType } from "../src/document";
 import { Bool } from "../src/expression";
 import { Cluster } from "../src/cluster";
 import * as agg from '../src/agg';
-
-enum OrderStatus {
-  new = 1,
-  paid = 2,
-  handled = 3,
-  canceled = 4,
-}
-
-enum OrderSource {
-  desktop = 1,
-  mobile = 2,
-}
-
-class OrderDoc extends Doc {
-  public static docType: string = 'order';
-
-  public static userId: Field = new Field(IntegerType, 'user_id');
-  public static status: Field = new Field(IntegerType, 'status'); // TODO how can we get names in runtime? like python metaclass
-  public static source: Field = new Field(IntegerType, 'source');
-  public static price: Field = new Field(IntegerType, 'price');
-  public static dateCreated: Field = new Field(DateType, 'date_created');
-  
-}
+import { SearchQuery } from '../src/query';
+import { OrderStatus, OrderSource, OrderDoc } from './fixtures';
 
 let client: Client;
 
@@ -208,5 +186,56 @@ describe("Cluster", () => {
 
     const esVersion = await cluster.getEsVersion();
     expect(esVersion.major).toBe(6);
+  });
+
+  test('should work if pass cluster to not bounded search query', async () => {
+    const cluster = new Cluster(client, indexName);
+    let query = new SearchQuery({ cluster, docClass: OrderDoc });
+    query = query.source(false)
+      .filter(
+        Bool.must(
+          OrderDoc.userId.in_([userId]),
+          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not_(OrderSource.mobile),
+        ),
+      );
+    const result = await query.getResult<OrderDoc>();
+    expect(result.error).toBeUndefined();
+    expect(result.total).toBe(1);
+  });
+
+  test('should work with explicilty provided docClass via withDoc', async () => {
+    const cluster = new Cluster(client, indexName);
+    let query = new SearchQuery({ cluster });
+    // TODO add test where withDoc(Doc) can accept only sublcasses of Doc
+    query = query.filter(OrderDoc.userId.in_([userId])).withDoc(OrderDoc);
+    const result = await query.getResult<OrderDoc>();
+    expect(result.error).toBeUndefined();
+    expect(result.total).toBe(1);
+  });
+
+  test('should work with explicilty provided docType class via withDocType', async () => {
+    const cluster = new Cluster(client, indexName);
+    let query = new SearchQuery({ cluster });
+    query = query.filter(OrderDoc.userId.in_([userId])).withDocType(OrderDoc.docType);
+    const result = await query.getResult<OrderDoc>();
+    expect(result.error).toBeUndefined();
+    expect(result.total).toBe(1);
+  });
+
+  test('should work without explicilty provided doc class', async () => {
+    const cluster = new Cluster(client, indexName);
+    let query = new SearchQuery({ cluster });
+    query = query.source(false)
+      .filter(
+        Bool.must(
+          OrderDoc.userId.in_([userId]),
+          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not_(OrderSource.mobile),
+        ),
+      );
+    const result = await query.getResult<OrderDoc>();
+    expect(result.error).toBeUndefined();
+    expect(result.total).toBe(1);
   });
 });

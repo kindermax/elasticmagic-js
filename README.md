@@ -5,6 +5,8 @@ JS/Typescript DSL for Elasticsearch
 
 This lib is a port of original library written in `python` by [@anti-social]( https://github.com/anti-social/elasticmagic )
 
+Supports Elasticsearch version 6.x
+
 # Getting Started
 
 Install elasticmagic-js using [`npm`](https://www.npmjs.com/):
@@ -174,6 +176,14 @@ Run all tests
 make test
 ```
 
+Run one test
+
+```bash
+make test TEST=tests/testSearchQuery.spec.ts
+# or
+make test TEST=testSearchQuery.spec.ts
+```
+
 # TODO
 
 - [x] query generation
@@ -183,6 +193,7 @@ make test
 - [ ] add support for es5, es7
 - [ ] collect doc classes
 - [ ] work with Date type
+- [ ] clone query
 - [x] return typed result of search +-
 - [ ] precommit hooks
 - [ ] generate doc with jsDoc

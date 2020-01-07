@@ -18,8 +18,8 @@ export type Hit<T = any> = {
   _routing?: string;
   _score?: number;
   _type?: string;
-  _source: T;
-  fields: PlainObject;
+  _source?: T;
+  fields?: PlainObject;
 };
 
 // TODo not sure if we need this fields in type
@@ -35,7 +35,7 @@ export type RawAggBucketChild = Dictionary<string, BucketFields | Dictionary<str
 export type RawAggBucket = {
   key: any;
   doc_count: number;
-} & RawAggBucketChild;
+} & RawAggBucketChild; // TODO can be rewriten with ts utility types such as Pick, Exclude, Extract
 
 export type RawAgg = {
   doc_count_error_upper_bound: number;

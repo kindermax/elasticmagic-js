@@ -1,45 +1,9 @@
-import { 
-  Field, 
-  DateType,
-  IntegerType, 
-  Doc, 
-} from "../src/index";
-import { SearchQuery } from "../src/query";
-import { Bool } from "../src/expression";
+import { SearchQuery } from '../src/query';
+import { Bool } from '../src/expression';
 import * as agg from '../src/agg';
+import { OrderDoc, OrderStatus, OrderSource } from './fixtures';
 
-enum OrderStatus {
-  new = 1,
-  paid = 2,
-  handled = 3,
-  canceled = 4,
-}
-
-enum OrderSource {
-  desktop = 1,
-  mobile = 2,
-}
-
-class OrderDoc extends Doc {
-  public static docType: string = 'order';
-
-  public static userId: Field = new Field(IntegerType, 'user_id');
-  public static status: Field = new Field(IntegerType, 'status'); // TODO how can we get names in runtime? like python metaclass
-  public static source: Field = new Field(IntegerType, 'source');
-  public static price: Field = new Field(IntegerType, 'price');
-  public static dateCreated: Field = new Field(DateType, 'date_created');
-  
-  public static conditionSourceDesktop() {
-    return OrderDoc.source.in_([OrderSource.desktop]);
-  }
-
-  public static conditionLowPrice() {
-    return OrderDoc.price.lt_(10);
-  }
-}
-
-
-describe("Aggregations compile", () => {
+describe('Aggregations compile', () => {
   test('valid aggregations', () => {
     const searchQuery = new SearchQuery({})
     const query = searchQuery
@@ -129,7 +93,7 @@ describe("Aggregations compile", () => {
       aggregations: {
         usersOrders: {
           terms: {
-            field: "user_id",
+            field: 'user_id',
             size: 1
           },
           aggregations: {

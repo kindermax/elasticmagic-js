@@ -23,7 +23,8 @@ export class Field extends Expression {
 
   constructor(
     private type: FieldType,
-    public name: string,
+    public name: string, // TODO maybe replace 2 and 3 args with opts object
+    private parent?: DocClass,
   ) {
     super();
   }
@@ -60,6 +61,10 @@ export class Field extends Expression {
   public getType(): FieldType {
     return this.type;
   }
+
+  public collectDocClasses(): Readonly<DocClass[]> {
+    return this.parent ? [this.parent] : [];
+  }
 }
 
 type DocOpts = {
@@ -90,4 +95,10 @@ export class Doc {
   public get instance(): any | null {
     return null;
   }
+
+  public static getDocCls(): string {
+    return this.docType;
+  }
 }
+
+export type DocClass = typeof Doc;

@@ -1,31 +1,8 @@
-import { Field, IntegerType, Doc, DateType } from "../src/document";
 import { SearchQuery } from "../src/query";
-import { Bool } from "../src/expression";
+import { Bool } from '../src/expression';
+import { OrderDoc, OrderStatus, OrderSource } from "./fixtures";
 
-enum OrderStatus {
-  new = 1,
-  paid = 2,
-  handled = 3,
-  canceled = 4,
-}
-
-enum OrderSource {
-  desktop = 1,
-  mobile = 2,
-}
-
-class OrderDoc extends Doc {
-  public static docType: string = 'order';
-
-  public static userId: Field = new Field(IntegerType, 'user_id');
-  public static status: Field = new Field(IntegerType, 'status'); // TODO how can we get names in runtime? like python metaclass
-  public static source: Field = new Field(IntegerType, 'source');
-  public static price: Field = new Field(IntegerType, 'price');
-  public static dateCreated: Field = new Field(DateType, 'date_created');
-}
-
-
-describe("Query compile", () => {
+describe("SearchQuery compile", () => {
   test('empty search query', () => {
     const searchQuery = new SearchQuery({})
     expect(searchQuery.body).toStrictEqual({});  
