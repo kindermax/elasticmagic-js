@@ -1,7 +1,7 @@
 import { AggExpression } from "./agg";
 import { Cluster, Index } from "./cluster";
 import { CompilerVisitor } from "./compiler";
-import { Doc, IDocument } from "./document";
+import { Doc } from "./document";
 import { Expression, Params, ParamsType } from "./expression";
 import { SearchResult } from "./result";
 import { Dictionary, PlainObject } from "./types";
@@ -9,7 +9,7 @@ import { cleanParams } from "./util";
 
 export type SearchQueryOptions = {
   routing?: number;
-  docClass?: IDocument;
+  docClass?: typeof Doc;
   docType?: string;
 };
 
@@ -99,7 +99,7 @@ export class SearchQueryContext {
     public limit: Limit,
     public searchParams: Params,
     public aggregations: Params,
-    public docClass?: IDocument, // TODO maybe we should pass entire SearchQuery ?
+    public docClass?: typeof Doc, // TODO maybe we should pass entire SearchQuery ?
     public instanceMapper?: InstanceMapper<any, any>,
   ) {
     if (!docClass) {
@@ -109,7 +109,7 @@ export class SearchQueryContext {
 }
 
 // UTIL
-function getDocType(docType?: string, docClass?: IDocument): string | null {
+function getDocType(docType?: string, docClass?: typeof Doc): string | null {
   if (docType) { return docType; }
   if (docClass) { return docClass.docType; }
   return null;
@@ -134,7 +134,7 @@ export class SearchQuery {
   private _searchParams: Params = new Params();
   private docType?: string;
 
-  private _docClass?: IDocument;
+  private _docClass?: typeof Doc;
   private _instanceMapper?: InstanceMapper<any, any>;
 
   constructor(
