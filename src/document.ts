@@ -66,10 +66,6 @@ type DocOpts = {
   hit: Hit;
   result: SearchResult<any>;
 };
-export interface IDocument {
-  docType: string;
-  new (opts: DocOpts): Doc;
-}
 
 // TODO maybe decorator can be used as an alternative to metaclass
 // https://github.com/Microsoft/TypeScript/issues/17454

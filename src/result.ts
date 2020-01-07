@@ -1,15 +1,17 @@
 import { AggResult, BucketAgg } from "./agg";
-import { Doc, IDocument } from "./document";
+import { Doc } from "./document";
 import { ParamKV, Params } from "./expression";
 import { InstanceMapper } from "./query";
-import { Dictionary, Hit, RawResultBody } from "./types";
+import { Dictionary, Hit, RawResultBody, Nullable } from "./types";
 import { arrayKVToDict } from "./util";
 
 const DOC_TYPE_FIELD = "_doc_type";
 const DOC_TYPE_NAME_FIELD = `${DOC_TYPE_FIELD}.name`;
 
-function docClsMap(docCls: IDocument | IDocument[] | null | undefined): Dictionary<string, IDocument> {
-  let docClasses: IDocument[] = [];
+function docClsMap(
+  docCls: Nullable<typeof Doc | Array<typeof Doc>>,
+): Dictionary<string, typeof Doc> {
+  let docClasses: Array<typeof Doc> = [];
   if (!docCls) {
     docClasses = [];
   } else if (!Array.isArray(docCls)) {
@@ -17,7 +19,7 @@ function docClsMap(docCls: IDocument | IDocument[] | null | undefined): Dictiona
   } else {
     docClasses = docCls;
   }
-  return arrayKVToDict<Dictionary<string, IDocument>>(
+  return arrayKVToDict<Dictionary<string, typeof Doc>>(
     docClasses.map((cls) => [cls.docType, cls]),
   );
 }
@@ -28,7 +30,7 @@ function getDocTypeForHit(hit: Hit): string {
   return customDocType ? customDocType[0] : hit._type;
 }
 
-type InstanceMapperDict = Dictionary<string, InstanceMapper<IDocument, any>>;
+type InstanceMapperDict = Dictionary<string, InstanceMapper<typeof Doc, any>>;
 
 function isInstanceMapperDict(arg: any): arg is InstanceMapperDict {
   return arg.constructor.name === "Object";
@@ -41,8 +43,8 @@ class Result {
 export class SearchResult<T extends Doc, TRaw = any> extends Result {
 
   private queryAggs: Params = new Params();
-  private docClsMap: Dictionary<string, IDocument> = {};
-  private docClasses: IDocument[] = [];
+  private docClsMap: Dictionary<string, typeof Doc> = {};
+  private docClasses: Array<typeof Doc> = [];
   private instanceMappers: InstanceMapperDict = {};
   private mapperRegistry: any = {};
 
@@ -58,8 +60,8 @@ export class SearchResult<T extends Doc, TRaw = any> extends Result {
   constructor(
     rawResult: RawResultBody<TRaw>,
     aggregations: Params,
-    docClass?: IDocument,
-    instanceMapper?: InstanceMapper<IDocument, any> | InstanceMapperDict, // TODO pass types
+    docClass?: typeof Doc,
+    instanceMapper?: InstanceMapper<typeof Doc, any> | InstanceMapperDict, // TODO pass types
   ) {
     super(rawResult);
 
