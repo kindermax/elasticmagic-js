@@ -180,6 +180,8 @@ Run one test
 
 ```bash
 make test TEST=tests/testSearchQuery.spec.ts
+# or
+make test TEST=testSearchQuery.spec.ts
 ```
 
 # TODO

@@ -1,4 +1,5 @@
-import { ParamsType } from "./expression";
+import { ParamsType, Expression, FieldQueryValue } from "./expression";
+import { DocClass } from "./document";
 
 export function arrayKVToDict<T = any>(array: any[][]): T {
   return array.reduce((acc: any, [key, val]) => {
@@ -23,27 +24,39 @@ export function cleanParams(params?: ParamsType): ParamsType {
     }, {} as ParamsType);
 }
 
-// TODO maybe rewrite all to Map. Could it be slow ??
-export function isObject(value: any): boolean {
-  const isObjectLike = typeof value === "object" && value !== null;
+export function isArray<T>(x: any): x is T[] {
+  return Array.isArray(x) && typeof x.length === 'number';
+}
 
-  let tag = null;
+export function isString(x: any): x is string {
+  return typeof x === 'string';
+}
 
-  if (value == null) {
-    tag = value === undefined ? "[object Undefined]" : "[object Null]";
-  } else {
-    tag = toString.call(value);
+export function isObject(x: any): x is object {
+  return x && typeof x === 'object' && x.constructor === Object;
+}
+
+export function isExpression(x: any): x is Expression {
+  return x instanceof Expression;
+}
+
+export function uniqueArray<T = any>(items: T[]): T[] {
+  return Array.from(new Set(items));
+}
+export function collectDocClasses(
+  expr: Expression | Expression[] | ParamsType | FieldQueryValue,
+): Readonly<DocClass[]> {
+  if (isExpression(expr)) {
+    return expr.collectDocClasses();
   }
 
-  if (!isObjectLike || tag !== "[object Object]") {
-    return false;
+  if (isArray(expr)) {
+    return uniqueArray(expr.flatMap((item) => collectDocClasses(item)));
   }
-  if (Object.getPrototypeOf(value) === null) {
-    return true;
+
+  if (isObject(expr)) {
+    const kvListChain = Object.keys(expr).concat(Object.values(expr));
+    return uniqueArray(kvListChain.flatMap((item) => collectDocClasses(item)));
   }
-  let proto = value;
-  while (Object.getPrototypeOf(proto) !== null) {
-    proto = Object.getPrototypeOf(proto);
-  }
-  return Object.getPrototypeOf(value) === proto;
+  return [];
 }

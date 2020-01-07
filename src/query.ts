@@ -1,15 +1,15 @@
 import { AggExpression } from "./agg";
 import { Cluster, Index } from "./cluster";
 import { CompilerVisitor } from "./compiler";
-import { Doc } from "./document";
+import { Doc, DocClass } from "./document";
 import { Expression, Params, ParamsType } from "./expression";
 import { SearchResult } from "./result";
 import { Dictionary, PlainObject } from "./types";
-import { cleanParams } from "./util";
+import { cleanParams, isString, collectDocClasses, uniqueArray } from "./util";
 
 export type SearchQueryOptions = {
   routing?: number;
-  docClass?: typeof Doc;
+  docClass?: DocClass;
   docType?: string;
 };
 
@@ -88,8 +88,11 @@ export type Limit = number | null;
 
 export type InstanceMapper<T1, T2> = (ids: T1[]) => T2;
 
+// TODO make all fields readonly
 export class SearchQueryContext {
-  public visitName: string = "searchQueryContext";
+  public visitName: string = 'searchQueryContext';
+
+  public docTypes: Readonly<string[]> = [];
 
   constructor(
     public query: QueryOverride,
@@ -99,17 +102,33 @@ export class SearchQueryContext {
     public limit: Limit,
     public searchParams: Params,
     public aggregations: Params,
-    public docClass?: typeof Doc, // TODO maybe we should pass entire SearchQuery ?
+    public docClasses: Readonly<DocClass[]>,
+    public docType?: string,
     public instanceMapper?: InstanceMapper<any, any>,
   ) {
-    if (!docClass) {
-      // TODO collect_doc_classes
+
+    const docTypes: string[] = [];
+    // TODO debug this to make it right, maybe look at tests
+    if (docType) {
+      if (isString(docType)) {
+        docTypes.push(...docType.split(',').map((type) => type.trim()));
+      } else {
+        docTypes.push(docType);
+      }
     }
+
+    this.docTypes = this.getUniqueDocTypes(docTypes, this.docClasses);
+  }
+
+  private getUniqueDocTypes(docTypes: string[], docClasses: Readonly<DocClass[]>): Readonly<string[]> {
+    const docClassesTypes = docClasses.map((cls) => cls.getDocCls());
+    const uniqueDocTypes = new Set(docTypes.concat(docClassesTypes));
+    return Array.from(uniqueDocTypes);
   }
 }
 
 // UTIL
-function getDocType(docType?: string, docClass?: typeof Doc): string | null {
+function getDocType(docType?: string, docClass?: DocClass): string | null {
   if (docType) { return docType; }
   if (docClass) { return docClass.docType; }
   return null;
@@ -132,13 +151,12 @@ export class SearchQuery {
   private _source: SourceField = null;
   private _query: QueryOverride = null;
   private _searchParams: Params = new Params();
-  private docType?: string;
-
-  private _docClass?: typeof Doc;
+  private _docClass?: DocClass;
+  private _docType?: string;
   private _instanceMapper?: InstanceMapper<any, any>;
 
   constructor(
-    searchQueryOptions: ClusterSearchQueryOptions,
+    searchQueryOptions: ClusterSearchQueryOptions = {},
   ) {
     const {
       index,
@@ -156,7 +174,7 @@ export class SearchQuery {
     }
 
     if (docType) {
-      this.docType = docType;
+      this._docType = docType;
     }
 
     this._searchParams = new Params({
@@ -166,6 +184,7 @@ export class SearchQuery {
   }
 
   public getQueryContext(): SearchQueryContext {
+    const docClasses = this._docClass ? [this._docClass] : this.collectDocClasses();
     return new SearchQueryContext(
       this._query,
       this._source,
@@ -174,7 +193,8 @@ export class SearchQuery {
       this._limit,
       this._searchParams,
       this._aggregations,
-      this._docClass,
+      docClasses,
+      this._docType,
       this._instanceMapper,
     );
   }
@@ -183,7 +203,7 @@ export class SearchQuery {
    * Controls which fields of the document's ``_source`` field to retrieve.
    * @param include
    */
-  public source(fields: SourceField): SearchQuery {
+  public source(fields: SourceField): this {
     // TODO add exclude and include
     this._source = fields;
     return this;
@@ -197,18 +217,18 @@ export class SearchQuery {
    * Multiple expressions may be specified, so they will be joined together using ``Bool.must`` expression.
    * @param filters
    */
-  public filter(...filters: Expression[]): SearchQuery {
+  public filter(...filters: Expression[]): this {
     this._filters.push(...filters);
     return this;
   }
 
-  public limit(limit: number): SearchQuery {
+  public limit(limit: number): this {
     this._limit = limit;
     return this;
   }
 
    // TODO QueryOverride type is incorrect, hack
-  public query(query: QueryOverride): SearchQuery {
+  public query(query: QueryOverride): this {
     this._query = query;
     return this;
   }
@@ -222,14 +242,28 @@ export class SearchQuery {
    *
    * @param aggs objects with aggregations. Can be ``null`` that cleans up previous aggregations.
    */
-  public aggregations(aggs: Aggregations): SearchQuery {
+  public aggregations(aggs: Aggregations): this {
     // TODO implement null cleaning
     this._aggregations = new Params(aggs);
     return this;
   }
 
-  public withInstanceMapper<T1, T2>(instanceMapper: InstanceMapper<T1, T2>): SearchQuery {
+  public withInstanceMapper<T1, T2>(instanceMapper: InstanceMapper<T1, T2>): this {
     this._instanceMapper = instanceMapper;
+    return this;
+  }
+
+  public withDoc<T extends DocClass>(docClass: T): this {
+    // TODO finish (this if PoC and not works)
+    if (docClass.prototype instanceof Doc && docClass instanceof Doc) {
+      throw new Error('docClass must be a subclass of Doc');
+    }
+    this._docClass = docClass;
+    return this;
+  }
+
+  public withDocType(docType: string): this {
+    this._docType = docType;
     return this;
   }
 
@@ -237,17 +271,6 @@ export class SearchQuery {
     return this.compile();
   }
 
-  private compile(): Query {
-    const compiler = new CompilerVisitor();
-    return compiler.compile(this.getQueryContext());
-  }
-
-  private prepareSearchParams(params: ParamsType): SearchParams {
-    return {
-      routing: `${params.routing}`,
-      type: params.docType,
-    };
-  }
   // TODO maybe reuse logic with Compiled.
   // Like hold class which can compile all on construction and then use that instance?
   public get body() {
@@ -265,8 +288,38 @@ export class SearchQuery {
   public async getResult<T extends Doc = any, TRaw = any>(): Promise<SearchResult<T>> {
     // TODO add cache
     if (!this.cluster) {
-      throw new Error("getResult: no cluster specified, can not make a query");
+      throw new Error('getResult: no cluster specified, can not make a query');
     }
     return this.cluster.search<T, TRaw>(this);
+  }
+
+  private compile(): Query {
+    const compiler = new CompilerVisitor();
+    return compiler.compile(this.getQueryContext());
+  }
+
+  private prepareSearchParams(params: ParamsType): SearchParams {
+    return {
+      routing: `${params.routing}`,
+      type: params.docType,
+    };
+  }
+
+  private collectDocClasses(): Readonly<DocClass[]> {
+    // set
+    // union
+    const expressions = [
+      this._query,
+      this._source,
+      this._fields,
+      this._filters,
+      // this._postFilters,
+      // function_score functions list,
+      Object.values(this._aggregations.getParams()),
+      // this._orderBy,
+      // this._rescores,
+      // this._highlight,
+    ];
+    return uniqueArray(expressions.flatMap((expr) => collectDocClasses(expr)));
   }
 }

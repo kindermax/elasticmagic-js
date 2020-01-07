@@ -1,25 +1,17 @@
 import { AggResult, BucketAgg } from "./agg";
-import { Doc } from "./document";
+import { Doc, DocClass } from "./document";
 import { ParamKV, Params } from "./expression";
 import { InstanceMapper } from "./query";
-import { Dictionary, Hit, RawResultBody, Nullable } from "./types";
+import { Dictionary, Hit, RawResultBody } from "./types";
 import { arrayKVToDict } from "./util";
 
 const DOC_TYPE_FIELD = "_doc_type";
 const DOC_TYPE_NAME_FIELD = `${DOC_TYPE_FIELD}.name`;
 
 function docClsMap(
-  docCls: Nullable<typeof Doc | Array<typeof Doc>>,
-): Dictionary<string, typeof Doc> {
-  let docClasses: Array<typeof Doc> = [];
-  if (!docCls) {
-    docClasses = [];
-  } else if (!Array.isArray(docCls)) {
-    docClasses = [docCls];
-  } else {
-    docClasses = docCls;
-  }
-  return arrayKVToDict<Dictionary<string, typeof Doc>>(
+  docClasses: Readonly<DocClass[]>,
+): Dictionary<string, DocClass> {
+  return arrayKVToDict<Dictionary<string, DocClass>>(
     docClasses.map((cls) => [cls.docType, cls]),
   );
 }
@@ -30,7 +22,7 @@ function getDocTypeForHit(hit: Hit): string {
   return customDocType ? customDocType[0] : hit._type;
 }
 
-type InstanceMapperDict = Dictionary<string, InstanceMapper<typeof Doc, any>>;
+type InstanceMapperDict = Dictionary<string, InstanceMapper<DocClass, any>>;
 
 function isInstanceMapperDict(arg: any): arg is InstanceMapperDict {
   return arg.constructor.name === "Object";
@@ -43,8 +35,7 @@ class Result {
 export class SearchResult<T extends Doc, TRaw = any> extends Result {
 
   private queryAggs: Params = new Params();
-  private docClsMap: Dictionary<string, typeof Doc> = {};
-  private docClasses: Array<typeof Doc> = [];
+  private docClsMap: Dictionary<string, DocClass> = {};
   private instanceMappers: InstanceMapperDict = {};
   private mapperRegistry: any = {};
 
@@ -60,16 +51,17 @@ export class SearchResult<T extends Doc, TRaw = any> extends Result {
   constructor(
     rawResult: RawResultBody<TRaw>,
     aggregations: Params,
-    docClass?: typeof Doc,
-    instanceMapper?: InstanceMapper<typeof Doc, any> | InstanceMapperDict, // TODO pass types
+    private docClasses: Readonly<DocClass[]>,
+    instanceMapper?: InstanceMapper<DocClass, any> | InstanceMapperDict, // TODO pass types
   ) {
     super(rawResult);
 
     this.queryAggs = aggregations || new Params();
-    this.docClsMap = docClsMap(docClass);
-    this.docClasses = Object.values(this.docClsMap);
+    this.docClsMap = docClsMap(docClasses);
 
     if (instanceMapper) {
+      // TODO although we can check if instanceMapper is a dict
+      // it is not implemented to accept instanceMapper at a higher level yet
       if (isInstanceMapperDict(instanceMapper)) {
         this.instanceMappers = instanceMapper;
       } else {
@@ -88,7 +80,8 @@ export class SearchResult<T extends Doc, TRaw = any> extends Result {
     // TODO add type for hit: any
     hits.hits.forEach((hit: Hit) => {
       const docType = getDocTypeForHit(hit);
-      const docCls = this.docClsMap[docType]; // TODO DynamicDocument
+      // TODO below use some sort of DynamicDocument, because fail if no docClass passed to SearchResult
+      const docCls = this.docClsMap[docType];
 
       // TODO below is a hack
       // the propblem is when having class type to create instance from it we need to know its type

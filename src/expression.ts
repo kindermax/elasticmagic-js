@@ -1,6 +1,6 @@
-import { Field } from "./document";
+import { Field, DocClass } from "./document";
 import { Dictionary, Nullable } from "./types";
-import { cleanParams } from "./util";
+import { cleanParams, collectDocClasses, uniqueArray } from "./util";
 
 // TODO must be generic type with restrictions
 export type TermValue =
@@ -17,6 +17,10 @@ export class Expression {
   public readonly visitName: string = "notDefined";
   public readonly queryName: string = "notDefined";
   public readonly queryKey: string = "notDefined";
+
+  public collectDocClasses(): Readonly<DocClass[]> {
+    return [];
+  }
 }
 
 export type ParamsType = Dictionary<any, any>;
@@ -25,7 +29,7 @@ export type ParamKV = [string, any];
 
 export class Params extends Expression {
   public visitName = "params";
-  private params: ParamsType;
+  private params: ParamsType; // TODO maybe change this to Map
   private paramsKvList: ParamKV[];
 
   constructor(params?: ParamsType) {
@@ -40,6 +44,10 @@ export class Params extends Expression {
 
   public getParams(): ParamsType {
     return this.params;
+  }
+
+  public collectDocClasses(): Readonly<DocClass[]> {
+    return collectDocClasses(this.params);
   }
 
   get length(): number {
@@ -62,6 +70,10 @@ export class ParamsExpression extends Expression {
   constructor(params?: Dictionary<any, any>) {
     super();
     this.params = new Params(params);
+  }
+
+  public collectDocClasses(): Readonly<DocClass[]> {
+    return collectDocClasses(this.params);
   }
 }
 
@@ -87,9 +99,15 @@ export class FieldExpression extends QueryExpression {
     }
     return new Literal(field);
   }
+
+  public collectDocClasses(): Readonly<DocClass[]> {
+    const parentClasses = super.collectDocClasses();
+    const ownClasses = collectDocClasses(this.field);
+    return uniqueArray(parentClasses.concat(ownClasses));
+  }
 }
 
-type FieldQueryValue =
+export type FieldQueryValue =
   | string
   | number
   | boolean
@@ -101,6 +119,12 @@ export class FieldQueryExpression extends FieldExpression {
 
   constructor(field: Field, public query: FieldQueryValue) {
     super(field, {});
+  }
+
+  public collectDocClasses(): Readonly<DocClass[]> {
+    const parentClasses = super.collectDocClasses();
+    const ownClasses = collectDocClasses(this.query);
+    return uniqueArray(parentClasses.concat(ownClasses));
   }
 }
 

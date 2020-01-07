@@ -1,4 +1,4 @@
-import { Field, FieldType, Doc } from "./document";
+import { Field, FieldType, Doc, DocClass } from "./document";
 import { Expression, ParamKV, Params, ParamsExpression, ParamsType } from "./expression";
 import { InstanceMapper } from "./query";
 import { Dictionary, KVList, RawAgg, RawAggBucket } from "./types";
@@ -17,7 +17,7 @@ class Bucket {
     rawData: RawAggBucket,
     aggExpr: BucketAgg,
     private parent: AggResult, // TODO used by self.parent._populate_instances()
-    docClsMap: Dictionary<string, typeof Doc>,
+    docClsMap: Dictionary<string, DocClass>,
     mapperRegistry: any,
   ) {
     this.key = rawData.key; // TODO check if has property
@@ -56,7 +56,7 @@ export class AggExpression extends ParamsExpression {
 
   public buildAggResult(
     rawData: Dictionary<string, any>,
-    docClsMap: Dictionary<string, typeof Doc> = {},
+    docClsMap: Dictionary<string, DocClass> = {},
     mapperRegistry: any = {},
   ): AggResult {
     throw new Error("AggExpression: buildAggResult not implemented");
@@ -95,7 +95,7 @@ class SingleBucketAggResult extends AggResult {
   constructor(
     aggExpr: SingleBucketAgg, // TODO maybe later we will need to pass wider type
     rawData: RawAggBucket,
-    docClsMap: Dictionary<string, typeof Doc>,
+    docClsMap: Dictionary<string, DocClass>,
     mapperRegistry: any,
   ) {
     super(aggExpr);
@@ -127,7 +127,7 @@ export class MultiBucketAggResult extends AggResult {
   constructor(
     aggExpr: MultiBucketAgg,
     rawData: RawAgg,
-    docClsMap: Dictionary<string, typeof Doc>,
+    docClsMap: Dictionary<string, DocClass>,
     mapperRegistry: any,
     private instanceMapper?: InstanceMapper<any, any>,
   ) {
@@ -197,7 +197,7 @@ export class SingleBucketAgg extends BucketAgg {
   // but for any reason we do not do this right now, maybe we will do this later
   public buildAggResult(
     rawData: RawAggBucket,
-    docClsMap: Dictionary<string, typeof Doc> = {},
+    docClsMap: Dictionary<string, DocClass> = {},
     mapperRegistry: any = null,
   ): SingleBucketAggResult {
     return new SingleBucketAggResult(this, rawData, docClsMap, mapperRegistry);
@@ -221,7 +221,7 @@ export class MultiBucketAgg extends BucketAgg {
 
   public buildAggResult(
     rawData: RawAgg,
-    docClsMap: Dictionary<string, typeof Doc> = {},
+    docClsMap: Dictionary<string, DocClass> = {},
     mapperRegistry: any = null,
   ): MultiBucketAggResult {
     return new MultiBucketAggResult(this, rawData, docClsMap, mapperRegistry, this.instanceMapper);

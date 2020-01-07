@@ -47,7 +47,7 @@ export class Cluster {
     this.index = new Index(indexName, this);
   }
 
-  public searchQuery(searchQueryOptions: SearchQueryOptions): SearchQuery {
+  public searchQuery(searchQueryOptions: SearchQueryOptions = {}): SearchQuery {
     return new SearchQuery({
       cluster: this,
       index: this.index,
@@ -106,7 +106,7 @@ export class Cluster {
     return new SearchResult<T, TRaw>(
       rawResultBody,
       searchQueryContext.aggregations,
-      searchQueryContext.docClass,
+      searchQueryContext.docClasses,
       searchQueryContext.instanceMapper,
     );
   }
