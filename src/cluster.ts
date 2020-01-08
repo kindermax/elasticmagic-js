@@ -1,18 +1,8 @@
+import { ApiResponse, Client } from '@elastic/elasticsearch';
 import { Doc } from './document';
 import { Query, SearchParams, SearchQuery, SearchQueryContext, SearchQueryOptions } from './query';
 import { SearchResult } from './result';
-import { RawResultBody } from './types';
-
-export interface IApiResponse<T = any> {
-  body: T;
-}
-export interface IClient {
-  search(opts: {
-    body: any;
-    index: string;
-  }): Promise<any>;
-  info(): Promise<any>;
-}
+import { RawResultBody, Nullable } from './types';
 
 type RootRawResult = {
   name: string;
@@ -47,14 +37,16 @@ class EsVersion {
 }
 
 export class Cluster {
-  private index: Index;
+  private index?: Index;
   private esVersion?: EsVersion;
 
   constructor(
-    private client: IClient,
-    indexName: string, // TODO this param must be optional or omited or accept Index instance or accept list of indeces
+    private client: Client,
+    indexName?: string,
   ) {
-    this.index = new Index(indexName, this);
+    if (indexName) {
+      this.index = new Index(indexName, this);
+    }
   }
 
   public searchQuery(searchQueryOptions: SearchQueryOptions = {}): SearchQuery {
@@ -65,13 +57,17 @@ export class Cluster {
     });
   }
 
-  public getIndex(): Index {
+  public getIndex(): Nullable<Index> {
     return this.index;
+  }
+
+  public addIndex(name: string) {
+    this.index = new Index(name, this);
   }
 
   public async getEsVersion(): Promise<EsVersion> {
     if (this.esVersion) { return this.esVersion; }
-    const rawResult: IApiResponse<RootRawResult> = await this.client.info();
+    const rawResult: ApiResponse<RootRawResult> = await this.client.info();
     return this.processEsVersionResult(rawResult.body);
   }
 
@@ -92,9 +88,12 @@ export class Cluster {
   private async doRequest<T = any>(
     compiledQuery: Query,
     params: SearchParams,
-  ): Promise<IApiResponse<RawResultBody<T>>> {
+  ): Promise<ApiResponse<RawResultBody<T>>> {
     // TODO for now we hardcoded search method
     // TODO get client method to call, must be a accep-like function in searchQuery
+    if (!this.index) {
+      throw new Error('index required');
+    }
     return this.client.search({
       body: compiledQuery,
       index: this.index.getName(),
@@ -127,7 +126,7 @@ export class Cluster {
    * @param searchQuery
    */
   public async search<T extends Doc, TRaw>(searchQuery: SearchQuery): Promise<SearchResult<T>> {
-    const rawResultResponse: IApiResponse<RawResultBody<TRaw>> = await this.doRequest<TRaw>(
+    const rawResultResponse: ApiResponse<RawResultBody<TRaw>> = await this.doRequest<TRaw>(
       searchQuery.body,
       searchQuery.params,
     );
