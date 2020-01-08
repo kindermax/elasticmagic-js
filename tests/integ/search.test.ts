@@ -1,9 +1,9 @@
 import { Client } from '@elastic/elasticsearch'; // TODO maybe replace
-import { Bool } from "../src/expression";
-import { Cluster } from "../src/cluster";
-import * as agg from '../src/agg';
-import { SearchQuery } from '../src/query';
-import { OrderStatus, OrderSource, OrderDoc } from './fixtures';
+import { Bool } from "../../src/expression";
+import { Cluster } from "../../src/cluster";
+import * as agg from '../../src/agg';
+import { SearchQuery } from '../../src/query';
+import { OrderStatus, OrderSource, OrderDoc } from '../fixtures';
 
 let client: Client;
 

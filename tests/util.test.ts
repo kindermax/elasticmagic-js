@@ -2,7 +2,7 @@ import { collectDocClasses } from '../src/util';
 import { SearchQuery } from '../src/query';
 import { OrderDoc } from './fixtures';
 
-describe('util', () => {
+describe('Util', () => {
   test('collectDocClasses', () => {
     let query = new SearchQuery();
     query = query.filter(OrderDoc.userId.eq(1));
