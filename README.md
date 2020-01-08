@@ -1,6 +1,8 @@
 elasticmagic-js (alpha)
 =======================
 
+> This is alpha. Api may/will change.
+
 JS/Typescript DSL for Elasticsearch
 
 This lib is a port of original library written in `python` by [@anti-social]( https://github.com/anti-social/elasticmagic )
@@ -231,4 +233,6 @@ make test TEST=testSearchQuery.spec.ts
 - [ ] rescores
 - [ ] highlight
 - [ ] add doc to methods
+- [ ] MultiMatch, Ids
+- [ ] api docs
 
