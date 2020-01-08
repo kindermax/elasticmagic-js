@@ -83,8 +83,8 @@ afterEach(async () => {
   })
 });
 
-describe("Cluster", () => {
-  test('should make a request with a valid response', async () => {
+describe("Search", () => {
+  test('run search query and get result', async () => {
     const cluster = new Cluster(client, indexName);
 
     const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
@@ -104,7 +104,7 @@ describe("Cluster", () => {
     expect(result.hits.length).toBe(0);
   });
 
-  test('should return response with a source', async () => {
+  test('run search query and get result with a source', async () => {
     const cluster = new Cluster(client, indexName);
 
     const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
@@ -116,7 +116,7 @@ describe("Cluster", () => {
           OrderDoc.source.not(OrderSource.mobile),
         )
       );
-    
+
     const result = await query.getResult<OrderDoc>();
     expect(result.error).toBeUndefined();
     expect(result.total).toBe(1);
@@ -131,7 +131,7 @@ describe("Cluster", () => {
     // expect(hit.dateCreated).toBe(5);
   });
 
-  test('should return response with aggregations', async () => {
+  test('run search query and get result with aggregations', async () => {
     const cluster = new Cluster(client, indexName);
 
     const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
@@ -179,13 +179,6 @@ describe("Cluster", () => {
     const totalBucket = users.buckets[0].getAggregation('total');
 
     expect(totalBucket.docCount).toBe(1);
-  });
-
-  test('should return es version', async () => {
-    const cluster = new Cluster(client, indexName);
-
-    const esVersion = await cluster.getEsVersion();
-    expect(esVersion.major).toBe(6);
   });
 
   test('should work if pass cluster to not bounded search query', async () => {
@@ -237,5 +230,22 @@ describe("Cluster", () => {
     const result = await query.getResult<OrderDoc>();
     expect(result.error).toBeUndefined();
     expect(result.total).toBe(1);
+  });
+
+  test('get ids', async () => {
+    const cluster = new Cluster(client, indexName);
+    let query = new SearchQuery({ cluster });
+    query = query.source(false)
+      .filter(
+        Bool.must(
+          OrderDoc.userId.in([userId]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
+        ),
+      );
+    const result = await query.getResult<OrderDoc>();
+    expect(result.error).toBeUndefined();
+    expect(result.total).toBe(1);
+    expect(result.getIds()).toStrictEqual([1]);
   });
 });
