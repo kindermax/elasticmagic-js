@@ -1,4 +1,4 @@
-export type Nullable<T> = T | null | undefined;
+export type Nullable<T = any> = T | null | undefined;
 
 export type Dictionary<T1 extends string | number, T2 = any> = {
   [key in T1]: T2
@@ -22,12 +22,6 @@ export type Hit<T = any> = {
   fields?: PlainObject;
 };
 
-// TODo not sure if we need this fields in type
-type RawAggOpts = {
-  doc_count_error_upper_bound: number;
-  sum_other_doc_count: number;
-};
-
 type BucketFields = { doc_count: number; };
 
 export type RawAggBucketChild = Dictionary<string, BucketFields | Dictionary<string, BucketFields>>;
@@ -41,7 +35,7 @@ export type RawAgg = {
   doc_count_error_upper_bound: number;
   sum_other_doc_count: number;
   buckets: RawAggBucket[]
-} & RawAggOpts;
+};
 type RawAggs = Dictionary<string, RawAgg>;
 
 type SearchResponseBody<T> = {
@@ -63,7 +57,4 @@ type SearchResponseBody<T> = {
   aggregations?: RawAggs;
 };
 
-// TODO this is a temp type, must be replaces with user type after functionality done and tested
-type Source = PlainObject;
-
-export type RawResultBody<T = Source> = SearchResponseBody<T>;
+export type RawResultBody<T = PlainObject> = SearchResponseBody<T>;

@@ -7,6 +7,7 @@ import {
   Params,
   QueryExpression,
   RangeExpr,
+  Sort,
   Term,
   Terms,
  } from './expression';
@@ -53,6 +54,8 @@ export class CompilerVisitor {
         return this.visitFilterAgg(expression);
       case 'range':
         return this.visitRange(expression);
+      case 'sort':
+        return this.visitSort(expression);
       default:
     }
 
@@ -68,9 +71,7 @@ export class CompilerVisitor {
   }
 
   private getQuery(queryContext: SearchQueryContext): QueryOverride {
-    const q = queryContext.query;
-    // TODO if wrap_function_score:
-    return q;
+    return queryContext.query;
   }
   private getFilteredQuery(queryContext: SearchQueryContext): QueryOverride {
     const q = this.getQuery(queryContext);
@@ -78,9 +79,7 @@ export class CompilerVisitor {
     if (queryContext.filters.length > 0) {
       filterClauses.push(...queryContext.filters);
     }
-    // TODO(for es > 6) if not features.supports_mapping_types and doc_classes:
     if (filterClauses.length > 0) {
-      // features.supports_bool_filter is always true for es > 2
       if (filterClauses.length === 1) {
         return new Bool({ must: q, filter: filterClauses[0]});
       }
@@ -99,7 +98,10 @@ export class CompilerVisitor {
     if (query) {
       params.query = this.visit(query);
     }
-    // TODO order_by (sort)
+
+    if (queryContext.sort.length > 0) {
+      params.sort = this.visit(queryContext.sort);
+    }
     if (queryContext.source != null && queryContext !== undefined) {
       params._source = queryContext.source;
     }
@@ -114,27 +116,18 @@ export class CompilerVisitor {
     return params;
   }
 
-  /**
-   * @param expression
-   */
-  // TODO return type
   private visitQueryExpression(expression: QueryExpression): any {
     return {
       [expression.queryName]: this.visit(expression.params),
     };
   }
 
-  /**
-   * @param expression
-   */
-  // TODO return type
   private visitFieldQuery(expression: FieldQueryExpression): any {
-    // const exprParams = new Params(expression.params);
     const exprParams = expression.params;
 
-    if (exprParams.length > 0) { // TODO maybe implement iterator for Params
+    if (exprParams.length > 0) {
       let params = { [expression.queryKey]: this.visit(expression.query) };
-      params = { ...params, ...exprParams }; // TODo here can be broken line
+      params = { ...params, ...exprParams };
       return {
         [expression.queryName]: {
           [this.visit(expression.field)]: params,
@@ -220,5 +213,22 @@ export class CompilerVisitor {
         ...fieldParams,
       },
     };
+  }
+
+  private visitSort(expr: Sort): any {
+    if (expr.params.length) {
+      const params = {
+        order: this.visit(expr.order),
+        ...this.visit(expr.params),
+      };
+      return {
+        [this.visit(expr.field)]: params,
+      };
+    } else if (expr.order) {
+      return {
+        [this.visit(expr.field)]: this.visit(expr.order),
+      };
+    }
+    return this.visit(expr.field);
   }
 }

@@ -3,13 +3,14 @@ import {
   Expression,
   RangeExpr,
   RangeValue,
+  Sort,
+  SortOpts,
   Term,
   Terms,
   TermValue,
 } from './expression';
 import { SearchResult } from './result';
 import { Hit } from './types';
-import { isString } from './util';
 
 export class FieldType {}
 
@@ -24,57 +25,52 @@ export type FieldOpts = {
   parent?: DocClass;
 };
 
-type FieldOptsArg = Required<Pick<FieldOpts, 'name'>> & { parent?: DocClass } | string;
-
 export class Field extends Expression {
   public readonly visitName = 'field';
-  public name!: string;
-  public parent!: DocClass;
 
   constructor(
     private type: FieldType,
-    fieldOpts: FieldOptsArg,
+    public readonly name: string,
+    public readonly parent: DocClass,
   ) {
     super();
-    if (isString(fieldOpts)) {
-      this.name = fieldOpts;
-    } else {
-      if (fieldOpts.name) {
-        this.name = fieldOpts.name;
-      }
-      if (fieldOpts.parent) {
-        this.parent = fieldOpts.parent;
-      }
-    }
   }
 
-  public in_(terms: TermValue[]): Terms {
+  public in(terms: TermValue[]): Terms {
     return new Terms(this, terms);
   }
 
-  public not_(term: TermValue): Bool {
+  public not(term: TermValue): Bool {
     return Bool.mustNot(new Term(this, term));
   }
 
-  public eq_(other: TermValue): Term {
+  public eq(other: TermValue): Term {
     // TODO add if other is None: return self.missing()
     return new Term(this, other);
   }
 
-  public lt_(other: RangeValue): RangeExpr {
+  public lt(other: RangeValue): RangeExpr {
     return new RangeExpr(this, { lt: other });
   }
 
-  public gt_(other: RangeValue): RangeExpr {
+  public gt(other: RangeValue): RangeExpr {
     return new RangeExpr(this, { gt: other });
   }
 
-  public lte_(other: RangeValue): RangeExpr {
+  public lte(other: RangeValue): RangeExpr {
     return new RangeExpr(this, { lte: other });
   }
 
-  public gte_(other: RangeValue): RangeExpr {
+  public gte(other: RangeValue): RangeExpr {
     return new RangeExpr(this, { gte: other });
+  }
+
+  public asc(opts?: SortOpts): Sort {
+    return new Sort(this, 'asc', opts);
+  }
+
+  public desc(opts?: SortOpts): Sort {
+    return new Sort(this, 'desc', opts);
   }
 
   public getType(): FieldType {
@@ -84,10 +80,6 @@ export class Field extends Expression {
   public collectDocClasses(): Readonly<DocClass[]> {
     return this.parent ? [this.parent] : [];
   }
-
-  public setParent(parent: DocClass) {
-    this.parent = parent;
-  }
 }
 
 type DocOpts = {
@@ -95,28 +87,17 @@ type DocOpts = {
   result: SearchResult<any>;
 };
 
-// TODO maybe decorator can be used as an alternative to metaclass
-// https://github.com/Microsoft/TypeScript/issues/17454
 export class Doc {
   public static readonly docType: string;
   private hit: Hit;
   private result: SearchResult<any>;
 
-  public _id: string | number;  // tslint:disable-line
+  public _id: string;
   constructor(opts: DocOpts) {
     this.hit = opts.hit;
     this.result = opts.result;
 
     this._id = opts.hit._id;
-  }
-
-  /**
-   * If instanceMapper was defined for query
-   * then return instance mapped by instanceMapper
-   * else return null;
-   */
-  public get instance(): any | null {
-    return null;
   }
 
   public static getDocCls(): string {

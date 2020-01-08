@@ -1,43 +1,46 @@
-import { Client } from '@elastic/elasticsearch';
-import { Bool } from "../src/expression";
-import { Cluster } from "../src/cluster";
-import * as agg from '../src/agg';
-import { SearchQuery } from '../src/query';
-import { OrderStatus, OrderSource, OrderDoc } from './fixtures';
+import { Client } from '@elastic/elasticsearch'; // TODO maybe replace
+import * as agg from '../../src/agg';
+import { Cluster } from '../../src/cluster';
+import { Bool } from '../../src/expression';
+import { SearchQuery } from '../../src/query';
+import { OrderDoc, OrderSource, OrderStatus } from '../fixtures';
 
 let client: Client;
 
+const DAY = 24 * 3600 * 1000;
+
 const userId = 1;
+const dateCreated = new Date(Date.now() - DAY);
 const type = 'order';
 const indexName = 'test_order_index';
 const esHost = `http://${process.env.ES_HOST}:9200`;
 
 const mapping = {
-  "dynamic": "false",
-  "_all": {
-      "enabled": false
+  dynamic: false,
+  _all: {
+      enabled: false,
   },
-  "_routing": {
-      "required": true
+  _routing: {
+      required: true,
   },
-  "date_detection": false,
-  "properties": {
-      "user_id": {
-          "type": "integer"
+  date_detection: false,
+  properties: {
+      user_id: {
+          type: 'integer',
       },
-      "source": {
-          "type": "integer"
+      source: {
+          type: 'integer',
       },
-      "status": {
-          "type": "integer"
-      },    
-      "date_created": {
-          "type": "date"
-      },    
-      "price": {
-          "type": "integer"
-      }
-  }
+      status: {
+          type: 'integer',
+      },
+      date_created: {
+          type: 'date',
+      },
+      price: {
+          type: 'integer',
+      },
+  },
 };
 
 beforeAll(async () => {
@@ -45,85 +48,115 @@ beforeAll(async () => {
   // cleanup before all tests
   await client.indices.delete({
     index: indexName,
-    ignore_unavailable: true
-  })
+    ignore_unavailable: true,
+  });
 });
 
 beforeEach(async () => {
   // create index
   await client.indices.create({
     index: indexName,
-  })
+  });
   // put mapping
   await client.indices.putMapping({
     index: indexName,
-    type: type, // TODO use include_type_name for es >= 7, https://www.elastic.co/guide/en/elasticsearch/reference/master/removal-of-types.html
-    body: mapping
+    // TODO https://www.elastic.co/guide/en/elasticsearch/reference/master/removal-of-types.html
+    type,
+    body: mapping,
   });
   // index doc
   await client.index({
     index: indexName,
-    id: "1",
+    id: '1',
     type: '_doc', // uncomment this line if you are using Elasticsearch ≤ 6
     body: {
       user_id: userId,
       status: OrderStatus.new,
       source: OrderSource.desktop,
-      date_created: new Date(),
+      date_created: dateCreated,
       price: 5,
     },
     routing: `${userId}`,
-    refresh: 'wait_for'
-  })
+    refresh: 'wait_for',
+  });
 });
 
 afterEach(async () => {
   await client.indices.delete({
     index: indexName,
-  })
+  });
 });
 
-describe("Cluster", () => {
-  test('should make a request with a valid response', async () => {
+describe('Search', () => {
+  test('run search query and get result', async () => {
     const cluster = new Cluster(client, indexName);
 
     const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
       .source(false)
       .filter(
         Bool.must(
-          OrderDoc.userId.in_([userId]),
-          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
-          OrderDoc.source.not_(OrderSource.mobile),
-        )
+          OrderDoc.userId.in([userId]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
+          OrderDoc.dateCreated.lte(new Date().toISOString()),
+        ),
       )
       .limit(0);
-    
+
     const result = await query.getResult<OrderDoc>();
     expect(result.error).toBeUndefined();
     expect(result.total).toBe(1);
     expect(result.hits.length).toBe(0);
   });
 
-  test('should return response with a source', async () => {
+  test('run search query with date as Date instance', async () => {
+    const cluster = new Cluster(client, indexName);
+
+    const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
+      .source(false)
+      .filter(Bool.must(OrderDoc.dateCreated.lte(new Date())))
+      .limit(0);
+
+    const result = await query.getResult<OrderDoc>();
+    expect(result.error).toBeUndefined();
+    expect(result.total).toBe(1);
+    expect(result.hits.length).toBe(0);
+  });
+
+  test('run search query with date as iso string', async () => {
+    const cluster = new Cluster(client, indexName);
+
+    const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
+      .source(false)
+      .filter(Bool.must(OrderDoc.dateCreated.lte(new Date().toISOString())))
+      .limit(0);
+
+    const result = await query.getResult<OrderDoc>();
+    expect(result.error).toBeUndefined();
+    expect(result.total).toBe(1);
+    expect(result.hits.length).toBe(0);
+  });
+
+  test('run search query and get result with a source', async () => {
     const cluster = new Cluster(client, indexName);
 
     const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
       .source(false)
       .filter(
         Bool.must(
-          OrderDoc.userId.in_([userId]),
-          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
-          OrderDoc.source.not_(OrderSource.mobile),
-        )
+          OrderDoc.userId.in([userId]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
+        ),
       );
-    
+
     const result = await query.getResult<OrderDoc>();
     expect(result.error).toBeUndefined();
     expect(result.total).toBe(1);
     expect(result.hits.length).toBe(1);
     const hit = result.hits[0];
     expect(hit).toBeInstanceOf(OrderDoc);
-    expect(hit._id).toBe("1");
+    expect(hit._id).toBe('1');
     // expect(hit.userId).toBe(1);
     // expect(hit.status).toBe(1);
     // expect(hit.source).toBe(1);
@@ -131,17 +164,17 @@ describe("Cluster", () => {
     // expect(hit.dateCreated).toBe(5);
   });
 
-  test('should return response with aggregations', async () => {
+  test('run search query and get result with aggregations', async () => {
     const cluster = new Cluster(client, indexName);
 
     const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
       .source(false)
       .filter(
         Bool.must(
-          OrderDoc.userId.in_([userId]),
-          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
-          OrderDoc.source.not_(OrderSource.mobile),
-        )
+          OrderDoc.userId.in([userId]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
+        ),
       )
       .aggregations({
         users: new agg.Terms({
@@ -149,19 +182,19 @@ describe("Cluster", () => {
           size: 1,
           aggs: {
             total: new agg.Filter({
-              filter: OrderDoc.status.eq_(OrderStatus.new)
-            })
-          }
-        })
+              filter: OrderDoc.status.eq(OrderStatus.new),
+            }),
+          },
+        }),
       });
-    
+
     const result = await query.getResult<OrderDoc>();
     expect(result.error).toBeUndefined();
     expect(result.total).toBe(1);
     expect(result.hits.length).toBe(1);
     const hit = result.hits[0];
     expect(hit).toBeInstanceOf(OrderDoc);
-    expect(hit._id).toBe("1");
+    expect(hit._id).toBe('1');
     // expect(hit.userId).toBe(1);
     // expect(hit.status).toBe(1);
     // expect(hit.source).toBe(1);
@@ -181,22 +214,15 @@ describe("Cluster", () => {
     expect(totalBucket.docCount).toBe(1);
   });
 
-  test('should return es version', async () => {
-    const cluster = new Cluster(client, indexName);
-
-    const esVersion = await cluster.getEsVersion();
-    expect(esVersion.major).toBe(6);
-  });
-
   test('should work if pass cluster to not bounded search query', async () => {
     const cluster = new Cluster(client, indexName);
     let query = new SearchQuery({ cluster, docClass: OrderDoc });
     query = query.source(false)
       .filter(
         Bool.must(
-          OrderDoc.userId.in_([userId]),
-          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
-          OrderDoc.source.not_(OrderSource.mobile),
+          OrderDoc.userId.in([userId]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
         ),
       );
     const result = await query.getResult<OrderDoc>();
@@ -208,7 +234,7 @@ describe("Cluster", () => {
     const cluster = new Cluster(client, indexName);
     let query = new SearchQuery({ cluster });
     // TODO add test where withDoc(Doc) can accept only sublcasses of Doc
-    query = query.filter(OrderDoc.userId.in_([userId])).withDoc(OrderDoc);
+    query = query.filter(OrderDoc.userId.in([userId])).withDoc(OrderDoc);
     const result = await query.getResult<OrderDoc>();
     expect(result.error).toBeUndefined();
     expect(result.total).toBe(1);
@@ -217,7 +243,7 @@ describe("Cluster", () => {
   test('should work with explicilty provided docType class via withDocType', async () => {
     const cluster = new Cluster(client, indexName);
     let query = new SearchQuery({ cluster });
-    query = query.filter(OrderDoc.userId.in_([userId])).withDocType(OrderDoc.docType);
+    query = query.filter(OrderDoc.userId.in([userId])).withDocType(OrderDoc.docType);
     const result = await query.getResult<OrderDoc>();
     expect(result.error).toBeUndefined();
     expect(result.total).toBe(1);
@@ -229,13 +255,30 @@ describe("Cluster", () => {
     query = query.source(false)
       .filter(
         Bool.must(
-          OrderDoc.userId.in_([userId]),
-          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
-          OrderDoc.source.not_(OrderSource.mobile),
+          OrderDoc.userId.in([userId]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
         ),
       );
     const result = await query.getResult<OrderDoc>();
     expect(result.error).toBeUndefined();
     expect(result.total).toBe(1);
+  });
+
+  test('get ids', async () => {
+    const cluster = new Cluster(client, indexName);
+    let query = new SearchQuery({ cluster });
+    query = query.source(false)
+      .filter(
+        Bool.must(
+          OrderDoc.userId.in([userId]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
+        ),
+      );
+    const result = await query.getResult<OrderDoc>();
+    expect(result.error).toBeUndefined();
+    expect(result.total).toBe(1);
+    expect(result.getIds()).toStrictEqual([1]);
   });
 });

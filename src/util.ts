@@ -1,5 +1,6 @@
 import { DocClass } from './document';
-import { Expression, FieldQueryValue, ParamsType } from './expression';
+import { Expression, FieldQueryValue, Params, ParamsType } from './expression';
+import { Nullable } from './types';
 
 export function arrayKVToDict<T = any>(array: any[][]): T {
   return array.reduce((acc: any, [key, val]) => {
@@ -12,7 +13,7 @@ export function arrayKVToDict<T = any>(array: any[][]): T {
  * TODO add tests
  * Filter keys having null or undefined values
  */
-export function cleanParams(params?: ParamsType): ParamsType {
+export function cleanParams(params?: Nullable<ParamsType>): ParamsType {
   if (!params) { return {}; }
 
   return Object.entries<ParamsType>(params)
@@ -40,6 +41,10 @@ export function isExpression(x: any): x is Expression {
   return x instanceof Expression;
 }
 
+export function isNullOrUndef(x: any): x is null | undefined {
+  return x === null || x === undefined;
+}
+
 export function uniqueArray<T = any>(items: T[]): T[] {
   return Array.from(new Set(items));
 }
@@ -59,4 +64,8 @@ export function collectDocClasses(
     return uniqueArray(kvListChain.flatMap((item) => collectDocClasses(item)));
   }
   return [];
+}
+
+export function mergeParams(currentParams: Params, newParams: Params): Params {
+  return new Params({ ...currentParams.getParams(), ...newParams.getParams() });
 }

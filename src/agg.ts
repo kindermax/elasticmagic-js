@@ -7,8 +7,6 @@ import { isObject } from './util';
 type BucketKey = string | number;
 
 class Bucket {
-  // TODO figure out _typed_key
-
   public key: BucketKey;
   public docCount: number;
   public aggregations: Dictionary<string, AggResult> =  {};
@@ -65,17 +63,15 @@ export class AggExpression extends ParamsExpression {
 
 export class BucketAgg extends AggExpression {
   public visitName = 'bucketAgg';
-  public aggName: any; // TODO hack so compiler sees this field for generic type
+  public aggName!: string;
 
   public aggregations: Params;
 
-  // TODO here must be interface for resultClass, but in typescript it is hard to reason abount how to do this properly
   constructor(
     aggs?: Dictionary<string, Filter>,
     params?: ParamsType,
   ) {
     super(params);
-    // TODO kwargs.pop('aggregations', {})
     this.aggregations = new Params(aggs);
   }
 }
@@ -119,10 +115,10 @@ class SingleBucketAggResult extends AggResult {
 }
 
 export class MultiBucketAggResult extends AggResult {
-  private bucketClass: any = Bucket; // TODO add type
+  private bucketClass: typeof Bucket = Bucket;
   public buckets: Bucket[] = [];
   private bucketsMap: Dictionary<string, Bucket> = {};
-  private mapperRegistry: any = {}; // TODO add type
+  private mapperRegistry: any = {};
 
   constructor(
     aggExpr: MultiBucketAgg,
@@ -178,13 +174,10 @@ export class MultiBucketAggResult extends AggResult {
   public getBucket(key: BucketKey) {
     return this.bucketsMap[key];
   }
-
-  // TODO def _populate_instances
-
 }
 
 export class SingleBucketAgg extends BucketAgg {
-  public aggName: any; // TODO hack so compiler sees this field for generic type
+  public aggName!: string;
 
   constructor(
     aggs?: Dictionary<string, Filter>,
@@ -193,7 +186,7 @@ export class SingleBucketAgg extends BucketAgg {
     super(aggs, params);
   }
 
-  // TODO in python we just pass result_cls and parent call buildAggResult
+  // TODO in python we just pass resultcls and parent call buildAggResult
   // but for any reason we do not do this right now, maybe we will do this later
   public buildAggResult(
     rawData: RawAggBucket,
