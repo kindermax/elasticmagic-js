@@ -10,7 +10,7 @@ describe("SearchQuery compile", () => {
   
   test('with terms expression in bool must', () => {
     const searchQuery = new SearchQuery({})
-    const query = searchQuery.filter(Bool.must(OrderDoc.userId.in_([1])));
+    const query = searchQuery.filter(Bool.must(OrderDoc.userId.in([1])));
     expect(query.body).toStrictEqual({
       query: {
         bool: {
@@ -26,7 +26,7 @@ describe("SearchQuery compile", () => {
   
   test('with terms expression without bool must', () => {
     const searchQuery = new SearchQuery({})
-    const query = searchQuery.filter(OrderDoc.userId.in_([1]));
+    const query = searchQuery.filter(OrderDoc.userId.in([1]));
     expect(query.body).toStrictEqual({
       query: {
         bool: {
@@ -45,8 +45,8 @@ describe("SearchQuery compile", () => {
     const query = searchQuery
       .filter(
         Bool.must(
-          OrderDoc.userId.in_([1]),
-          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.userId.in([1]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
         )
       );
     expect(query.body).toStrictEqual({
@@ -70,9 +70,9 @@ describe("SearchQuery compile", () => {
     const query = searchQuery
       .filter(
         Bool.must(
-          OrderDoc.userId.in_([1]),
-          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
-          OrderDoc.source.not_(OrderSource.mobile),
+          OrderDoc.userId.in([1]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
         )
       );
     expect(query.body).toStrictEqual({
@@ -108,9 +108,9 @@ describe("SearchQuery compile", () => {
     const query = searchQuery
       .filter(
         Bool.must(
-          OrderDoc.userId.in_([1]),
-          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
-          OrderDoc.source.not_(OrderSource.mobile),
+          OrderDoc.userId.in([1]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
         )
       )
       .source(false);
@@ -149,9 +149,9 @@ describe("SearchQuery compile", () => {
     const query = searchQuery
       .filter(
         Bool.must(
-          OrderDoc.userId.in_([1]),
-          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
-          OrderDoc.source.not_(OrderSource.mobile),
+          OrderDoc.userId.in([1]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
         )
       )
       .limit(0);
@@ -184,9 +184,9 @@ describe("SearchQuery compile", () => {
       .source(false)
       .filter(
         Bool.must(
-          OrderDoc.userId.in_([1]),
-          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
-          OrderDoc.source.not_(OrderSource.mobile),
+          OrderDoc.userId.in([1]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
         )
       )
       .limit(0);
@@ -223,9 +223,9 @@ describe("SearchQuery compile", () => {
       .source(false)
       .filter(
         Bool.must(
-          OrderDoc.userId.in_([1]),
-          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
-          OrderDoc.source.not_(OrderSource.mobile),
+          OrderDoc.userId.in([1]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
         )
       )
       .limit(0);

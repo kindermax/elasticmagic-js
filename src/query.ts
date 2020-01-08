@@ -83,7 +83,7 @@ export type Query = {
   // TODO complete this type
 };
 
-export type QueryOverride = any | null; // TODO this type is incorrect, hack
+export type QueryOverride = any | null; // rewrite type
 export type Limit = number | null;
 
 export type InstanceMapper<T1, T2> = (ids: T1[]) => T2;
@@ -127,7 +127,6 @@ export class SearchQueryContext {
   }
 }
 
-// UTIL
 function getDocType(docType?: string, docClass?: DocClass): string | null {
   if (docType) { return docType; }
   if (docClass) { return docClass.docType; }
@@ -209,11 +208,7 @@ export class SearchQuery {
     return this;
   }
 
-  // TODO later there can be multiple filter func declarations, one with variadic args
-
   /**
-   * TODO maybe we need clone Query instance on filter call?
-   *
    * Multiple expressions may be specified, so they will be joined together using ``Bool.must`` expression.
    * @param filters
    */
@@ -267,8 +262,6 @@ export class SearchQuery {
     return this.compile();
   }
 
-  // TODO maybe reuse logic with Compiled.
-  // Like hold class which can compile all on construction and then use that instance?
   public get body() {
     return this.toJSON();
   }
@@ -307,12 +300,7 @@ export class SearchQuery {
       this._source,
       this._fields,
       this._filters,
-      // this._postFilters,
-      // function_score functions list,
       Object.values(this._aggregations.getParams()),
-      // this._orderBy,
-      // this._rescores,
-      // this._highlight,
     ];
     return uniqueArray(expressions.flatMap((expr) => collectDocClasses(expr)));
   }

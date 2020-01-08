@@ -77,7 +77,6 @@ export class SearchResult<T extends Doc, TRaw = any> extends Result {
     const hits = rawResult.hits || {};
     this.total = hits.total;
     this.maxScore = hits.max_score;
-    // TODO add type for hit: any
     hits.hits.forEach((hit: Hit) => {
       const docType = getDocTypeForHit(hit);
       // TODO below use some sort of DynamicDocument, because fail if no docClass passed to SearchResult

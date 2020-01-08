@@ -2,21 +2,18 @@ import { DocClass, Field } from './document';
 import { Dictionary, Nullable } from './types';
 import { cleanParams, collectDocClasses, uniqueArray } from './util';
 
-// TODO must be generic type with restrictions
+// TODO maybe generic type with restrictions
 export type TermValue =
   | number
   | string
   | boolean;
 export type TermField = Dictionary<string, TermValue>;
 
-// TODo this must be interface ???
+// TODO make Expression an interface
 export class Expression {
-  /**
-   * TODO hack, is there some way to not init this fields ? interface ?
-   */
-  public readonly visitName: string = 'notDefined';
-  public readonly queryName: string = 'notDefined';
-  public readonly queryKey: string = 'notDefined';
+  public readonly visitName!: string;
+  public readonly queryName!: string;
+  public readonly queryKey!: string;
 
   public collectDocClasses(): Readonly<DocClass[]> {
     return [];
@@ -84,20 +81,8 @@ export class QueryExpression extends ParamsExpression {
 export class FieldExpression extends QueryExpression {
   public visitName = 'fieldExpression';
 
-  // TODO maybe later it will be Field but for now it Expression
-  public field: Expression;
-
-  // TODO field is an AttributeField, OrderedAttributes
-  constructor(field: Field, params?: Dictionary<any, any>) {
-    super(params); // TODO pass null or field ???
-    this.field = this.wrapLiteral(field);
-  }
-
-  private wrapLiteral(field: Field): Expression {
-    if (field instanceof Expression) {
-      return field;
-    }
-    return new Literal(field);
+  constructor(public field: Field, params?: Dictionary<any, any>) {
+    super(params);
   }
 
   public collectDocClasses(): Readonly<DocClass[]> {
@@ -210,7 +195,6 @@ export class Bool extends QueryExpression {
     super(options);
   }
 
-  // TODO make it clear what Expression to return
   public static must(...expressions: Expression[]): Expression {
     if (expressions.length === 1) {
       return expressions[0];

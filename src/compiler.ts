@@ -68,9 +68,7 @@ export class CompilerVisitor {
   }
 
   private getQuery(queryContext: SearchQueryContext): QueryOverride {
-    const q = queryContext.query;
-    // TODO if wrap_function_score:
-    return q;
+    return queryContext.query;
   }
   private getFilteredQuery(queryContext: SearchQueryContext): QueryOverride {
     const q = this.getQuery(queryContext);
@@ -78,9 +76,7 @@ export class CompilerVisitor {
     if (queryContext.filters.length > 0) {
       filterClauses.push(...queryContext.filters);
     }
-    // TODO(for es > 6) if not features.supports_mapping_types and doc_classes:
     if (filterClauses.length > 0) {
-      // features.supports_bool_filter is always true for es > 2
       if (filterClauses.length === 1) {
         return new Bool({ must: q, filter: filterClauses[0]});
       }
@@ -114,27 +110,18 @@ export class CompilerVisitor {
     return params;
   }
 
-  /**
-   * @param expression
-   */
-  // TODO return type
   private visitQueryExpression(expression: QueryExpression): any {
     return {
       [expression.queryName]: this.visit(expression.params),
     };
   }
 
-  /**
-   * @param expression
-   */
-  // TODO return type
   private visitFieldQuery(expression: FieldQueryExpression): any {
-    // const exprParams = new Params(expression.params);
     const exprParams = expression.params;
 
-    if (exprParams.length > 0) { // TODO maybe implement iterator for Params
+    if (exprParams.length > 0) {
       let params = { [expression.queryKey]: this.visit(expression.query) };
-      params = { ...params, ...exprParams }; // TODo here can be broken line
+      params = { ...params, ...exprParams };
       return {
         [expression.queryName]: {
           [this.visit(expression.field)]: params,

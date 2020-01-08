@@ -13,29 +13,29 @@ const indexName = 'test_order_index';
 const esHost = `http://${process.env.ES_HOST}:9200`;
 
 const mapping = {
-  "dynamic": "false",
-  "_all": {
-      "enabled": false
+  dynamic: false,
+  _all: {
+      enabled: false,
   },
-  "_routing": {
-      "required": true
+  _routing: {
+      required: true,
   },
-  "date_detection": false,
-  "properties": {
-      "user_id": {
-          "type": "integer"
+  date_detection: false,
+  properties: {
+      user_id: {
+          type: 'integer',
       },
-      "source": {
-          "type": "integer"
+      source: {
+          type: 'integer',
       },
-      "status": {
-          "type": "integer"
-      },    
-      "date_created": {
-          "type": "date"
-      },    
-      "price": {
-          "type": "integer"
+      status: {
+          type: 'integer',
+      },
+      date_created: {
+          type: 'date',
+      },
+      price: {
+          type: 'integer',
       }
   }
 };
@@ -45,7 +45,7 @@ beforeAll(async () => {
   // cleanup before all tests
   await client.indices.delete({
     index: indexName,
-    ignore_unavailable: true
+    ignore_unavailable: true,
   })
 });
 
@@ -91,13 +91,13 @@ describe("Cluster", () => {
       .source(false)
       .filter(
         Bool.must(
-          OrderDoc.userId.in_([userId]),
-          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
-          OrderDoc.source.not_(OrderSource.mobile),
+          OrderDoc.userId.in([userId]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
         )
       )
       .limit(0);
-    
+
     const result = await query.getResult<OrderDoc>();
     expect(result.error).toBeUndefined();
     expect(result.total).toBe(1);
@@ -111,9 +111,9 @@ describe("Cluster", () => {
       .source(false)
       .filter(
         Bool.must(
-          OrderDoc.userId.in_([userId]),
-          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
-          OrderDoc.source.not_(OrderSource.mobile),
+          OrderDoc.userId.in([userId]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
         )
       );
     
@@ -138,9 +138,9 @@ describe("Cluster", () => {
       .source(false)
       .filter(
         Bool.must(
-          OrderDoc.userId.in_([userId]),
-          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
-          OrderDoc.source.not_(OrderSource.mobile),
+          OrderDoc.userId.in([userId]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
         )
       )
       .aggregations({
@@ -149,7 +149,7 @@ describe("Cluster", () => {
           size: 1,
           aggs: {
             total: new agg.Filter({
-              filter: OrderDoc.status.eq_(OrderStatus.new)
+              filter: OrderDoc.status.eq(OrderStatus.new)
             })
           }
         })
@@ -194,9 +194,9 @@ describe("Cluster", () => {
     query = query.source(false)
       .filter(
         Bool.must(
-          OrderDoc.userId.in_([userId]),
-          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
-          OrderDoc.source.not_(OrderSource.mobile),
+          OrderDoc.userId.in([userId]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
         ),
       );
     const result = await query.getResult<OrderDoc>();
@@ -208,7 +208,7 @@ describe("Cluster", () => {
     const cluster = new Cluster(client, indexName);
     let query = new SearchQuery({ cluster });
     // TODO add test where withDoc(Doc) can accept only sublcasses of Doc
-    query = query.filter(OrderDoc.userId.in_([userId])).withDoc(OrderDoc);
+    query = query.filter(OrderDoc.userId.in([userId])).withDoc(OrderDoc);
     const result = await query.getResult<OrderDoc>();
     expect(result.error).toBeUndefined();
     expect(result.total).toBe(1);
@@ -217,7 +217,7 @@ describe("Cluster", () => {
   test('should work with explicilty provided docType class via withDocType', async () => {
     const cluster = new Cluster(client, indexName);
     let query = new SearchQuery({ cluster });
-    query = query.filter(OrderDoc.userId.in_([userId])).withDocType(OrderDoc.docType);
+    query = query.filter(OrderDoc.userId.in([userId])).withDocType(OrderDoc.docType);
     const result = await query.getResult<OrderDoc>();
     expect(result.error).toBeUndefined();
     expect(result.total).toBe(1);
@@ -229,9 +229,9 @@ describe("Cluster", () => {
     query = query.source(false)
       .filter(
         Bool.must(
-          OrderDoc.userId.in_([userId]),
-          OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
-          OrderDoc.source.not_(OrderSource.mobile),
+          OrderDoc.userId.in([userId]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
         ),
       );
     const result = await query.getResult<OrderDoc>();

@@ -5,7 +5,7 @@ import { OrderDoc } from './fixtures';
 describe('util', () => {
   test('collectDocClasses', () => {
     let query = new SearchQuery();
-    query = query.filter(OrderDoc.userId.eq_(1));
+    query = query.filter(OrderDoc.userId.eq(1));
     // @ts-ignore
     // pass expression
     const collected = collectDocClasses(query._filters);

@@ -41,7 +41,7 @@ export class Cluster {
   private esVersion?: EsVersion;
 
   constructor(
-    private client: Client,
+    private client: any,
     indexName: string, // TODO this param must be optional or omited or accept Index instance or accept list of indeces
   ) {
     this.index = new Index(indexName, this);
@@ -95,6 +95,7 @@ export class Cluster {
   /**
    * returns SearchResult instance with processed raw es response.
    *
+   * TODO drop type generic for raw body
    * NOTE: If you want to type response body, pass a generic type.
    * @param rawResultBody \
    * @param searchQueryContext

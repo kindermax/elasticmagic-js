@@ -10,9 +10,9 @@ describe('Aggregations compile', () => {
       .source(false)
       .filter(
         Bool.must(
-          OrderDoc.userId.in_([1]),
-          OrderDoc.status.in_([OrderStatus.new, OrderStatus.handled, OrderStatus.paid]),
-          OrderDoc.source.not_(OrderSource.mobile),
+          OrderDoc.userId.in([1]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.handled, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
         )
       )
       .aggregations({
@@ -25,22 +25,22 @@ describe('Aggregations compile', () => {
               aggs: {
                 selled: new agg.Filter({
                   filter: Bool.must(
-                    OrderDoc.status.in_([OrderStatus.paid, OrderStatus.handled]),
+                    OrderDoc.status.in([OrderStatus.paid, OrderStatus.handled]),
                   ),
                   aggs: {
                     paid: new agg.Filter({
-                      filter: OrderDoc.status.eq_(OrderStatus.paid)
+                      filter: OrderDoc.status.eq(OrderStatus.paid)
                     }), 
                     handled: new agg.Filter({
-                      filter: OrderDoc.status.eq_(OrderStatus.handled)
+                      filter: OrderDoc.status.eq(OrderStatus.handled)
                     }),
                   }
                 }),
                 canceled: new agg.Filter({
-                  filter: OrderDoc.status.eq_(OrderStatus.canceled),
+                  filter: OrderDoc.status.eq(OrderStatus.canceled),
                 }),
                 new: new agg.Filter({
-                  filter: OrderDoc.status.eq_(OrderStatus.new)
+                  filter: OrderDoc.status.eq(OrderStatus.new)
                 })
               }
             }),

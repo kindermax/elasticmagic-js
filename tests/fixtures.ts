@@ -1,5 +1,4 @@
-import { FieldProp } from '../src/decorators';
-import { DateType, Doc, Field, IntegerType } from '../src/document';
+import { DateType, Doc, Field } from '../src/document';
 
 export enum OrderStatus {
   new = 1,
@@ -16,21 +15,23 @@ export enum OrderSource {
 export class OrderDoc extends Doc {
   public static docType: string = 'order';
 
-  @FieldProp(IntegerType, { name: 'user_id' })
-  public static userId: Field;
-  @FieldProp(IntegerType)
-  public static status: Field;
-  @FieldProp(IntegerType)
-  public static source: Field;
-  @FieldProp(IntegerType)
-  public static price: Field;
-  public static dateCreated: Field = new Field(DateType, { name: 'date_created', parent: OrderDoc });
+  public static userId = new Field(DateType, 'user_id', OrderDoc);
+  public userId?: number;
+  public static status = new Field(DateType, 'status', OrderDoc);
+  public status?: number;
+
+  public static source = new Field(DateType, 'source', OrderDoc);
+  public source?: number;
+  public static price = new Field(DateType, 'price', OrderDoc);
+  public price?: number;
+  public static dateCreated = new Field(DateType, 'date_created', OrderDoc);
+  public dateCreated?: Date;
 
   public static conditionSourceDesktop() {
-    return OrderDoc.source.in_([OrderSource.desktop]);
+    return OrderDoc.source.in([OrderSource.desktop]);
   }
 
   public static conditionLowPrice() {
-    return OrderDoc.price.lt_(10);
+    return OrderDoc.price.lt(10);
   }
 }
