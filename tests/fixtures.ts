@@ -16,7 +16,7 @@ export class OrderDoc extends Doc {
   public static docType: string = 'order';
 
   public static userId = new Field(DateType, 'user_id', OrderDoc);
-  public userId?: number;
+  public user_id?: number;
   public static status = new Field(DateType, 'status', OrderDoc);
   public status?: number;
 
@@ -25,7 +25,7 @@ export class OrderDoc extends Doc {
   public static price = new Field(DateType, 'price', OrderDoc);
   public price?: number;
   public static dateCreated = new Field(DateType, 'date_created', OrderDoc);
-  public dateCreated?: Date;
+  public date_created?: Date;
 
   public static conditionSourceDesktop() {
     return OrderDoc.source.in([OrderSource.desktop]);

@@ -137,7 +137,7 @@ describe('Search', () => {
     expect(result.hits.length).toBe(0);
   });
 
-  test('run search query and get result with a source', async () => {
+  test('run search query and get result with a hits', async () => {
     const cluster = new Cluster(client, indexName);
 
     const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
@@ -151,17 +151,30 @@ describe('Search', () => {
       );
 
     const result = await query.getResult<OrderDoc>();
+
     expect(result.error).toBeUndefined();
     expect(result.total).toBe(1);
     expect(result.hits.length).toBe(1);
+
     const hit = result.hits[0];
     expect(hit).toBeInstanceOf(OrderDoc);
     expect(hit._id).toBe('1');
-    // expect(hit.userId).toBe(1);
-    // expect(hit.status).toBe(1);
-    // expect(hit.source).toBe(1);
-    // expect(hit.price).toBe(5);
-    // expect(hit.dateCreated).toBe(5);
+  });
+  test('run search query and get result with populated doc fields from _source', async () => {
+    const cluster = new Cluster(client, indexName);
+
+    const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc }).filter(OrderDoc.userId.in([userId]));
+
+    const result = await query.getResult<OrderDoc>();
+    expect(result.error).toBeUndefined();
+    expect(result.hits.length).toBe(1);
+    const hit = result.hits[0];
+
+    expect(hit.user_id).toBe(1);
+    expect(hit.status).toBe(1);
+    expect(hit.source).toBe(1);
+    expect(hit.price).toBe(5);
+    expect(hit.date_created).toBe(dateCreated.toISOString());
   });
 
   test('run search query and get result with aggregations', async () => {
@@ -195,10 +208,6 @@ describe('Search', () => {
     const hit = result.hits[0];
     expect(hit).toBeInstanceOf(OrderDoc);
     expect(hit._id).toBe('1');
-    // expect(hit.userId).toBe(1);
-    // expect(hit.status).toBe(1);
-    // expect(hit.source).toBe(1);
-    // expect(hit.price).toBe(5);
 
     expect(Object.keys(result.aggregations).length).toBe(1);
 

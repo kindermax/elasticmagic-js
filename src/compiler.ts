@@ -102,7 +102,7 @@ export class CompilerVisitor {
     if (queryContext.sort.length > 0) {
       params.sort = this.visit(queryContext.sort);
     }
-    if (queryContext.source != null && queryContext !== undefined) {
+    if (queryContext.source != null && queryContext.source !== undefined) {
       params._source = queryContext.source;
     }
     if (queryContext.limit !== null) {
