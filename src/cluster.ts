@@ -1,8 +1,18 @@
-import { ApiResponse, Client } from '@elastic/elasticsearch';
 import { Doc } from './document';
 import { Query, SearchParams, SearchQuery, SearchQueryContext, SearchQueryOptions } from './query';
 import { SearchResult } from './result';
 import { RawResultBody } from './types';
+
+export interface IApiResponse<T = any> {
+  body: T;
+}
+export interface IClient {
+  search(opts: {
+    body: any;
+    index: string;
+  }): Promise<any>;
+  info(): Promise<any>;
+}
 
 type RootRawResult = {
   name: string;
@@ -41,7 +51,7 @@ export class Cluster {
   private esVersion?: EsVersion;
 
   constructor(
-    private client: any,
+    private client: IClient,
     indexName: string, // TODO this param must be optional or omited or accept Index instance or accept list of indeces
   ) {
     this.index = new Index(indexName, this);
@@ -61,7 +71,7 @@ export class Cluster {
 
   public async getEsVersion(): Promise<EsVersion> {
     if (this.esVersion) { return this.esVersion; }
-    const rawResult: ApiResponse<RootRawResult> = await this.client.info();
+    const rawResult: IApiResponse<RootRawResult> = await this.client.info();
     return this.processEsVersionResult(rawResult.body);
   }
 
@@ -82,7 +92,7 @@ export class Cluster {
   private async doRequest<T = any>(
     compiledQuery: Query,
     params: SearchParams,
-  ): Promise<ApiResponse<RawResultBody<T>>> {
+  ): Promise<IApiResponse<RawResultBody<T>>> {
     // TODO for now we hardcoded search method
     // TODO get client method to call, must be a accep-like function in searchQuery
     return this.client.search({
@@ -117,7 +127,7 @@ export class Cluster {
    * @param searchQuery
    */
   public async search<T extends Doc, TRaw>(searchQuery: SearchQuery): Promise<SearchResult<T>> {
-    const rawResultResponse: ApiResponse<RawResultBody<TRaw>> = await this.doRequest<TRaw>(
+    const rawResultResponse: IApiResponse<RawResultBody<TRaw>> = await this.doRequest<TRaw>(
       searchQuery.body,
       searchQuery.params,
     );
