@@ -107,4 +107,8 @@ export class SearchResult<T extends Doc, TRaw = any> extends Result {
   public getAggregation(name: string): AggResult {
     return this.aggregations[name];
   }
+
+  public getIds(): number[] {
+    return this.hits.map((hit) => Number(hit._id));
+  }
 }
