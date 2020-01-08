@@ -1,5 +1,5 @@
-elasticmagic-js
-===============
+elasticmagic-js (alpha)
+=======================
 
 JS/Typescript DSL for Elasticsearch
 
@@ -19,12 +19,12 @@ npm install elasticmagic-js
 
 Let's get started by writing a simple query.
 
+1. Declare class. We will use it both as `query builder` and container for data from elastic
 ```javascript
 import { Client } from '@elastic/elasticsearch';
 import { 
   Cluster,
   Field,
-  FieldProp,
   IntegerType,
   Doc,
   Bool,
@@ -42,33 +42,41 @@ enum OrderSource {
   mobile = 2,
 }
 
-// You can either set property manually or use FieldProp decrator.
-// The later will bind parent for you and set field name as well.
-
 class OrderDoc extends Doc {
   public static docType: string = 'order';
 
-  @FieldProp(IntegerType, { name: 'user_id' })
-  public static userId: Field;
+  public static userId = new Field(DateType, 'user_id', OrderDoc);
+  public userId?: number;
+  public static status = new Field(DateType, 'status', OrderDoc);
+  public status?: number;
 
-  @FieldProp(IntegerType)
-  public static status: Field;
-  
-  public static source: Field = new Field(IntegerType, { name: 'source', parent: OrderDoc });
-  public static price: Field = new Field(IntegerType, { name: 'price', parent: OrderDoc });
-  public static dateCreated: Field = new Field(DateType, { name: 'date_created', parent: OrderDoc });
+  public static source = new Field(DateType, 'source', OrderDoc);
+  public source?: number;
+  public static price = new Field(DateType, 'price', OrderDoc);
+  public price?: number;
+  public static dateCreated = new Field(DateType, 'date_created', OrderDoc);
+  public dateCreated?: Date;
 }
+```
 
+2. Create elasticsearch client and pass it to Cluester
+
+```javascript
 const client = new Client({ node: 'http://es6-test:9200' });
 const cluster = new Cluster(client, 'test_order_index');
 
-const query = cluster.searchQuery({ routing: 1, docClass: OrderDoc })
+```
+
+3. Now we ready to write our query
+
+```javascript
+const query = cluster.searchQuery({ routing: 1 })
   .source(false)
   .filter(
     Bool.must(
-      OrderDoc.user_id.in_([1]),
-      OrderDoc.status.in_([OrderStatus.new, OrderStatus.paid]),
-      OrderDoc.source.not_(OrderSource.mobile),
+      OrderDoc.user_id.in([1]),
+      OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+      OrderDoc.source.not(OrderSource.mobile),
     )
   )
   .limit(0);
@@ -102,7 +110,7 @@ It will print:
 }
 ```
 
-To fetch results from elasticsearch:
+4. To fetch results from elasticsearch:
 
 ```javascript
 const result = await query.getResult<OrderDoc>();
@@ -115,9 +123,9 @@ const query = searchQuery
   .source(false)
   .filter(
     Bool.must(
-      OrderDoc.userId.in_([1]),
-      OrderDoc.status.in_([OrderStatus.new, OrderStatus.handled, OrderStatus.paid]),
-      OrderDoc.source.not_(OrderSource.mobile),
+      OrderDoc.userId.in([1]),
+      OrderDoc.status.in([OrderStatus.new, OrderStatus.handled, OrderStatus.paid]),
+      OrderDoc.source.not(OrderSource.mobile),
     )
   )
   .aggregations({
@@ -130,22 +138,22 @@ const query = searchQuery
           aggs: {
             selled: new agg.Filter({
               filter: Bool.must(
-                OrderDoc.status.in_([OrderStatus.paid, OrderStatus.handled]),
+                OrderDoc.status.in([OrderStatus.paid, OrderStatus.handled]),
               ),
               aggs: {
                 paid: new agg.Filter({
-                  filter: OrderDoc.status.eq_(OrderStatus.paid)
+                  filter: OrderDoc.status.eq(OrderStatus.paid)
                 }), 
                 handled: new agg.Filter({
-                  filter: OrderDoc.status.eq_(OrderStatus.handled)
+                  filter: OrderDoc.status.eq(OrderStatus.handled)
                 }),
               }
             }),
             canceled: new agg.Filter({
-              filter: OrderDoc.status.eq_(OrderStatus.canceled),
+              filter: OrderDoc.status.eq(OrderStatus.canceled),
             }),
             new: new agg.Filter({
-              filter: OrderDoc.status.eq_(OrderStatus.new)
+              filter: OrderDoc.status.eq(OrderStatus.new)
             })
           }
         }),
@@ -202,7 +210,7 @@ make test TEST=testSearchQuery.spec.ts
 - [x] aggregations
 - [x] get aggregations result
 - [ ] documentation (https://typedoc.org, docusaurus, js.org)
-- [ ] add support for es5, es7
+- [ ] add support for elasticsearch  5, 7 versions, compilers for different es versions
 - [ ] collect doc classes
 - [ ] work with Date type
 - [ ] clone query
@@ -210,18 +218,17 @@ make test TEST=testSearchQuery.spec.ts
 - [ ] precommit hooks
 - [ ] generate doc with jsDoc
 - [ ] generate doc like ttag has
-- [ ] elasticsearch must be devDep or peerDep, but not production dep
-- [ ] meta document creation
+- [ ] elasticsearch must be devDep or peerDep, but not production dep (create Client interface)
 - [ ] scroll
 - [ ] pagination
 - [ ] queryFilters
-- [ ] inline functions
-- [ ] compilers for different es versions
+- [ ] function_score, inline functions
 - [ ] sub documents
 - [ ] more tests
-- [ ] indexing
-- [ ] delete
-- [ ] bulk
-- [ ] replace any type with proper types
-- [ ] drop unused fields
+- [ ] indexing, delete, bulk (CRUD)
+- [ ] post_filters
+- [ ] order_by
+- [ ] rescores
+- [ ] highlight
+- [ ] add doc to methods
 
