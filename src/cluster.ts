@@ -2,7 +2,7 @@ import { ApiResponse, Client } from '@elastic/elasticsearch';
 import { Doc } from './document';
 import { Query, SearchParams, SearchQuery, SearchQueryContext, SearchQueryOptions } from './query';
 import { SearchResult } from './result';
-import { RawResultBody, Nullable } from './types';
+import { Nullable, RawResultBody } from './types';
 
 type RootRawResult = {
   name: string;

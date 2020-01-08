@@ -3,11 +3,11 @@ import {
   Expression,
   RangeExpr,
   RangeValue,
+  Sort,
+  SortOpts,
   Term,
   Terms,
   TermValue,
-  SortOpts,
-  Sort,
 } from './expression';
 import { SearchResult } from './result';
 import { Hit } from './types';

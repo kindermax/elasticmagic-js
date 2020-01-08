@@ -5,8 +5,8 @@ import { CompilerVisitor } from './compiler';
 import { Doc, DocClass, Field } from './document';
 import { Expression, Params, ParamsType, Sort } from './expression';
 import { SearchResult } from './result';
-import { Dictionary, PlainObject, Nullable } from './types';
-import { cleanParams, collectDocClasses, isString, uniqueArray, isNullOrUndef, mergeParams, isArray } from './util';
+import { Dictionary, Nullable, PlainObject } from './types';
+import { cleanParams, collectDocClasses, isArray, isNullOrUndef, isString, mergeParams, uniqueArray } from './util';
 
 export type SearchQueryOptions = {
   routing?: number;
@@ -259,7 +259,7 @@ export class SearchQuery {
     if (this.mustClean(aggs)) {
       this._aggregations = new Params();
     } else {
-      this._aggregations = mergeParams(this._aggregations, new Params(aggs))
+      this._aggregations = mergeParams(this._aggregations, new Params(aggs));
     }
     return this;
   }

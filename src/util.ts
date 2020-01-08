@@ -1,5 +1,5 @@
 import { DocClass } from './document';
-import { Expression, FieldQueryValue, ParamsType, Params } from './expression';
+import { Expression, FieldQueryValue, Params, ParamsType } from './expression';
 import { Nullable } from './types';
 
 export function arrayKVToDict<T = any>(array: any[][]): T {
@@ -68,4 +68,4 @@ export function collectDocClasses(
 
 export function mergeParams(currentParams: Params, newParams: Params): Params {
   return new Params({ ...currentParams.getParams(), ...newParams.getParams() });
-};
+}

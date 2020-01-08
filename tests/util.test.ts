@@ -1,7 +1,7 @@
-import { collectDocClasses, mergeParams, cleanParams } from '../src/util';
-import { SearchQuery } from '../src/query';
-import { OrderDoc } from './fixtures';
 import { Params } from '../src/expression';
+import { SearchQuery } from '../src/query';
+import { cleanParams, collectDocClasses, mergeParams } from '../src/util';
+import { OrderDoc } from './fixtures';
 
 describe('Util', () => {
   test('collectDocClasses', () => {

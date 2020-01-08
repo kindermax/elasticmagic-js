@@ -212,7 +212,6 @@ export class Bool extends QueryExpression {
   }
 }
 
-
 export type SortOpts = {
   mode?: any;
   missing?: any;

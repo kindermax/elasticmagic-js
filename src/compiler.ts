@@ -7,9 +7,9 @@ import {
   Params,
   QueryExpression,
   RangeExpr,
+  Sort,
   Term,
   Terms,
-  Sort,
  } from './expression';
 import { Query, QueryOverride, SearchQueryContext } from './query';
 import { arrayKVToDict, isObject } from './util';

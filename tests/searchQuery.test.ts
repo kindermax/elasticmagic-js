@@ -1,6 +1,6 @@
+import * as agg from '../src/agg';
 import { SearchQuery } from '../src/query';
 import { OrderDoc, OrderStatus } from './fixtures';
-import * as agg from '../src/agg';
 
 describe('SearchQuery', () => {
   test('collectDocClasses private method', () => {
@@ -22,7 +22,7 @@ describe('SearchQuery', () => {
 
   test('clone of search query has same fields values', () => {
     const origQuery = new SearchQuery().filter(OrderDoc.userId.eq(1)).limit(1).source(false);
-    const clonedQuery = origQuery.clone()
+    const clonedQuery = origQuery.clone();
 
     // @ts-ignore
     expect(origQuery._limit).toBe(1);
@@ -60,7 +60,7 @@ describe('SearchQuery', () => {
     const clonedQuery = origQuery.clone();
 
     // reference types such as arrays must not be changed in original instance
-    clonedQuery.filter(OrderDoc.status.not(OrderStatus.canceled))
+    clonedQuery.filter(OrderDoc.status.not(OrderStatus.canceled));
     // @ts-ignore
     expect(origQuery._filters.length).toBe(1);
     // @ts-ignore
@@ -81,8 +81,8 @@ describe('SearchQuery', () => {
       usersOrders: new agg.Terms({
         field: OrderDoc.userId,
         size: 1,
-      })
-    })
+      }),
+    });
     // @ts-ignore
     expect(origQuery._aggregations.length).toBe(0);
     // @ts-ignore

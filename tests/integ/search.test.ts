@@ -1,9 +1,9 @@
 import { Client } from '@elastic/elasticsearch'; // TODO maybe replace
-import { Bool } from "../../src/expression";
-import { Cluster } from "../../src/cluster";
 import * as agg from '../../src/agg';
+import { Cluster } from '../../src/cluster';
+import { Bool } from '../../src/expression';
 import { SearchQuery } from '../../src/query';
-import { OrderStatus, OrderSource, OrderDoc } from '../fixtures';
+import { OrderDoc, OrderSource, OrderStatus } from '../fixtures';
 
 let client: Client;
 
@@ -39,8 +39,8 @@ const mapping = {
       },
       price: {
           type: 'integer',
-      }
-  }
+      },
+  },
 };
 
 beforeAll(async () => {
@@ -49,24 +49,25 @@ beforeAll(async () => {
   await client.indices.delete({
     index: indexName,
     ignore_unavailable: true,
-  })
+  });
 });
 
 beforeEach(async () => {
   // create index
   await client.indices.create({
     index: indexName,
-  })
+  });
   // put mapping
   await client.indices.putMapping({
     index: indexName,
-    type: type, // TODO use include_type_name for es >= 7, https://www.elastic.co/guide/en/elasticsearch/reference/master/removal-of-types.html
-    body: mapping
+    // TODO https://www.elastic.co/guide/en/elasticsearch/reference/master/removal-of-types.html
+    type,
+    body: mapping,
   });
   // index doc
   await client.index({
     index: indexName,
-    id: "1",
+    id: '1',
     type: '_doc', // uncomment this line if you are using Elasticsearch ≤ 6
     body: {
       user_id: userId,
@@ -76,14 +77,14 @@ beforeEach(async () => {
       price: 5,
     },
     routing: `${userId}`,
-    refresh: 'wait_for'
-  })
+    refresh: 'wait_for',
+  });
 });
 
 afterEach(async () => {
   await client.indices.delete({
     index: indexName,
-  })
+  });
 });
 
 describe('Search', () => {
@@ -146,7 +147,7 @@ describe('Search', () => {
           OrderDoc.userId.in([userId]),
           OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
           OrderDoc.source.not(OrderSource.mobile),
-        )
+        ),
       );
 
     const result = await query.getResult<OrderDoc>();
@@ -155,7 +156,7 @@ describe('Search', () => {
     expect(result.hits.length).toBe(1);
     const hit = result.hits[0];
     expect(hit).toBeInstanceOf(OrderDoc);
-    expect(hit._id).toBe("1");
+    expect(hit._id).toBe('1');
     // expect(hit.userId).toBe(1);
     // expect(hit.status).toBe(1);
     // expect(hit.source).toBe(1);
@@ -173,7 +174,7 @@ describe('Search', () => {
           OrderDoc.userId.in([userId]),
           OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
           OrderDoc.source.not(OrderSource.mobile),
-        )
+        ),
       )
       .aggregations({
         users: new agg.Terms({
@@ -181,19 +182,19 @@ describe('Search', () => {
           size: 1,
           aggs: {
             total: new agg.Filter({
-              filter: OrderDoc.status.eq(OrderStatus.new)
-            })
-          }
-        })
+              filter: OrderDoc.status.eq(OrderStatus.new),
+            }),
+          },
+        }),
       });
-    
+
     const result = await query.getResult<OrderDoc>();
     expect(result.error).toBeUndefined();
     expect(result.total).toBe(1);
     expect(result.hits.length).toBe(1);
     const hit = result.hits[0];
     expect(hit).toBeInstanceOf(OrderDoc);
-    expect(hit._id).toBe("1");
+    expect(hit._id).toBe('1');
     // expect(hit.userId).toBe(1);
     // expect(hit.status).toBe(1);
     // expect(hit.source).toBe(1);

@@ -1,9 +1,8 @@
-import { Field, IntegerType } from "../src/document";
-import { Terms, Bool, Term, RangeExpr } from "../src/expression";
-import { OrderDoc } from "./fixtures";
+import { Field, IntegerType } from '../src/document';
+import { Bool, RangeExpr, Term, Terms } from '../src/expression';
+import { OrderDoc } from './fixtures';
 
-
-describe("Field", () => {
+describe('Field', () => {
   test('accept name as 2 positional arg', () => {
     const field: Field = new Field(IntegerType, 'id', OrderDoc);
     expect(field.name).toBe('id');
@@ -20,17 +19,17 @@ describe("Field", () => {
 
   test('has in operator', () => {
     const field: Field = new Field(IntegerType, 'id', OrderDoc);
-    expect(field.in([1, 2, 3])).toBeInstanceOf(Terms)
+    expect(field.in([1, 2, 3])).toBeInstanceOf(Terms);
   });
 
   test('has not operator', () => {
     const field: Field = new Field(IntegerType, 'id', OrderDoc);
     expect(field.not(1)).toBeInstanceOf(Bool);
     expect(field.not(1).params.length).toBe(1);
-    expect(field.not(1).params.getParams()).toStrictEqual({ 
+    expect(field.not(1).params.getParams()).toStrictEqual({
       must_not: [
-        new Term(field, 1)
-      ]
+        new Term(field, 1),
+      ],
     });
   });
 

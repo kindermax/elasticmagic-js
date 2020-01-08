@@ -1,11 +1,11 @@
-import { SearchQuery } from '../src/query';
-import { Bool } from '../src/expression';
 import * as agg from '../src/agg';
-import { OrderDoc, OrderStatus, OrderSource } from './fixtures';
+import { Bool } from '../src/expression';
+import { SearchQuery } from '../src/query';
+import { OrderDoc, OrderSource, OrderStatus } from './fixtures';
 
 describe('Aggregations compile', () => {
   test('valid aggregations', () => {
-    const searchQuery = new SearchQuery({})
+    const searchQuery = new SearchQuery({});
     const query = searchQuery
       .source(false)
       .filter(
@@ -13,7 +13,7 @@ describe('Aggregations compile', () => {
           OrderDoc.userId.in([1]),
           OrderDoc.status.in([OrderStatus.new, OrderStatus.handled, OrderStatus.paid]),
           OrderDoc.source.not(OrderSource.mobile),
-        )
+        ),
       )
       .aggregations({
         usersOrders: new agg.Terms({
@@ -29,26 +29,26 @@ describe('Aggregations compile', () => {
                   ),
                   aggs: {
                     paid: new agg.Filter({
-                      filter: OrderDoc.status.eq(OrderStatus.paid)
-                    }), 
-                    handled: new agg.Filter({
-                      filter: OrderDoc.status.eq(OrderStatus.handled)
+                      filter: OrderDoc.status.eq(OrderStatus.paid),
                     }),
-                  }
+                    handled: new agg.Filter({
+                      filter: OrderDoc.status.eq(OrderStatus.handled),
+                    }),
+                  },
                 }),
                 canceled: new agg.Filter({
                   filter: OrderDoc.status.eq(OrderStatus.canceled),
                 }),
                 new: new agg.Filter({
-                  filter: OrderDoc.status.eq(OrderStatus.new)
-                })
-              }
+                  filter: OrderDoc.status.eq(OrderStatus.new),
+                }),
+              },
             }),
             lowcost: new agg.Filter({
-              filter: OrderDoc.conditionLowPrice()
-            })
-          }
-        })
+              filter: OrderDoc.conditionLowPrice(),
+            }),
+          },
+        }),
       })
       .limit(0);
     expect(query.body).toStrictEqual({
@@ -60,115 +60,115 @@ describe('Aggregations compile', () => {
                 {
                   terms: {
                     user_id: [
-                      1
-                    ]
-                  }
+                      1,
+                    ],
+                  },
                 },
                 {
                   terms: {
                     status: [
                       1,
                       3,
-                      2 // order is a must
-                    ]
-                  }
+                      2, // order is a must
+                    ],
+                  },
                 },
                 {
                   bool: {
                     must_not: [
                       {
                         term: {
-                          source: 2
-                        }
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        }
+                          source: 2,
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        },
       },
       _source: false,
       aggregations: {
         usersOrders: {
           terms: {
             field: 'user_id',
-            size: 1
+            size: 1,
           },
           aggregations: {
             total: {
               filter: {
                 terms: {
                   source: [
-                    1
-                  ]
-                }
+                    1,
+                  ],
+                },
               },
               aggregations: {
                 selled: {
                   filter: {
                     terms: {
-                      status: [2, 3]
-                    }
+                      status: [2, 3],
+                    },
                   },
                   aggregations: {
                     paid: {
                       filter: {
                         term: {
-                          status: 2
-                        }
-                      }
+                          status: 2,
+                        },
+                      },
                     },
                     handled: {
                       filter: {
                         term: {
-                          status: 3
-                        }
-                      }
-                    }
-                  }
+                          status: 3,
+                        },
+                      },
+                    },
+                  },
                 },
                 canceled: {
                   filter: {
                     term: {
-                      status: 4
-                    }
-                  }
+                      status: 4,
+                    },
+                  },
                 },
                 new: {
                   filter: {
                     term: {
-                      status: 1
-                    }
-                  }
-                }
-              }
+                      status: 1,
+                    },
+                  },
+                },
+              },
             },
             lowcost: {
               filter: {
                 range: {
                   price: {
-                    lt: 10
-                  }
-                }
-              }
-            }
-          }
-        }
+                    lt: 10,
+                  },
+                },
+              },
+            },
+          },
+        },
       },
-      size: 0
-    })
+      size: 0,
+    });
   });
 
   test('can clear aggs', () => {
-    const searchQuery = new SearchQuery({})
+    const searchQuery = new SearchQuery({});
     const query = searchQuery
       .aggregations({
         usersOrders: new agg.Terms({
           field: OrderDoc.userId,
           size: 1,
-        })
+        }),
       });
 
     expect(query.body).toStrictEqual({
@@ -176,10 +176,10 @@ describe('Aggregations compile', () => {
         usersOrders: {
           terms: {
             field: 'user_id',
-            size: 1
+            size: 1,
           },
-        }
-      }
+        },
+      },
     });
 
     query.aggs(null);
