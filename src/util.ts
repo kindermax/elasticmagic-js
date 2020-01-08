@@ -56,16 +56,20 @@ export function collectDocClasses(
   }
 
   if (isArray(expr)) {
-    return uniqueArray(expr.flatMap((item) => collectDocClasses(item)));
+    return uniqueArray(flatMap((item) => collectDocClasses(item), expr));
   }
 
   if (isObject(expr)) {
     const kvListChain = Object.keys(expr).concat(Object.values(expr));
-    return uniqueArray(kvListChain.flatMap((item) => collectDocClasses(item)));
+    return uniqueArray(flatMap((item) => collectDocClasses(item), kvListChain));
   }
   return [];
 }
 
 export function mergeParams(currentParams: Params, newParams: Params): Params {
   return new Params({ ...currentParams.getParams(), ...newParams.getParams() });
+}
+
+export function flatMap(f: (arg: any) => any, arr: any[]): any[] {
+  return arr.reduce((x, y) => [...x, ...f(y)], []);
 }

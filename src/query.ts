@@ -6,7 +6,7 @@ import { Doc, DocClass, Field } from './document';
 import { Expression, Params, ParamsType, Sort } from './expression';
 import { SearchResult } from './result';
 import { Dictionary, Nullable, PlainObject } from './types';
-import { cleanParams, collectDocClasses, isArray, isNullOrUndef, isString, mergeParams, uniqueArray } from './util';
+import { cleanParams, collectDocClasses, isArray, isNullOrUndef, isString, mergeParams, uniqueArray, flatMap } from './util';
 
 export type SearchQueryOptions = {
   routing?: number;
@@ -352,6 +352,6 @@ export class SearchQuery {
       this._filters,
       Object.values(this._aggregations.getParams()),
     ];
-    return uniqueArray(expressions.flatMap((expr) => collectDocClasses(expr)));
+    return uniqueArray(flatMap((expr) => collectDocClasses(expr), expressions));
   }
 }

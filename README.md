@@ -21,7 +21,11 @@ npm install elasticmagic-js
 
 Let's get started by writing a simple query.
 
-1. Declare class. We will use it both as `query builder` and container for data from elastic
+1. Declare class. We will use it both as `query builder` and container for data from elastic.
+
+   As you can see we declare one static field and one intance field with same name but different types.  
+   Static field will be used to build queries while instance field will be populate on search query
+
 ```javascript
 import { Client } from '@elastic/elasticsearch';
 import { 
@@ -49,13 +53,16 @@ class OrderDoc extends Doc {
 
   public static userId = new Field(DateType, 'user_id', OrderDoc);
   public userId?: number;
+
   public static status = new Field(DateType, 'status', OrderDoc);
   public status?: number;
 
   public static source = new Field(DateType, 'source', OrderDoc);
   public source?: number;
+
   public static price = new Field(DateType, 'price', OrderDoc);
   public price?: number;
+
   public static dateCreated = new Field(DateType, 'date_created', OrderDoc);
   public dateCreated?: Date;
 }
@@ -187,12 +194,6 @@ console.log(total.docCount) // # prints 1
 
 #### Tests
 
-First build base image
-
-```bash
-make build # 
-```
-
 Run all tests
 
 ```bash
@@ -209,15 +210,8 @@ make test TEST=testSearchQuery.spec.ts
 
 # TODO
 
-- [x] query generation
-- [x] aggregations
-- [x] get aggregations result
 - [ ] documentation (https://typedoc.org, docusaurus, js.org)
 - [ ] add support for elasticsearch  5, 7 versions, compilers for different es versions
-- [ ] collect doc classes
-- [ ] work with Date type
-- [ ] clone query
-- [x] return typed result of search +-
 - [ ] precommit hooks
 - [ ] generate doc with jsDoc
 - [ ] generate doc like ttag has
@@ -230,7 +224,6 @@ make test TEST=testSearchQuery.spec.ts
 - [ ] more tests
 - [ ] indexing, delete, bulk (CRUD)
 - [ ] post_filters
-- [ ] order_by
 - [ ] rescores
 - [ ] highlight
 - [ ] add doc to methods
