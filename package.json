@@ -20,15 +20,17 @@
     "lint:test": "tslint -c tslint.json 'tests/**/*.ts'"
   },
   "dependencies": {
-    "tslint": "^5.20.1"
+    "lodash.clonedeep": "4.5.0"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.25",
-    "@types/node": "^13.1.4",
-    "jest": "^24.9.0",
-    "ts-jest": "^24.2.0",
-    "typescript": "^3.7.4",
-    "@elastic/elasticsearch": "^6.8.4"
+    "@elastic/elasticsearch": "6.8.4",
+    "@types/jest": "24.0.25",
+    "@types/lodash.clonedeep": "4.5.6",
+    "@types/node": "13.1.4",
+    "jest": "24.9.0",
+    "ts-jest": "24.2.0",
+    "typescript": "3.7.4",
+    "tslint": "5.20.1"
   },
   "author": "Kindritskiy Maksym <kindritskiy.m@gmail.com>",
   "license": "Apache License 2.0",

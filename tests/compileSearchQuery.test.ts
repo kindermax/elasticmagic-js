@@ -96,6 +96,46 @@ describe("SearchQuery compile", () => {
     })
   });
 
+  test('with date range', () => {
+    const searchQuery = new SearchQuery({})
+    const now = new Date().toISOString();
+    const query = searchQuery
+      .filter(
+        Bool.must(
+          OrderDoc.userId.in([1]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
+          OrderDoc.dateCreated.lte(now),
+        )
+      );
+    expect(query.body).toStrictEqual({
+      query: {
+        bool: {
+          filter: {
+            bool: {
+              must: [
+                {terms: {user_id: [1]}},
+                {terms: {status: [OrderStatus.new, OrderStatus.paid]}},
+                {bool: {
+                  must_not: [
+                    {term: {source: OrderSource.mobile}}
+                  ],
+                }},
+                {
+                  range: {
+                    date_created: {
+                      lte: `${now}`,
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+    })
+  });
+
   test('with only _source field', () => {
     const searchQuery = new SearchQuery({})
     const query = searchQuery.source(false);
@@ -233,5 +273,35 @@ describe("SearchQuery compile", () => {
       routing: '1',
       type: 'order'
     })
+  });
+
+  test('valid query with size field', () => {
+    const query = new SearchQuery()
+      .source(false)
+      .filter(
+        Bool.must(
+          OrderDoc.userId.in([1]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
+        )
+      )
+      .limit(0);
+    const original = query.clone().sort(OrderDoc.userId.desc());
+    expect(original.body.sort).toStrictEqual([{
+        user_id: 'desc',
+    }]);
+
+    original.orderBy(null);
+    expect(original.body).not.toHaveProperty('sort');
+
+    original.orderBy(OrderDoc.userId);
+    expect(original.body.sort).toStrictEqual(['user_id']);
+
+    const cloned = query.clone().orderBy(OrderDoc.userId.asc());
+    query.clone().orderBy(OrderDoc.userId.asc());
+    query.clone().orderBy(OrderDoc.userId.asc());
+    expect(cloned.body.sort).toStrictEqual([{
+        user_id: 'asc',
+    }]);
   });
 });

@@ -9,6 +9,7 @@ import {
   RangeExpr,
   Term,
   Terms,
+  Sort,
  } from './expression';
 import { Query, QueryOverride, SearchQueryContext } from './query';
 import { arrayKVToDict, isObject } from './util';
@@ -53,6 +54,8 @@ export class CompilerVisitor {
         return this.visitFilterAgg(expression);
       case 'range':
         return this.visitRange(expression);
+      case 'sort':
+        return this.visitSort(expression);
       default:
     }
 
@@ -95,7 +98,10 @@ export class CompilerVisitor {
     if (query) {
       params.query = this.visit(query);
     }
-    // TODO order_by (sort)
+
+    if (queryContext.sort.length > 0) {
+      params.sort = this.visit(queryContext.sort);
+    }
     if (queryContext.source != null && queryContext !== undefined) {
       params._source = queryContext.source;
     }
@@ -207,5 +213,22 @@ export class CompilerVisitor {
         ...fieldParams,
       },
     };
+  }
+
+  private visitSort(expr: Sort): any {
+    if (expr.params.length) {
+      const params = {
+        order: this.visit(expr.order),
+        ...this.visit(expr.params),
+      };
+      return {
+        [this.visit(expr.field)]: params,
+      };
+    } else if (expr.order) {
+      return {
+        [this.visit(expr.field)]: this.visit(expr.order),
+      };
+    }
+    return this.visit(expr.field);
   }
 }

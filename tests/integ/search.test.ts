@@ -7,7 +7,10 @@ import { OrderStatus, OrderSource, OrderDoc } from '../fixtures';
 
 let client: Client;
 
+const DAY = 24 * 3600 * 1000;
+
 const userId = 1;
+const dateCreated = new Date(Date.now() - DAY);
 const type = 'order';
 const indexName = 'test_order_index';
 const esHost = `http://${process.env.ES_HOST}:9200`;
@@ -69,7 +72,7 @@ beforeEach(async () => {
       user_id: userId,
       status: OrderStatus.new,
       source: OrderSource.desktop,
-      date_created: new Date(),
+      date_created: dateCreated,
       price: 5,
     },
     routing: `${userId}`,
@@ -83,7 +86,7 @@ afterEach(async () => {
   })
 });
 
-describe("Search", () => {
+describe('Search', () => {
   test('run search query and get result', async () => {
     const cluster = new Cluster(client, indexName);
 
@@ -94,8 +97,37 @@ describe("Search", () => {
           OrderDoc.userId.in([userId]),
           OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
           OrderDoc.source.not(OrderSource.mobile),
-        )
+          OrderDoc.dateCreated.lte(new Date().toISOString()),
+        ),
       )
+      .limit(0);
+
+    const result = await query.getResult<OrderDoc>();
+    expect(result.error).toBeUndefined();
+    expect(result.total).toBe(1);
+    expect(result.hits.length).toBe(0);
+  });
+
+  test('run search query with date as Date instance', async () => {
+    const cluster = new Cluster(client, indexName);
+
+    const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
+      .source(false)
+      .filter(Bool.must(OrderDoc.dateCreated.lte(new Date())))
+      .limit(0);
+
+    const result = await query.getResult<OrderDoc>();
+    expect(result.error).toBeUndefined();
+    expect(result.total).toBe(1);
+    expect(result.hits.length).toBe(0);
+  });
+
+  test('run search query with date as iso string', async () => {
+    const cluster = new Cluster(client, indexName);
+
+    const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
+      .source(false)
+      .filter(Bool.must(OrderDoc.dateCreated.lte(new Date().toISOString())))
       .limit(0);
 
     const result = await query.getResult<OrderDoc>();

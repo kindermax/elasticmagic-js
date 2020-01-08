@@ -8,8 +8,8 @@ export COMPOSE_DOCKER_CLI_BUILD=1
 build:
 	docker build -t base . -f Dockerfile
 
-test: 
+test: build
 	docker-compose run -e TESTS=${TEST} -e ES=${ES} --rm test
 
-test-integ: 
+test-integ: build
 	docker-compose run --rm test-integ

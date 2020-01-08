@@ -160,4 +160,29 @@ describe('Aggregations compile', () => {
       size: 0
     })
   });
+
+  test('can clear aggs', () => {
+    const searchQuery = new SearchQuery({})
+    const query = searchQuery
+      .aggregations({
+        usersOrders: new agg.Terms({
+          field: OrderDoc.userId,
+          size: 1,
+        })
+      });
+
+    expect(query.body).toStrictEqual({
+      aggregations: {
+        usersOrders: {
+          terms: {
+            field: 'user_id',
+            size: 1
+          },
+        }
+      }
+    });
+
+    query.aggs(null);
+    expect(query.body).not.toHaveProperty('aggregations');
+  });
 });

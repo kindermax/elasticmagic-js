@@ -128,6 +128,7 @@ const query = searchQuery
       OrderDoc.userId.in([1]),
       OrderDoc.status.in([OrderStatus.new, OrderStatus.handled, OrderStatus.paid]),
       OrderDoc.source.not(OrderSource.mobile),
+      OrderDoc.dateCreated.lte(new Date().toISOString()),
     )
   )
   .aggregations({

@@ -1,11 +1,12 @@
+import cloneDeep from 'lodash.clonedeep';
 import { AggExpression } from './agg';
 import { Cluster, Index } from './cluster';
 import { CompilerVisitor } from './compiler';
-import { Doc, DocClass } from './document';
-import { Expression, Params, ParamsType } from './expression';
+import { Doc, DocClass, Field } from './document';
+import { Expression, Params, ParamsType, Sort } from './expression';
 import { SearchResult } from './result';
-import { Dictionary, PlainObject } from './types';
-import { cleanParams, collectDocClasses, isString, uniqueArray } from './util';
+import { Dictionary, PlainObject, Nullable } from './types';
+import { cleanParams, collectDocClasses, isString, uniqueArray, isNullOrUndef, mergeParams, isArray } from './util';
 
 export type SearchQueryOptions = {
   routing?: number;
@@ -75,11 +76,20 @@ type QueryRootField = {
   match?: any;
 };
 
+type SortOrder = 'asc' | 'desc';
+type SortMode = 'min' | 'max' | 'sum' | 'avg' | 'median';
+// TODO finish https://www.elastic.co/guide/en/elasticsearch/reference/6.8/search-request-sort.html#nested-sorting
+type SortObject = Dictionary<string, SortOrder | { order: SortOrder; mode?: SortMode }>;
+type SortRootField =
+  | SortObject[]
+  | string
+  | '_score';
 export type Query = {
   query?: QueryRootField;
   size?: number;
   _source?: SourceField;
   aggregations?: AggregationsField;
+  sort?: SortRootField
   // TODO complete this type
 };
 
@@ -99,6 +109,7 @@ export class SearchQueryContext {
     public source: SourceField,
     public fields: any,
     public filters: any,
+    public sort: Sort[],
     public limit: Limit,
     public searchParams: Params,
     public aggregations: Params,
@@ -145,6 +156,7 @@ export class SearchQuery {
   private _limit: Limit = null;
   private _fields: any = null; // TODO not used right now
   private _filters: Expression[] = [];
+  private _sort: Sort[] = [];
   private _aggregations: Params = new Params();
 
   private _source: SourceField = null;
@@ -189,6 +201,7 @@ export class SearchQuery {
       this._source,
       this._fields,
       this._filters,
+      this._sort,
       this._limit,
       this._searchParams,
       this._aggregations,
@@ -212,8 +225,12 @@ export class SearchQuery {
    * Multiple expressions may be specified, so they will be joined together using ``Bool.must`` expression.
    * @param filters
    */
-  public filter(...filters: Expression[]): this {
-    this._filters.push(...filters);
+  public filter(...filters: Expression[] | Nullable[]): this {
+    if (this.mustClean(filters)) {
+      this._filters = [];
+    } else {
+      this._filters.push(...filters);
+    }
     return this;
   }
 
@@ -237,9 +254,18 @@ export class SearchQuery {
    *
    * @param aggs objects with aggregations. Can be ``null`` that cleans up previous aggregations.
    */
-  public aggregations(aggs: Aggregations): this {
+  public aggregations(aggs: Nullable<Aggregations>): this {
     // TODO implement null cleaning
-    this._aggregations = new Params(aggs);
+    if (this.mustClean(aggs)) {
+      this._aggregations = new Params();
+    } else {
+      this._aggregations = mergeParams(this._aggregations, new Params(aggs))
+    }
+    return this;
+  }
+
+  public aggs(aggs: Nullable<Aggregations>): this {
+    this.aggregations(aggs);
     return this;
   }
 
@@ -262,7 +288,7 @@ export class SearchQuery {
     return this.compile();
   }
 
-  public get body() {
+  public get body(): Query {
     return this.toJSON();
   }
 
@@ -282,6 +308,30 @@ export class SearchQuery {
     return this.cluster.search<T, TRaw>(this);
   }
 
+  public clone(): this {
+    return cloneDeep(this);
+  }
+
+  public sort(...orders: Sort[] | Field[] | Nullable[]): this {
+    if (this.mustClean(orders)) {
+      this._sort = [];
+    } else {
+      this._sort.push(...orders);
+    }
+    return this;
+  }
+
+  public orderBy(...orders: Sort[] | Field[] | Nullable[]): this {
+    this.sort(...orders);
+    return this;
+  }
+
+  private mustClean(arg: any[] | Nullable): boolean {
+    if (isArray(arg)) {
+      return arg.length === 1 && isNullOrUndef(arg[0]);
+    }
+    return !arg ? true : false;
+  }
   private compile(): Query {
     const compiler = new CompilerVisitor();
     return compiler.compile(this.getQueryContext());

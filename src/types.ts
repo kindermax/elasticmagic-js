@@ -1,4 +1,4 @@
-export type Nullable<T> = T | null | undefined;
+export type Nullable<T = any> = T | null | undefined;
 
 export type Dictionary<T1 extends string | number, T2 = any> = {
   [key in T1]: T2

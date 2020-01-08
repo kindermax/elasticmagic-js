@@ -6,6 +6,8 @@ import {
   Term,
   Terms,
   TermValue,
+  SortOpts,
+  Sort,
 } from './expression';
 import { SearchResult } from './result';
 import { Hit } from './types';
@@ -61,6 +63,14 @@ export class Field extends Expression {
 
   public gte(other: RangeValue): RangeExpr {
     return new RangeExpr(this, { gte: other });
+  }
+
+  public asc(opts?: SortOpts): Sort {
+    return new Sort(this, 'asc', opts);
+  }
+
+  public desc(opts?: SortOpts): Sort {
+    return new Sort(this, 'desc', opts);
   }
 
   public getType(): FieldType {
