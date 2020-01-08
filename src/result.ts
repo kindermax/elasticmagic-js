@@ -32,7 +32,7 @@ class Result {
   constructor(public raw: any) {}
 }
 
-export class SearchResult<T extends Doc, TRaw = any> extends Result {
+export class SearchResult<T extends Doc> extends Result {
 
   private queryAggs: Params = new Params();
   private docClsMap: Dictionary<string, DocClass> = {};
@@ -49,7 +49,7 @@ export class SearchResult<T extends Doc, TRaw = any> extends Result {
   public scrollId: number | undefined;
 
   constructor(
-    rawResult: RawResultBody<TRaw>,
+    rawResult: RawResultBody<any>,
     aggregations: Params,
     private docClasses: Readonly<DocClass[]>,
     instanceMapper?: InstanceMapper<DocClass, any> | InstanceMapperDict, // TODO pass types

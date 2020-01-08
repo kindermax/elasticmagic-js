@@ -300,12 +300,12 @@ export class SearchQuery {
     return JSON.stringify(this.compile(), null, 2);
   }
 
-  public async getResult<T extends Doc = any, TRaw = any>(): Promise<SearchResult<T>> {
+  public async getResult<T extends Doc = any>(): Promise<SearchResult<T>> {
     // TODO add cache
     if (!this.cluster) {
       throw new Error('getResult: no cluster specified, can not make a query');
     }
-    return this.cluster.search<T, TRaw>(this);
+    return this.cluster.search<T>(this);
   }
 
   public clone(): this {
