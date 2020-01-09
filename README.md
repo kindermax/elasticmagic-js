@@ -14,7 +14,7 @@ Supports Elasticsearch version 6.x
 Install elasticmagic-js using [`npm`](https://www.npmjs.com/):
 
 ```bash
-npm install elasticmagic-js
+npm install elasticmagic
 ```
 
 # Examples
