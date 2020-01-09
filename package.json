@@ -1,6 +1,6 @@
 {
   "name": "elasticmagic",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "JS orm for elasticsearch.",
   "repository": {
     "type": "git",
