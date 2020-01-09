@@ -357,8 +357,7 @@ describe('SearchQuery compile', () => {
       });
 
     expect(query.body).toHaveProperty('_source');
-    expect(query.body._source).toStrictEqual({exclude: ['status']});
-    expect(query.body._source).toStrictEqual({include: ['user_id']});
+    expect(query.body._source).toStrictEqual({exclude: ['status'], include: ['user_id']});
   });
 
   test('valid query with all fields and empty exclude in _source field', () => {
