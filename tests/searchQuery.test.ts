@@ -1,4 +1,5 @@
 import * as agg from '../src/agg';
+import { Source } from '../src/expression';
 import { SearchQuery } from '../src/query';
 import { OrderDoc, OrderStatus } from './fixtures';
 
@@ -30,9 +31,13 @@ describe('SearchQuery', () => {
     expect(clonedQuery._limit).toBe(1);
 
     // @ts-ignore
-    expect(origQuery._source).toBe(false);
+    expect(origQuery._source).toBeInstanceOf(Source);
     // @ts-ignore
-    expect(clonedQuery._source).toBe(false);
+    expect(origQuery._source.fields).toBe(false);
+    // @ts-ignore
+    expect(clonedQuery._source).toBeInstanceOf(Source);
+    // @ts-ignore
+    expect(clonedQuery._source.fields).toBe(false);
   });
 
   test('clone of search query do not change primitive values in original query', () => {
@@ -49,10 +54,15 @@ describe('SearchQuery', () => {
     // primitive types must not be changed in original instance
     origQuery.source(false);
     clonedQuery.source(true);
+
     // @ts-ignore
-    expect(origQuery._source).toBe(false);
+    expect(origQuery._source).toBeInstanceOf(Source);
     // @ts-ignore
-    expect(clonedQuery._source).toBe(true);
+    expect(origQuery._source.fields).toBe(false);
+    // @ts-ignore
+    expect(clonedQuery._source).toBeInstanceOf(Source);
+    // @ts-ignore
+    expect(clonedQuery._source.fields).toBe(true);
   });
 
   test('clone of search query do not change reference values (arrays) in original query', () => {

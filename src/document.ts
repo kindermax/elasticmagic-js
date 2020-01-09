@@ -89,8 +89,8 @@ type DocOpts = {
 
 export class Doc {
   public static readonly docType: string;
-  private hit: Hit;
-  private result: SearchResult<any>;
+  protected hit: Hit;
+  protected result: SearchResult<any>;
 
   public _id: string;
   constructor(opts: DocOpts) {
@@ -98,10 +98,23 @@ export class Doc {
     this.result = opts.result;
 
     this._id = opts.hit._id;
+
+    if (this.hit._source) {
+      this.populateFromSource();
+    }
   }
 
   public static getDocCls(): string {
     return this.docType;
+  }
+
+  private populateFromSource() {
+    Object.entries(this.hit._source).forEach((hitKV) => {
+      const fieldName: string = hitKV[0];
+      const fieldValue = hitKV[1];
+      const _this: any = this; // TODO well you should't see this
+      _this[fieldName] = fieldValue;
+    });
   }
 }
 

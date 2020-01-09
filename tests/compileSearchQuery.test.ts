@@ -304,4 +304,77 @@ describe('SearchQuery compile', () => {
         user_id: 'asc',
     }]);
   });
+
+  test('valid query with nulled  _source field', () => {
+    const query = new SearchQuery()
+      .source(null)
+      .filter(
+        Bool.must(
+          OrderDoc.userId.in([1]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
+        ),
+      )
+      .limit(0);
+
+    expect(query.body).not.toHaveProperty('_source');
+  });
+
+  test('valid query with fields in _source field', () => {
+    const query = new SearchQuery()
+      .source([
+        OrderDoc.userId,
+        'status',
+      ])
+      .filter(
+        Bool.must(
+          OrderDoc.userId.in([1]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
+        ),
+      )
+      .limit(0);
+
+    expect(query.body).toHaveProperty('_source');
+    expect(query.body._source).toStrictEqual(['user_id', 'status']);
+  });
+
+  test('valid query with all fields and exclude is list of string in _source field', () => {
+    const query = new SearchQuery()
+      .source(true, {
+        exclude: ['status'],
+      });
+
+    expect(query.body).toHaveProperty('_source');
+    expect(query.body._source).toStrictEqual({exclude: ['status']});
+  });
+
+  test('valid query with all fields include and exclude is list of string in _source field', () => {
+    const query = new SearchQuery()
+      .source(true, {
+        exclude: ['status'],
+        include: [OrderDoc.userId],
+      });
+
+    expect(query.body).toHaveProperty('_source');
+    expect(query.body._source).toStrictEqual({exclude: ['status'], include: ['user_id']});
+  });
+
+  test('valid query with all fields and empty exclude in _source field', () => {
+    const query = new SearchQuery()
+      .source(true, {
+        exclude: [],
+      })
+      .filter(
+        Bool.must(
+          OrderDoc.userId.in([1]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
+        ),
+      )
+      .limit(0);
+
+    expect(query.body).toHaveProperty('_source');
+    expect(query.body._source).toStrictEqual({});
+  });
 });

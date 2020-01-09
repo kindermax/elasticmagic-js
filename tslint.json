@@ -12,7 +12,8 @@
         "quotemark": [true, "single", "avoid-escape", "avoid-template"],
         "variable-name": {
             "options": [
-              "allow-leading-underscore"
+              "allow-leading-underscore",
+              "allow-snake-case"
             ]
           }
     },

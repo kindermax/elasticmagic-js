@@ -80,15 +80,13 @@ export class Cluster {
 
   /**
    * Make a request using underlying es client.
-   *
-   * NOTE: If you want to type response body, pass a generic type.
    * @param compiledQuery
    * @param params
    */
-  private async doRequest<T = any>(
+  private async doRequest(
     compiledQuery: Query,
     params: SearchParams,
-  ): Promise<ApiResponse<RawResultBody<T>>> {
+  ): Promise<ApiResponse<RawResultBody<any>>> {
     // TODO for now we hardcoded search method
     // TODO get client method to call, must be a accep-like function in searchQuery
     if (!this.index) {
@@ -104,16 +102,14 @@ export class Cluster {
   /**
    * returns SearchResult instance with processed raw es response.
    *
-   * TODO drop type generic for raw body
-   * NOTE: If you want to type response body, pass a generic type.
    * @param rawResultBody \
    * @param searchQueryContext
    */
-  private processResult<T extends Doc, TRaw>(
-    rawResultBody: RawResultBody<TRaw>,
+  private processResult<T extends Doc>(
+    rawResultBody: RawResultBody<any>,
     searchQueryContext: SearchQueryContext,
   ): SearchResult<T> {
-    return new SearchResult<T, TRaw>(
+    return new SearchResult<T>(
       rawResultBody,
       searchQueryContext.aggregations,
       searchQueryContext.docClasses,
@@ -125,12 +121,12 @@ export class Cluster {
    * run search query against elasticsearch cluster and return processed result.
    * @param searchQuery
    */
-  public async search<T extends Doc, TRaw>(searchQuery: SearchQuery): Promise<SearchResult<T>> {
-    const rawResultResponse: ApiResponse<RawResultBody<TRaw>> = await this.doRequest<TRaw>(
+  public async search<T extends Doc>(searchQuery: SearchQuery): Promise<SearchResult<T>> {
+    const rawResultResponse: ApiResponse<RawResultBody<any>> = await this.doRequest(
       searchQuery.body,
       searchQuery.params,
     );
-    return this.processResult<T, TRaw>(
+    return this.processResult<T>(
       rawResultResponse.body,
       searchQuery.getQueryContext(),
     );

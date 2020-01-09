@@ -21,7 +21,12 @@ npm install elasticmagic
 
 Let's get started by writing a simple query.
 
-1. Declare class. We will use it both as `query builder` and container for data from elastic
+1. Declare class. We will use it both as `query builder` and container for data from elastic.
+
+   As you can see we declare one static field and one intance field with almost same name but different types.  
+   Static field will be used to build queries.
+   Instance field will be populated on search query so they must be the same as in elasticsearch document.
+
 ```javascript
 import { Client } from '@elastic/elasticsearch';
 import { 
@@ -48,16 +53,19 @@ class OrderDoc extends Doc {
   public static docType: string = 'order';
 
   public static userId = new Field(DateType, 'user_id', OrderDoc);
-  public userId?: number;
+  public user_id?: number;
+
   public static status = new Field(DateType, 'status', OrderDoc);
   public status?: number;
 
   public static source = new Field(DateType, 'source', OrderDoc);
   public source?: number;
+
   public static price = new Field(DateType, 'price', OrderDoc);
   public price?: number;
+
   public static dateCreated = new Field(DateType, 'date_created', OrderDoc);
-  public dateCreated?: Date;
+  public date_created?: Date;
 }
 ```
 
@@ -112,10 +120,14 @@ It will print:
 }
 ```
 
-4. To fetch results from elasticsearch:
+4. To fetch results from elasticsearch: Lets suppouse we have one doc in index with id 1.
 
 ```javascript
 const result = await query.getResult<OrderDoc>();
+console.log(result.getIds()); // prints [1]
+const hit = result.hits[0];
+
+console.log(hit.user_id); // prints 1
 ```
 
 #### Aggregations
@@ -179,19 +191,13 @@ console.log(usersOrders.buckets[0].key) // prints 1
 console.log(usersOrders.buckets[0].docCount) // prints 1
 
 const total = usersOrders.buckets[0].getAggregation("total")
-console.log(total.docCount) // # prints 1
+console.log(total.docCount) // prints 1
 ```
 
 # Development
 
 
 #### Tests
-
-First build base image
-
-```bash
-make build # 
-```
 
 Run all tests
 
@@ -209,15 +215,8 @@ make test TEST=testSearchQuery.spec.ts
 
 # TODO
 
-- [x] query generation
-- [x] aggregations
-- [x] get aggregations result
 - [ ] documentation (https://typedoc.org, docusaurus, js.org)
 - [ ] add support for elasticsearch  5, 7 versions, compilers for different es versions
-- [ ] collect doc classes
-- [ ] work with Date type
-- [ ] clone query
-- [x] return typed result of search +-
 - [ ] precommit hooks
 - [ ] generate doc with jsDoc
 - [ ] generate doc like ttag has
@@ -230,7 +229,6 @@ make test TEST=testSearchQuery.spec.ts
 - [ ] more tests
 - [ ] indexing, delete, bulk (CRUD)
 - [ ] post_filters
-- [ ] order_by
 - [ ] rescores
 - [ ] highlight
 - [ ] add doc to methods

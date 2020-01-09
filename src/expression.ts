@@ -74,6 +74,27 @@ export class ParamsExpression extends Expression {
   }
 }
 
+export type SourceField = boolean | string | Field | null;
+export class Source extends Expression {
+  public visitName = 'source';
+
+  constructor(
+    public fields: boolean | string | Field | Array<string | Field>,
+    public include?: Array<string | Field>,
+    public exclude?: Array<string | Field>,
+  ) {
+    super();
+  }
+
+  public collectDocClasses(): Readonly<DocClass[]> {
+    return uniqueArray(
+      collectDocClasses(this.fields)
+      .concat(collectDocClasses(this.include))
+      .concat(collectDocClasses(this.exclude)),
+    );
+  }
+}
+
 export class QueryExpression extends ParamsExpression {
   public visitName = 'queryExpression';
 }
@@ -178,7 +199,7 @@ export class RangeExpr extends FieldExpression {
 
 type BoolOptions = {
   must?: Nullable<Expression[]>;
-  filter?: Nullable<Expression[]>;
+  filter?: Nullable<Expression[]> | Expression;
   must_not?: Nullable<Expression[]>;
   should?: Nullable<Expression[]>;
   mininum_should_match?: any; // TODO finish this props
