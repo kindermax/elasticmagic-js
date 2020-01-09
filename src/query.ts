@@ -3,10 +3,21 @@ import { AggExpression } from './agg';
 import { Cluster, Index } from './cluster';
 import { CompilerVisitor } from './compiler';
 import { Doc, DocClass, Field } from './document';
-import { Expression, Params, ParamsType, Sort } from './expression';
+import { Expression, Params, ParamsType, Sort, Source, SourceField } from './expression';
 import { SearchResult } from './result';
 import { Dictionary, Nullable, PlainObject } from './types';
-import { cleanParams, collectDocClasses, isArray, isNullOrUndef, isString, mergeParams, uniqueArray, flatMap } from './util';
+import {
+  cleanParams,
+  collectDocClasses,
+  isArray,
+  isString,
+  mergeParams,
+  uniqueArray,
+  flatMap,
+  isBoolean,
+  mustClean,
+  isNullOrUndef,
+} from './util';
 
 export type SearchQueryOptions = {
   routing?: number;
@@ -24,7 +35,6 @@ export type SearchParams = {
   type?: string;
 };
 
-type SourceField = boolean | string[] | null; // TODO create Source class as expression
 
 type MatchValue = string | number | boolean;
 type TermValue = string | number | boolean;
@@ -106,9 +116,9 @@ export class SearchQueryContext {
 
   constructor(
     public query: QueryOverride,
-    public source: SourceField,
-    public fields: any,
-    public filters: any,
+    public source: Source | null,
+    public fields: Field[],
+    public filters: Expression[],
     public sort: Sort[],
     public limit: Limit,
     public searchParams: Params,
@@ -154,12 +164,12 @@ export class SearchQuery {
   private index?: Index;
 
   private _limit: Limit = null;
-  private _fields: any = null; // TODO not used right now
+  private _fields: Field[] = [];
   private _filters: Expression[] = [];
   private _sort: Sort[] = [];
   private _aggregations: Params = new Params();
 
-  private _source: SourceField = null;
+  private _source: Source | null = null;
   private _query: QueryOverride = null;
   private _searchParams: Params = new Params();
   private _docClass?: DocClass;
@@ -213,11 +223,35 @@ export class SearchQuery {
 
   /**
    * Controls which fields of the document's ``_source`` field to retrieve.
-   * @param include
+   *
+   * @param fields: list of fields which should be returned by elasticsearch. Can be one of the following types:
+   * - field expression, for example: ``PostDocument.title``
+   * - ``str`` means field name or glob pattern. For example:
+   * ``"title"``, ``"user.*"``
+   * - ``False`` disables retrieving source
+   * - ``True`` enables retrieving all source document
+   * - ``None`` cancels source filtering applied before
+   * @param include: list of fields to include
+   * @param exclude: list of fields to exclu
+   * See `source filtering for more information.
+   * <https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-source-filtering.html>`_
    */
-  public source(fields: SourceField): this {
-    // TODO add exclude and include
-    this._source = fields;
+  public source(
+    fields: boolean | null | undefined | string | Field | Array<string | Field>,
+    opts?: {
+      include?: Array<string | Field>;
+      exclude?: Array<string | Field>;
+    }
+  ): this {
+    if (isNullOrUndef(fields) || mustClean(fields)) {
+      this._source = null;
+    } else if (isBoolean(fields)) {
+      this._source = new Source(fields, opts?.include, opts?.exclude);
+    } else if (isArray(fields)) {
+      this._source = new Source(fields, opts?.include, opts?.exclude);
+    } else {
+      this._source = new Source(fields, opts?.include, opts?.exclude);
+    }
     return this;
   }
 
@@ -226,7 +260,7 @@ export class SearchQuery {
    * @param filters
    */
   public filter(...filters: Expression[] | Nullable[]): this {
-    if (this.mustClean(filters)) {
+    if (mustClean(filters)) {
       this._filters = [];
     } else {
       this._filters.push(...filters);
@@ -256,7 +290,7 @@ export class SearchQuery {
    */
   public aggregations(aggs: Nullable<Aggregations>): this {
     // TODO implement null cleaning
-    if (this.mustClean(aggs)) {
+    if (mustClean(aggs)) {
       this._aggregations = new Params();
     } else {
       this._aggregations = mergeParams(this._aggregations, new Params(aggs));
@@ -313,7 +347,7 @@ export class SearchQuery {
   }
 
   public sort(...orders: Sort[] | Field[] | Nullable[]): this {
-    if (this.mustClean(orders)) {
+    if (mustClean(orders)) {
       this._sort = [];
     } else {
       this._sort.push(...orders);
@@ -326,12 +360,6 @@ export class SearchQuery {
     return this;
   }
 
-  private mustClean(arg: any[] | Nullable): boolean {
-    if (isArray(arg)) {
-      return arg.length === 1 && isNullOrUndef(arg[0]);
-    }
-    return !arg ? true : false;
-  }
   private compile(): Query {
     const compiler = new CompilerVisitor();
     return compiler.compile(this.getQueryContext());

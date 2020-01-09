@@ -29,7 +29,7 @@ function isInstanceMapperDict(arg: any): arg is InstanceMapperDict {
 }
 
 class Result {
-  constructor(public raw: any) {}
+  constructor(public raw: RawResultBody<any>) {}
 
   public get prettyRaw(): string {
     return JSON.stringify(this.raw, null, 2);

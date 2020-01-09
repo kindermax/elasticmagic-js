@@ -177,6 +177,34 @@ describe('Search', () => {
     expect(hit.date_created).toBe(dateCreated.toISOString());
   });
 
+  test('run search query and get result with populated doc fields from _source with exclude', async () => {
+    const cluster = new Cluster(client, indexName);
+
+    const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
+      .filter(OrderDoc.userId.in([userId]))
+      .source(true, {
+        exclude: ['status'],
+        include: ['user_id', OrderDoc.dateCreated],
+      });
+
+    const result = await query.getResult<OrderDoc>();
+    expect(result.error).toBeUndefined();
+    expect(result.hits.length).toBe(1);
+
+    const rawHit = result.raw.hits.hits[0];
+    expect(rawHit._source).toHaveProperty('user_id');
+    expect(rawHit._source).toHaveProperty('date_created');
+    expect(rawHit._source).not.toHaveProperty('status');
+
+    const hit = result.hits[0];
+
+    expect(hit.user_id).toBe(1);
+    expect(hit.status).toBe(undefined);
+    expect(hit.source).toBe(undefined);
+    expect(hit.price).toBe(undefined);
+    expect(hit.date_created).toBe(dateCreated.toISOString());
+  });
+
   test('run search query and get result with aggregations', async () => {
     const cluster = new Cluster(client, indexName);
 

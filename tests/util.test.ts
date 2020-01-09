@@ -1,6 +1,6 @@
 import { Params } from '../src/expression';
 import { SearchQuery } from '../src/query';
-import { cleanParams, collectDocClasses, mergeParams } from '../src/util';
+import { cleanParams, collectDocClasses, mergeParams, mustClean } from '../src/util';
 import { OrderDoc } from './fixtures';
 
 describe('Util', () => {
@@ -44,5 +44,17 @@ describe('Util', () => {
     });
     expect(cleaned).toStrictEqual(valid);
     expect(cleanParams(null)).toStrictEqual({});
+  });
+
+  test('mustClean', () => {
+    expect(mustClean(true)).toBe(false);
+    expect(mustClean(false)).toBe(false);
+    expect(mustClean([])).toBe(true);
+    expect(mustClean([null])).toBe(true);
+    expect(mustClean(['1'])).toBe(false);
+    expect(mustClean([1])).toBe(false);
+    expect(mustClean({})).toBe(true);
+    expect(mustClean(null)).toBe(true);
+    expect(mustClean(undefined)).toBe(true);
   });
 });

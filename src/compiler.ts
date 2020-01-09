@@ -10,9 +10,15 @@ import {
   Sort,
   Term,
   Terms,
+  Source,
  } from './expression';
 import { Query, QueryOverride, SearchQueryContext } from './query';
-import { arrayKVToDict, isObject } from './util';
+import { arrayKVToDict, isObject, isString, isNullOrUndef, isBoolean, isArray } from './util';
+
+// TODO can not move to utils due to cirular inports
+export function isField(x: any): x is Field {
+  return x instanceof Field;
+}
 
 export class CompilerVisitor {
   public params: Query = {};
@@ -56,6 +62,8 @@ export class CompilerVisitor {
         return this.visitRange(expression);
       case 'sort':
         return this.visitSort(expression);
+      case 'source':
+        return this.visitSource(expression);
       default:
     }
 
@@ -81,7 +89,8 @@ export class CompilerVisitor {
     }
     if (filterClauses.length > 0) {
       if (filterClauses.length === 1) {
-        return new Bool({ must: q, filter: filterClauses[0]});
+        const clause = filterClauses[0];
+        return new Bool({ must: q, filter: clause });
       }
       return new Bool({ must: q, filter: filterClauses });
     }
@@ -102,8 +111,8 @@ export class CompilerVisitor {
     if (queryContext.sort.length > 0) {
       params.sort = this.visit(queryContext.sort);
     }
-    if (queryContext.source != null && queryContext.source !== undefined) {
-      params._source = queryContext.source;
+    if (!isNullOrUndef(queryContext.source)) {
+      params._source = this.visit(queryContext.source);
     }
     if (queryContext.limit !== null) {
       params.size = queryContext.limit;
@@ -230,5 +239,35 @@ export class CompilerVisitor {
       };
     }
     return this.visit(expr.field);
+  }
+
+  private visitSource(expr: Source): any {
+    if (expr.include || expr.exclude) {
+      const params: any = {};
+      if (expr.exclude?.length) {
+          const exclude = this.visit(expr.exclude);
+          if (exclude.length) {
+            params.exclude = exclude;
+          }
+      }
+      if (expr.include?.length) {
+        const include = this.visit(expr.include);
+        if (include.length) {
+          params.include = include;
+        }
+    }
+      return params;
+    }
+    if (isBoolean(expr.fields)) {
+      return expr.fields;
+    }
+    if (isString(expr.fields)) {
+      return expr.fields;
+    }
+    if (isField(expr.fields)) {
+      return this.visit(expr.fields);
+    }
+    const fields: any = expr.fields;
+    return fields.map((field: Field | string) => this.visit(field));
   }
 }

@@ -33,6 +33,10 @@ export function isString(x: any): x is string {
   return typeof x === 'string';
 }
 
+export function isBoolean(x: any): x is boolean {
+  return typeof x === 'boolean';
+}
+
 export function isObject(x: any): x is object {
   return x && typeof x === 'object' && x.constructor === Object;
 }
@@ -49,7 +53,7 @@ export function uniqueArray<T = any>(items: T[]): T[] {
   return Array.from(new Set(items));
 }
 export function collectDocClasses(
-  expr: Expression | Expression[] | ParamsType | FieldQueryValue,
+  expr?: Expression | Expression[] | ParamsType | FieldQueryValue,
 ): Readonly<DocClass[]> {
   if (isExpression(expr)) {
     return expr.collectDocClasses();
@@ -72,4 +76,20 @@ export function mergeParams(currentParams: Params, newParams: Params): Params {
 
 export function flatMap(f: (arg: any) => any, arr: any[]): any[] {
   return arr.reduce((x, y) => [...x, ...f(y)], []);
+}
+
+export function mustClean(arg: any[] | Nullable): boolean {
+  if (isBoolean(arg)) {
+    return false;
+  }
+  if (isObject(arg) && Object.keys(arg).length === 0) {
+    return true;
+  }
+  if (isArray(arg) && arg.length === 1) {
+    return isNullOrUndef(arg[0]);
+  }
+  if (isArray(arg) && arg.length === 0) {
+    return true;
+  }
+  return isNullOrUndef(arg) ? true : false;
 }

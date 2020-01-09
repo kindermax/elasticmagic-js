@@ -89,8 +89,8 @@ type DocOpts = {
 
 export class Doc {
   public static readonly docType: string;
-  private hit: Hit;
-  private result: SearchResult<any>;
+  protected hit: Hit;
+  protected result: SearchResult<any>;
 
   public _id: string;
   constructor(opts: DocOpts) {
