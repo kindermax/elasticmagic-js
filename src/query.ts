@@ -9,14 +9,14 @@ import { Dictionary, Nullable, PlainObject } from './types';
 import {
   cleanParams,
   collectDocClasses,
+  flatMap,
   isArray,
+  isBoolean,
+  isNullOrUndef,
   isString,
   mergeParams,
-  uniqueArray,
-  flatMap,
-  isBoolean,
   mustClean,
-  isNullOrUndef,
+  uniqueArray,
 } from './util';
 
 export type SearchQueryOptions = {
@@ -34,7 +34,6 @@ export type SearchParams = {
   routing?: string;
   type?: string;
 };
-
 
 type MatchValue = string | number | boolean;
 type TermValue = string | number | boolean;
@@ -241,7 +240,7 @@ export class SearchQuery {
     opts?: {
       include?: Array<string | Field>;
       exclude?: Array<string | Field>;
-    }
+    },
   ): this {
     if (isNullOrUndef(fields) || mustClean(fields)) {
       this._source = null;

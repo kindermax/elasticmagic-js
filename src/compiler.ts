@@ -8,12 +8,12 @@ import {
   QueryExpression,
   RangeExpr,
   Sort,
+  Source,
   Term,
   Terms,
-  Source,
  } from './expression';
 import { Query, QueryOverride, SearchQueryContext } from './query';
-import { arrayKVToDict, isObject, isString, isNullOrUndef, isBoolean, isArray } from './util';
+import { arrayKVToDict, isArray, isBoolean, isNullOrUndef, isObject, isString } from './util';
 
 // TODO can not move to utils due to cirular inports
 export function isField(x: any): x is Field {
