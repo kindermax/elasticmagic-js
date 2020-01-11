@@ -1,11 +1,11 @@
 module.exports = {
   title: 'Elasticmagic',
   tagline: 'JavaScript/TypeScript ORM and query builder for Elasticsearch',
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://elasticmagic.js.org',
   baseUrl: '/',
   favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'kindritskyiMax', // Usually your GitHub org/user name.
+  projectName: 'elasticmagic', // Usually your repo name.
   themeConfig: {
     navbar: {
       title: 'Elasticmagic',

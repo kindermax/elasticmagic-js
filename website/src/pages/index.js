@@ -25,10 +25,9 @@ const features = [
   },
   {
     title: <>Safety</>,
-    imageUrl: 'img/undraw_docusaurus_react.svg',
     description: (
       <>
-        Elasticmagic written in Typescript which gives roubustnes and safety of library.
+        Elasticmagic written in Typescript which gives roubustnes and safety of the library.
       </>
     ),
   },
@@ -54,7 +53,7 @@ function Home() {
   const {siteConfig = {}} = context;
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
+      title={`${siteConfig.title}`}
       description="Description will go into a meta tag in <head />">
       <header className={classnames('hero hero--primary', styles.heroBanner)}>
         <div className="container">
@@ -66,7 +65,7 @@ function Home() {
                 'button button--outline button--secondary button--lg',
                 styles.getStarted,
               )}
-              to={useBaseUrl('docs/doc1')}>
+              to={useBaseUrl('docs/getting_started')}>
               Get Started
             </Link>
           </div>
