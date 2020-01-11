@@ -9,6 +9,8 @@ This lib is a port of original library written in `python` by [@anti-social]( ht
 
 Supports Elasticsearch version 6.x
 
+* **Docs** - [https://elasticmagic.js.org/](https://elasticmagic.js.org/)
+
 # Getting Started
 
 Install elasticmagic-js using [`npm`](https://www.npmjs.com/):
@@ -52,16 +54,16 @@ enum OrderSource {
 class OrderDoc extends Doc {
   public static docType: string = 'order';
 
-  public static userId = new Field(DateType, 'user_id', OrderDoc);
+  public static userId = new Field(IntegerType, 'user_id', OrderDoc);
   public user_id?: number;
 
-  public static status = new Field(DateType, 'status', OrderDoc);
+  public static status = new Field(IntegerType, 'status', OrderDoc);
   public status?: number;
 
-  public static source = new Field(DateType, 'source', OrderDoc);
+  public static source = new Field(IntegerType, 'source', OrderDoc);
   public source?: number;
 
-  public static price = new Field(DateType, 'price', OrderDoc);
+  public static price = new Field(IntegerType, 'price', OrderDoc);
   public price?: number;
 
   public static dateCreated = new Field(DateType, 'date_created', OrderDoc);
@@ -235,3 +237,23 @@ make test TEST=testSearchQuery.spec.ts
 - [ ] MultiMatch, Ids
 - [ ] api docs
 
+# Doc TODO
+
+As an example - https://github.com/reduxjs/redux
+
+- [ ] API - for each class and each method of there must be 
+  - [ ] how to create or instantiate or call
+  - [ ] how to pass args
+  - [ ] basic usage example
+  - [ ] the most important relations with others elements
+- [ ] Examples
+  - [ ] query
+  - [ ] aggregation
+  - [ ] cluster
+  - [ ] multiple indices
+  - [ ] function score
+  - [ ] query filters
+  - [ ] realworld examples
+  - [ ] CRUD
+- [ ] deprecations
+- [ ] how to develop and contribute
