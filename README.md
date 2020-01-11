@@ -52,16 +52,16 @@ enum OrderSource {
 class OrderDoc extends Doc {
   public static docType: string = 'order';
 
-  public static userId = new Field(DateType, 'user_id', OrderDoc);
+  public static userId = new Field(IntegerType, 'user_id', OrderDoc);
   public user_id?: number;
 
-  public static status = new Field(DateType, 'status', OrderDoc);
+  public static status = new Field(IntegerType, 'status', OrderDoc);
   public status?: number;
 
-  public static source = new Field(DateType, 'source', OrderDoc);
+  public static source = new Field(IntegerType, 'source', OrderDoc);
   public source?: number;
 
-  public static price = new Field(DateType, 'price', OrderDoc);
+  public static price = new Field(IntegerType, 'price', OrderDoc);
   public price?: number;
 
   public static dateCreated = new Field(DateType, 'date_created', OrderDoc);

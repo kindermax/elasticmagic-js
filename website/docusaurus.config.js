@@ -14,9 +14,9 @@ module.exports = {
         src: 'img/logo.svg',
       },
       links: [
-        {to: 'docs/doc1', label: 'Getting Started', position: 'right'},
-        {to: 'docs/doc1', label: 'API', position: 'right'},
-        {to: 'docs/doc1', label: 'FAQ', position: 'right'},
+        {to: 'docs/getting_started', label: 'Getting Started', position: 'right'},
+        {to: 'docs/api', label: 'API', position: 'right'},
+        {to: 'docs/faq', label: 'FAQ', position: 'right'},
         {
           href: 'https://github.com/kindritskyiMax/elasticmagic-js',
           label: 'GitHub',
@@ -31,12 +31,8 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'Style Guide',
-              to: 'docs/doc1',
-            },
-            {
-              label: 'Second Doc',
-              to: 'docs/doc2',
+              label: 'Getting Started',
+              to: 'docs/getting_started',
             },
           ],
         },
@@ -45,11 +41,7 @@ module.exports = {
           items: [
             {
               label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-            },
-            {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
+              href: 'https://stackoverflow.com/questions/tagged/elasticmagic-js',
             },
           ],
         },
@@ -62,16 +54,12 @@ module.exports = {
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
-            },
-            {
-              label: 'Twitter',
-              href: 'https://twitter.com/docusaurus',
+              href: 'https://github.com/kindritskyiMax/elasticmagic-js',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Elasticmagic, Inc. Built with Docusaurus.`,
     },
   },
   presets: [
