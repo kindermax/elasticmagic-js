@@ -235,3 +235,23 @@ make test TEST=testSearchQuery.spec.ts
 - [ ] MultiMatch, Ids
 - [ ] api docs
 
+# Doc TODO
+
+As an example - https://github.com/reduxjs/redux
+
+- [ ] API - for each class and each method of there must be 
+  - [ ] how to create or instantiate or call
+  - [ ] how to pass args
+  - [ ] basic usage example
+  - [ ] the most important relations with others elements
+- [ ] Examples
+  - [ ] query
+  - [ ] aggregation
+  - [ ] cluster
+  - [ ] multiple indices
+  - [ ] function score
+  - [ ] query filters
+  - [ ] realworld examples
+  - [ ] CRUD
+- [ ] deprecations
+- [ ] how to develop and contribute
