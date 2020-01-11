@@ -9,6 +9,8 @@ This lib is a port of original library written in `python` by [@anti-social]( ht
 
 Supports Elasticsearch version 6.x
 
+* **Docs** - [https://elasticmagic.js.org/](https://elasticmagic.js.org/)
+
 # Getting Started
 
 Install elasticmagic-js using [`npm`](https://www.npmjs.com/):
