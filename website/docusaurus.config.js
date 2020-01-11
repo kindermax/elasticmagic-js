@@ -5,7 +5,7 @@ module.exports = {
   baseUrl: '/',
   favicon: 'img/favicon.ico',
   organizationName: 'kindritskyiMax', // Usually your GitHub org/user name.
-  projectName: 'elasticmagic', // Usually your repo name.
+  projectName: 'elasticmagic-js', // Usually your repo name.
   themeConfig: {
     navbar: {
       title: 'Elasticmagic',
