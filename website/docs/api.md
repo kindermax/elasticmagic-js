@@ -20,3 +20,16 @@ How it must look:
 `How it works`  
 `Use cases`  
 `Example`  
+
+
+- [ ] Examples
+  - [ ] query
+  - [ ] aggregation
+  - [ ] cluster
+  - [ ] multiple indices
+  - [ ] function score
+  - [ ] query filters
+  - [ ] realworld examples
+  - [ ] CRUD
+- [ ] deprecations
+- [ ] how to develop and contribute
