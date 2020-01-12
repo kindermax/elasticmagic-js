@@ -211,20 +211,99 @@ make test TEST=testSearchQuery.spec.ts
 
 ## TODO
 
-- [ ] add support for elasticsearch 5, 7 versions, compilers for different es versions
-- [ ] precommit hooks
-- [ ] scroll
-- [ ] pagination
-- [ ] queryFilters
-- [ ] function_score, inline functions
-- [ ] sub documents
-- [ ] sub fields
-- [ ] more tests
-- [ ] indexing, delete, bulk (CRUD)
-- [ ] post_filters
-- [ ] rescores
-- [ ] highlight
-- [ ] add documentation to methods
-- [ ] MultiMatch, Ids
-- [ ] generate api docs (typedoc)
+#### Document API (CRUD)
 
+- [ ] Index API
+- [ ] Get API
+- [ ] Delete API
+- [ ] Delete By Query API
+- [ ] Update API
+- [ ] Update By Query API
+- [ ] Multi Get API
+- [ ] Bulk API
+- [ ] Reindex API
+  
+#### Query DSL
+- [x] searchQuery
+- [x] aggregations
+- [ ] Match All Query
+- [ ] Match All Query
+- Full text queries
+  - [ ] Match Query
+  - [ ] Match Phrase Query
+  - [ ] Match Phrase PrefixQuery
+  - [ ] Multi Match Query
+  - [ ] Common Terms Query
+  - [ ] Query String Query
+  - [ ] Simple Query String Query
+- Term level queries
+  - [x] Term Query
+  - [x] Terms Query
+  - [ ] Terms Set Query
+  - [x] Range Query
+  - [ ] Exists Query
+  - [ ] Prefix Query
+  - [ ] Wildcard Query
+  - [ ] Regexp Query
+  - [ ] Fuzzy Query
+  - [ ] Type Query
+  - [ ] Ids Query
+- Compound queries
+  - [ ] Constant Score Query
+  - [ ] Bool Query
+  - [ ] Dis Max Query
+  - [ ] Function Score Query
+  - [ ] Boosting Query
+- Joining queries
+  - [ ] Nested Query
+  - [ ] Has Child Query
+  - [ ] Has Parent Query
+  - [ ] Parent Id Query
+- Specialized queries
+  - [ ] Distance Feature Query
+  - [ ] More Like This Query
+  - [ ] Script Query
+  - [ ] Script Score Query
+  - [ ] Percolate Query
+- Sorting
+  - [ ] Sort by score
+  - [x] Sort by field
+  - [ ] Sort by geo distance
+  - [ ] Sort by script
+  - [ ] Sort by doc
+
+  
+#### Search APIs (
+
+- [ ] Multi Search
+- [ ] Search Shards API
+- [ ] Multi Search API
+- [ ] Count API
+- [ ] Validate API
+- [ ] Explain API
+- [ ] Profile API
+
+
+#### Elasticsearch versions interop
+
+- [ ] add support for elasticsearch 5, 7 versions, compilers for different es versions
+
+#### Development
+
+- [ ] precommit hooks
+- [ ] fix integration tests by randomly creating indexes, so tests can be run in parallel
+- [ ] add documentation to methods
+- [ ] generate api docs (typedoc)
+  
+#### cat APIs
+
+#### Other
+
+- [ ] Post filters
+- [ ] Rescores
+- [ ] Scroll
+- [ ] Pagination
+- [ ] QueryFilters
+- [ ] Sub document in field
+- [ ] Sub field in field
+- [ ] Highlight
