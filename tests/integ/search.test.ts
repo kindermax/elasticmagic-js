@@ -4,6 +4,7 @@ import { Cluster } from '../../src/cluster';
 import { Bool } from '../../src/expression';
 import { SearchQuery } from '../../src/query';
 import { OrderDoc, OrderSource, OrderStatus } from '../fixtures';
+import { getOrderDocMapping, indexDoc } from './utils';
 
 let client: Client;
 
@@ -14,34 +15,6 @@ const dateCreated = new Date(Date.now() - DAY);
 const type = 'order';
 const indexName = 'test_order_index';
 const esHost = `http://${process.env.ES_HOST}:9200`;
-
-const mapping = {
-  dynamic: false,
-  _all: {
-      enabled: false,
-  },
-  _routing: {
-      required: true,
-  },
-  date_detection: false,
-  properties: {
-      user_id: {
-          type: 'integer',
-      },
-      source: {
-          type: 'integer',
-      },
-      status: {
-          type: 'integer',
-      },
-      date_created: {
-          type: 'date',
-      },
-      price: {
-          type: 'integer',
-      },
-  },
-};
 
 beforeAll(async () => {
   client = new Client({ node: esHost });
@@ -62,23 +35,22 @@ beforeEach(async () => {
     index: indexName,
     // TODO https://www.elastic.co/guide/en/elasticsearch/reference/master/removal-of-types.html
     type,
-    body: mapping,
+    body: getOrderDocMapping(),
   });
   // index doc
-  await client.index({
-    index: indexName,
-    id: '1',
-    type: '_doc', // uncomment this line if you are using Elasticsearch ≤ 6
-    body: {
+  await indexDoc(
+    client,
+    indexName,
+    `${userId}`,
+    {
       user_id: userId,
       status: OrderStatus.new,
       source: OrderSource.desktop,
       date_created: dateCreated,
       price: 5,
     },
-    routing: `${userId}`,
-    refresh: 'wait_for',
-  });
+    `${userId}`,
+  );
 });
 
 afterEach(async () => {
@@ -87,7 +59,7 @@ afterEach(async () => {
   });
 });
 
-describe('Search', () => {
+describe('Search integration', () => {
   test('run search query and get result', async () => {
     const cluster = new Cluster(client, indexName);
 

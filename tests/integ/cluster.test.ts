@@ -3,7 +3,7 @@ import { Cluster } from '../../src/cluster';
 
 const esHost = `http://${process.env.ES_HOST}:9200`;
 
-describe('Cluster', () => {
+describe('Cluster integration', () => {
   test('should return es version', async () => {
     const cluster = new Cluster(new Client({ node: esHost }));
 
