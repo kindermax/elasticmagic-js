@@ -1,33 +1,46 @@
-elasticmagic-js (alpha)
+elasticmagic-js - JS/Typescript DSL for Elasticsearch
 =======================
 
-> This is alpha. Api may/will change.
+> The project is still very much a work in progress and in an alpha state, api may/will change; input and contributions welcome!
 
-JS/Typescript DSL for Elasticsearch
+[![actions](https://github.com/kindritskyiMax/elasticmagic-js/workflows/tests/badge.svg?branch=master)](https://github.com/kindritskyiMax/elasticmagic-js/actions)
 
-This lib is a port of original library written in `python` by [@anti-social]( https://github.com/anti-social/elasticmagic )
+Elasticmagic is an Elasticsearch query builder and ORM for JavaScript/Typescript.
+
+It helps you easily build queries which are typed and safe. 
+
+You do not need to remember how to write `json` DSL for Elasticsearch, Elasticmagic will do it for you.
+
+
+> This lib is a port of original library written in `python` by [@anti-social]( https://github.com/anti-social/elasticmagic )
+
+## Versions
 
 Supports Elasticsearch version 6.x
 
-* **Docs** - [https://elasticmagic.js.org/](https://elasticmagic.js.org/)
+## Docs
 
-# Getting Started
+**Docs** - [https://elasticmagic.js.org/](https://elasticmagic.js.org/)
 
-Install elasticmagic-js using [`npm`](https://www.npmjs.com/):
+**Changelog** - [https://elasticmagic.js.org/docs/changelog.html](elasticmagic.js.org/docs/changelog.html)
+
+## Installation
+
+To install Elasticmagic via NPM:
 
 ```bash
-npm install elasticmagic
+npm install --save elasticmagic
 ```
 
-# Examples
+Also you need an Elasticseach official js client
 
-Let's get started by writing a simple query.
+```bash
+npm install --save @elastic/elasticsearch
+```
 
-1. Declare class. We will use it both as `query builder` and container for data from elastic.
+## Getting Started
 
-   As you can see we declare one static field and one intance field with almost same name but different types.  
-   Static field will be used to build queries.
-   Instance field will be populated on search query so they must be the same as in elasticsearch document.
+#### Query building
 
 ```javascript
 import { Client } from '@elastic/elasticsearch';
@@ -39,18 +52,24 @@ import {
   Bool,
 } from "elasticmagic-js";
 
-enum OrderStatus {
-  new = 1,
-  paid = 2,
-  handled = 3,
-  canceled = 4,
-}
 
-enum OrderSource {
-  desktop = 1,
-  mobile = 2,
-}
-
+/**
+ * Here we creating our document which maps structure of same document in Elasticsearch.  
+ * 
+ * We will use this class as our query builder.
+ * Also when we will get result from elasticsearch, we instantiate this class
+ * and populate it with data from Elasticsearch hits.
+ * 
+ * First we declare docType - it must be the same as document in Elasticsearch mapping. 
+ * 
+ * Then we declare static fields that will be user to build our queries. 
+ * As we do not need an instance of this class to build queries, the fields are static.
+ * 
+ * Next, conventionaly, we declare instance properties, as you can see, with almost same name. 
+ * Then lettercase is same as fields in Elasticseach mapping
+ * 
+ * And thats is.  
+ */
 class OrderDoc extends Doc {
   public static docType: string = 'order';
 
@@ -69,67 +88,45 @@ class OrderDoc extends Doc {
   public static dateCreated = new Field(DateType, 'date_created', OrderDoc);
   public date_created?: Date;
 }
-```
 
-2. Create elasticsearch client and pass it to Cluester
-
-```javascript
+// Create a Elasticsearch client which will be passed to cluster.
 const client = new Client({ node: 'http://es6-test:9200' });
+// Create cluster instance. Its an entrypiint for interacting with Elasticsearch.
 const cluster = new Cluster(client, 'test_order_index');
 
-```
 
-3. Now we ready to write our query
-
-```javascript
+// Lets start building our query.
+// Calling searchQuery method we start creating new query.
+// We using builder pattern, so you can chain any amount of methods
 const query = cluster.searchQuery({ routing: 1 })
-  .source(false)
+  .source(true)
   .filter(
     Bool.must(
       OrderDoc.user_id.in([1]),
-      OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
-      OrderDoc.source.not(OrderSource.mobile),
+      OrderDoc.status.in([1, 2]),
+      OrderDoc.source.not(1),
+      OrderDoc.dateCreated.lte(new Date().toISOString())
     )
   )
   .limit(0);
 
-console.log(query.toJSON()) // or console.log(query.body)
-```
-
-It will print:
-
-```bash
-{
-  query: {
-    bool: {
-      filter: {
-        bool: {
-          must: [
-            {terms: {user_id: [1]}},
-            {terms: {status: [1, 2]}},
-            {bool: {
-              must_not: [
-                {term: {source: 2}}
-              ]
-            }}
-          ]
-        }
-      }
-    }
-  },
-  _source: false,
-  size: 0
-}
-```
-
-4. To fetch results from elasticsearch: Lets suppouse we have one doc in index with id 1.
-
-```javascript
+// To make a query to Elasticsearch we calling getResult.
 const result = await query.getResult<OrderDoc>();
 console.log(result.getIds()); // prints [1]
-const hit = result.hits[0];
 
+const hit = result.hits[0];
 console.log(hit.user_id); // prints 1
+```
+
+We can check what query Elasticmagic will build for us.
+
+```javascript
+console.log(query.toJSON()) 
+// or alias 
+console.log(query.body)
+
+// to see prettified query
+console.log(query.prettyQuery)
 ```
 
 #### Aggregations
@@ -196,10 +193,7 @@ const total = usersOrders.buckets[0].getAggregation("total")
 console.log(total.docCount) // prints 1
 ```
 
-# Development
-
-
-#### Tests
+## Tests
 
 Run all tests
 
@@ -215,45 +209,22 @@ make test TEST=tests/testSearchQuery.spec.ts
 make test TEST=testSearchQuery.spec.ts
 ```
 
-# TODO
+## TODO
 
-- [ ] documentation (https://typedoc.org, docusaurus, js.org)
-- [ ] add support for elasticsearch  5, 7 versions, compilers for different es versions
+- [ ] add support for elasticsearch 5, 7 versions, compilers for different es versions
 - [ ] precommit hooks
-- [ ] generate doc with jsDoc
-- [ ] generate doc like ttag has
-- [ ] elasticsearch must be devDep or peerDep, but not production dep (create Client interface)
 - [ ] scroll
 - [ ] pagination
 - [ ] queryFilters
 - [ ] function_score, inline functions
 - [ ] sub documents
+- [ ] sub fields
 - [ ] more tests
 - [ ] indexing, delete, bulk (CRUD)
 - [ ] post_filters
 - [ ] rescores
 - [ ] highlight
-- [ ] add doc to methods
+- [ ] add documentation to methods
 - [ ] MultiMatch, Ids
-- [ ] api docs
+- [ ] generate api docs (typedoc)
 
-# Doc TODO
-
-As an example - https://github.com/reduxjs/redux
-
-- [ ] API - for each class and each method of there must be 
-  - [ ] how to create or instantiate or call
-  - [ ] how to pass args
-  - [ ] basic usage example
-  - [ ] the most important relations with others elements
-- [ ] Examples
-  - [ ] query
-  - [ ] aggregation
-  - [ ] cluster
-  - [ ] multiple indices
-  - [ ] function score
-  - [ ] query filters
-  - [ ] realworld examples
-  - [ ] CRUD
-- [ ] deprecations
-- [ ] how to develop and contribute

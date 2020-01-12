@@ -10,6 +10,14 @@ module.exports = {
     Introduction: [
       'getting_started',
       'installation', 
+      'querying', 
+      'aggregations', 
+    ],   
+    API: [
+      'api',
+    ],
+    Changelog: [
+      'changelog',
     ],
   },
 };

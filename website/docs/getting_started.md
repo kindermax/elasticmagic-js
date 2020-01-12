@@ -83,7 +83,7 @@ const cluster = new Cluster(client, 'test_order_index');
 // Calling searchQuery method we start creating new query.
 // We using builder pattern, so you can chain any amount of methods
 const query = cluster.searchQuery({ routing: 1 })
-  .source(false)
+  .source(true)
   .filter(
     Bool.must(
       OrderDoc.user_id.in([1]),
