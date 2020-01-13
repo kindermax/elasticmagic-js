@@ -85,10 +85,12 @@ export class Field extends Expression {
 type DocOpts = {
   hit: Hit;
   result: SearchResult<any>;
+  docType: string;
 };
 
 export class Doc {
   public static readonly docType: string;
+  public readonly docType: string;
   protected hit: Hit;
   protected result: SearchResult<any>;
   public instance: any;
@@ -97,6 +99,7 @@ export class Doc {
   constructor(opts: DocOpts) {
     this.hit = opts.hit;
     this.result = opts.result;
+    this.docType = opts.docType;
 
     this._id = opts.hit._id;
 
@@ -119,7 +122,7 @@ export class Doc {
       return this.instance;
     }
     if (this.result) {
-      this.result.populateInstances('order');
+      await this.result.populateInstances(this.docType);
       return this.instance;
     }
   }

@@ -90,7 +90,7 @@ export class SearchResult<T extends Doc = any> extends Result {
       // the propblem is when having class type to create instance from it we need to know its type
       // but we have only interface
       // The solution unknown by now
-      this.hits.push(new docCls({ hit, result: this }) as T);
+      this.hits.push(new docCls({ hit, result: this, docType: docCls.docType }) as T);
     });
 
     this.queryAggs.getParamsKvList().forEach((agg: ParamKV) => {
@@ -136,8 +136,8 @@ export class SearchResult<T extends Doc = any> extends Result {
     });
   }
 
-  public async getInstances<Inst = any>(): Promise<Inst[]> {
-    await this.populateInstances('order');
-    return Promise.all(this.hits.map(async (hit) => await hit.getInstance()));
-  }
+  // public async getInstances<Inst = any>(): Promise<Inst[]> {
+  //   await this.populateInstances();
+  //   return Promise.all(this.hits.map(async (hit) => await hit.getInstance()));
+  // }
 }

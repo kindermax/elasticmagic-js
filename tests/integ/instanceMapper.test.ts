@@ -57,7 +57,7 @@ afterEach(async () => {
 });
 
 describe('Instance Mapper integration', () => {
-  test('getInstances() returns list of objects created by instance mapper', async () => {
+  test('getInstance() Doc method returns object created by instance mapper', async () => {
     const cluster = new Cluster(client, indexName);
 
     const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
@@ -80,9 +80,9 @@ describe('Instance Mapper integration', () => {
     expect(result.total).toBe(1);
     expect(result.hits.length).toBe(1);
 
-    const instances = await result.getInstances();
-    expect(instances.length).toBe(1);
-    expect(instances[0]).toStrictEqual({
+    const hit = result.hits[0];
+    const instance = await hit.getInstance();
+    expect(instance).toStrictEqual({
       id: 1,
       name: 'test_name_1',
     });
