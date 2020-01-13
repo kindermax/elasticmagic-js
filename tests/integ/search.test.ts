@@ -288,6 +288,6 @@ describe('Search integration', () => {
     const result = await query.getResult<OrderDoc>();
     expect(result.error).toBeUndefined();
     expect(result.total).toBe(1);
-    expect(result.getIds()).toStrictEqual([1]);
+    expect(result.getIds()).toStrictEqual(['1']);
   });
 });

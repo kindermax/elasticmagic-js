@@ -95,7 +95,7 @@ const query = cluster.searchQuery({ routing: 1 })
 
 // To make a query to Elasticsearch we calling getResult.
 const result = await query.getResult<OrderDoc>();
-console.log(result.getIds()); // prints [1]
+console.log(result.getIds()); // prints ["1"]
 
 const hit = result.hits[0];
 console.log(hit.user_id); // prints 1
