@@ -5,7 +5,7 @@ title: Instance mapper
 
 ## How it works
 
-It's possible to pass a function which map ids from elasticsearch to structure definded by instance mapper function.
+It's possible to pass an async function which map ids from elasticsearch to structure definded by instance mapper function.
 
 When specifying `source(false)`, elasticsearch returns only _id of found document in `hit._source` field.
 
