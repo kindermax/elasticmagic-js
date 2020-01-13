@@ -16,6 +16,7 @@
     "test": "run-p test:unit test:integ",
     "test:integ": "ES_HOST=es6 jest tests/integ --runInBand",
     "test:unit": "ES_HOST=es6 jest tests/unit",
+    "test:one": "ES_HOST=es6 jest",
     "test:ci": "ES_HOST=localhost jest",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "lint:test": "tslint -c tslint.json 'tests/**/*.ts'"

@@ -9,7 +9,10 @@ build:
 	docker build -t base . -f Dockerfile
 
 test: build
-	docker-compose run -e TESTS=${TEST} -e ES=${ES} --rm test
+	docker-compose run --rm test
+
+test-unit: build
+	docker-compose run -e TEST=${TEST} --rm test-unit
 
 test-integ: build
-	docker-compose run --rm test-integ
+	docker-compose run -e TEST=${TEST} --rm test-integ
