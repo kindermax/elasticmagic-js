@@ -26,7 +26,7 @@ services:
     command: |
       sh -c "
           ./scripts/wait_es.sh es6:9200
-          if [[ -n $${TEST} ]]; then
+          if [[ ! -z $${TEST} ]]; then
             npm run test:one -- $${TEST};
           else
             npm run test:integ
@@ -37,7 +37,7 @@ services:
     <<: *test
     command: |
       sh -c "
-          if [[ -n $${TEST} ]]; then
+          if [[ ! -z $${TEST} ]]; then
             npm run test:one -- $${TEST};
           else
             npm run test:unit

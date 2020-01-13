@@ -62,6 +62,10 @@ describe('Instance Mapper integration', () => {
 
     const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
       .source(false)
+      .withInstanceMapper(async (ids: number[]) => {
+        // TODO maybe accept objects as mappings aswell, if typing works well
+        return new Map(ids.map((id) => [id, { id,  name: `test_name_${id}`}]));
+      })
       .filter(
         Bool.must(
           OrderDoc.userId.in([userId]),
@@ -69,12 +73,18 @@ describe('Instance Mapper integration', () => {
           OrderDoc.source.not(OrderSource.mobile),
           OrderDoc.dateCreated.lte(new Date().toISOString()),
         ),
-      )
-      .limit(0);
+      );
 
     const result = await query.getResult<OrderDoc>();
     expect(result.error).toBeUndefined();
     expect(result.total).toBe(1);
-    expect(result.hits.length).toBe(0);
+    expect(result.hits.length).toBe(1);
+
+    const instances = await result.getInstances();
+    expect(instances.length).toBe(1);
+    expect(instances[0]).toStrictEqual({
+      id: 1,
+      name: 'test_name_1',
+    });
   });
 });

@@ -22,7 +22,7 @@ function getDocTypeForHit(hit: Hit): string {
   return customDocType ? customDocType[0] : hit._type;
 }
 
-type InstanceMapperDict = Dictionary<string, InstanceMapper<DocClass, any>>;
+type InstanceMapperDict = Dictionary<string, InstanceMapper<any>>;
 
 function isInstanceMapperDict(arg: any): arg is InstanceMapperDict {
   return arg.constructor.name === 'Object';
@@ -36,7 +36,7 @@ class Result {
   }
 }
 
-export class SearchResult<T extends Doc> extends Result {
+export class SearchResult<T extends Doc = any> extends Result {
 
   private queryAggs: Params = new Params();
   private docClsMap: Dictionary<string, DocClass> = {};
@@ -56,7 +56,7 @@ export class SearchResult<T extends Doc> extends Result {
     rawResult: RawResultBody<any>,
     aggregations: Params,
     private docClasses: Readonly<DocClass[]>,
-    instanceMapper?: InstanceMapper<DocClass, any> | InstanceMapperDict, // TODO pass types
+    instanceMapper?: InstanceMapper<any> | InstanceMapperDict, // TODO pass types
   ) {
     super(rawResult);
 
@@ -114,5 +114,30 @@ export class SearchResult<T extends Doc> extends Result {
 
   public getIds(): number[] {
     return this.hits.map((hit) => Number(hit._id));
+  }
+
+  /**
+   * Populates docs (hits) with result of instance mapper.
+   *
+   * For now works with one type of document.
+   * Multiple docs in one query will be supported later
+   */
+  public async populateInstances(docType: string) {
+    // TODO not sure if ids only can be numbers, check elasticsearch docs
+    const ids = this.hits.map((hit) => Number(hit._id));
+    const mapper = this.instanceMappers[docType];
+    if (!mapper) {
+      throw new Error(`no instance mapper for ${docType} doc type`);
+    }
+    // TODO for now works only with Map
+    const instancesMap = await mapper(ids);
+    this.hits.forEach((hit) => {
+      hit.setInstance(instancesMap.get(Number(hit._id)));
+    });
+  }
+
+  public async getInstances<Inst = any>(): Promise<Inst[]> {
+    await this.populateInstances('order');
+    return Promise.all(this.hits.map(async (hit) => await hit.getInstance()));
   }
 }

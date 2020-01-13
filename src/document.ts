@@ -91,6 +91,7 @@ export class Doc {
   public static readonly docType: string;
   protected hit: Hit;
   protected result: SearchResult<any>;
+  public instance: any;
 
   public _id: string;
   constructor(opts: DocOpts) {
@@ -106,6 +107,25 @@ export class Doc {
 
   public static getDocCls(): string {
     return this.docType;
+  }
+
+  /**
+   * Get instance populated by instance mapper.
+   *
+   * TODO maybe pass as arg DocType
+   */
+  public async getInstance(): Promise<any> {
+    if (this.instance) {
+      return this.instance;
+    }
+    if (this.result) {
+      this.result.populateInstances('order');
+      return this.instance;
+    }
+  }
+
+  public setInstance(instance: any) {
+    this.instance = instance;
   }
 
   private populateFromSource() {
