@@ -118,26 +118,52 @@ export class SearchResult<T extends Doc = any> extends Result {
 
   /**
    * Populates docs (hits) with result of instance mapper.
-   *
-   * For now works with one type of document.
-   * Multiple docs in one query will be supported later
    */
-  public async populateInstances(docType: string) {
+  public async populateInstances(docType?: string) {
     // TODO not sure if ids only can be numbers, check elasticsearch docs
-    const ids = this.hits.map((hit) => Number(hit._id));
-    const mapper = this.instanceMappers[docType];
-    if (!mapper) {
-      throw new Error(`no instance mapper for ${docType} doc type`);
+    const getHitIds = (docs: Doc[]) => {
+      return docs.map((doc) => Number(doc._id));
+    };
+
+    let instancesMap: Map<number, Doc> = new Map();
+
+    if (docType) {
+      const mapper = this.instanceMappers[docType];
+      if (!mapper) {
+        throw new Error(`no instance mapper for ${docType} doc type`);
+      }
+      // TODO for now works only with Map
+      instancesMap = await mapper(getHitIds(this.hits));
+    } else {
+      const docTypeDocsMap = this.getDocTypeDocMap();
+      docTypeDocsMap.forEach(async (docs, key) => {
+        const mapper = this.instanceMappers[key];
+        if (!mapper) {
+          throw new Error(`no instance mapper for ${key} doc type`);
+        }
+        const mapped = await mapper(getHitIds(docs));
+        instancesMap = new Map([...instancesMap, ...mapped]);
+      });
     }
-    // TODO for now works only with Map
-    const instancesMap = await mapper(ids);
     this.hits.forEach((hit) => {
       hit.setInstance(instancesMap.get(Number(hit._id)));
     });
   }
 
-  // public async getInstances<Inst = any>(): Promise<Inst[]> {
-  //   await this.populateInstances();
-  //   return Promise.all(this.hits.map(async (hit) => await hit.getInstance()));
-  // }
+  private getDocTypeDocMap(): Map<string, Doc[]> {
+    const docTypeDocsMap = new Map();
+    this.hits.forEach((hit) => {
+      const key = hit.docType;
+      if (docTypeDocsMap.get(key) === undefined) {
+        docTypeDocsMap.set(key, []);
+      }
+      docTypeDocsMap.get(key).push(hit);
+    });
+    return docTypeDocsMap;
+  }
+
+  public async getInstances<Inst = any>(): Promise<Inst[]> {
+    await this.populateInstances();
+    return Promise.all(this.hits.map(async (hit) => await hit.getInstance()));
+  }
 }

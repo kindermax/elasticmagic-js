@@ -114,8 +114,6 @@ export class Doc {
 
   /**
    * Get instance populated by instance mapper.
-   *
-   * TODO maybe pass as arg DocType
    */
   public async getInstance(): Promise<any> {
     if (this.instance) {

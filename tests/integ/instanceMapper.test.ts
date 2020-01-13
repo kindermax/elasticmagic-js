@@ -87,4 +87,35 @@ describe('Instance Mapper integration', () => {
       name: 'test_name_1',
     });
   });
+
+  test('getInstances() SearchResult method returns list of object created by instance mapper', async () => {
+    const cluster = new Cluster(client, indexName);
+
+    const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
+      .source(false)
+      .withInstanceMapper(async (ids: number[]) => {
+        // TODO maybe accept objects as mappings as well, if typing works well
+        return new Map(ids.map((id) => [id, { id,  name: `test_name_${id}`}]));
+      })
+      .filter(
+        Bool.must(
+          OrderDoc.userId.in([userId]),
+          OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
+          OrderDoc.source.not(OrderSource.mobile),
+          OrderDoc.dateCreated.lte(new Date().toISOString()),
+        ),
+      );
+
+    const result = await query.getResult<OrderDoc>();
+    expect(result.error).toBeUndefined();
+    expect(result.total).toBe(1);
+    expect(result.hits.length).toBe(1);
+
+    const instances = await result.getInstances();
+    expect(instances.length).toBe(1);
+    expect(instances[0]).toStrictEqual({
+      id: 1,
+      name: 'test_name_1',
+    });
+  });
 });
