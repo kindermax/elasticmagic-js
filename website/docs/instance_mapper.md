@@ -9,6 +9,8 @@ It's possible to pass an async function which map ids from elasticsearch to stru
 
 When specifying `source(false)`, elasticsearch returns only _id of found document in `hit._source` field.
 
+Instance mapper is lazy by design and evaluated only when `getInstances` called `SearchResult` or `getInstance` called on `Doc` subtype
+
 ## Examples
 
 ```javascript
@@ -22,10 +24,11 @@ type EntityMapped = {
   createdAt: Date;
 }
 
+
 const query = cluster.searchQuery()
   .filter(MyDoc.status.eq(1))
   .source(false)
-  .withInstanceMapper(async (ids: number[]): Map<number, EntityMapped> => {
+  .withInstanceMapper(async (ids: string[]): Map<string, EntityMapped> => {
     const entitiesFromDb = await dbConnection.select().whereIn('id', ids);
     // create entity id -> entity map
     const entitiesMap = new Map(entitiesFromDb.map((entity) => [entity.id, entity]));

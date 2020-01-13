@@ -107,8 +107,7 @@ const query = cluster.searchQuery({ routing: 1 })
       OrderDoc.source.not(1),
       OrderDoc.dateCreated.lte(new Date().toISOString())
     )
-  )
-  .limit(0);
+  );
 
 // To make a query to Elasticsearch we calling getResult.
 const result = await query.getResult<OrderDoc>();
