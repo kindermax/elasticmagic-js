@@ -59,12 +59,12 @@ afterEach(async () => {
 describe('Instance Mapper integration', () => {
   test('getInstance() Doc method returns object created by instance mapper', async () => {
     const cluster = new Cluster(client, indexName);
-
+    type Mapped = { id: number; name: string };
     const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
       .source(false)
-      .withInstanceMapper(async (ids: number[]) => {
+      .withInstanceMapper<Mapped>(async (ids: string[]): Promise<Map<string, Mapped>> => {
         // TODO maybe accept objects as mappings aswell, if typing works well
-        return new Map(ids.map((id) => [id, { id,  name: `test_name_${id}`}]));
+        return new Map(ids.map((id) => [id, { id: Number(id),  name: `test_name_${id}`}]));
       })
       .filter(
         Bool.must(
@@ -91,11 +91,12 @@ describe('Instance Mapper integration', () => {
   test('getInstances() SearchResult method returns list of object created by instance mapper', async () => {
     const cluster = new Cluster(client, indexName);
 
+    type Mapped = { id: number; name: string };
     const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
       .source(false)
-      .withInstanceMapper(async (ids: number[]) => {
+      .withInstanceMapper<Mapped>(async (ids: string[]): Promise<Map<string, Mapped>> => {
         // TODO maybe accept objects as mappings as well, if typing works well
-        return new Map(ids.map((id) => [id, { id,  name: `test_name_${id}`}]));
+        return new Map(ids.map((id) => [id, { id: Number(id),  name: `test_name_${id}`}]));
       })
       .filter(
         Bool.must(

@@ -105,7 +105,7 @@ export type Query = {
 export type QueryOverride = any | null; // rewrite type
 export type Limit = number | null;
 
-export type InstanceMapper<T> = (ids: number[]) => Promise<Map<number, T>>;
+export type InstanceMapper<T> = (ids: string[]) => Promise<Map<string, T>>;
 
 // TODO make all fields readonly
 export class SearchQueryContext {

@@ -112,20 +112,19 @@ export class SearchResult<T extends Doc = any> extends Result {
     return this.aggregations[name];
   }
 
-  public getIds(): number[] {
-    return this.hits.map((hit) => Number(hit._id));
+  public getIds(): string[] {
+    return this.hits.map((hit) => hit._id);
   }
 
   /**
    * Populates docs (hits) with result of instance mapper.
    */
   public async populateInstances(docType?: string) {
-    // TODO not sure if ids only can be numbers, check elasticsearch docs
-    const getHitIds = (docs: Doc[]) => {
-      return docs.map((doc) => Number(doc._id));
+    const getHitIds = (docs: Doc[]): string[] => {
+      return docs.map((doc) => doc._id);
     };
 
-    let instancesMap: Map<number, Doc> = new Map();
+    let instancesMap: Map<string, Doc> = new Map();
 
     if (docType) {
       const mapper = this.instanceMappers[docType];
@@ -146,7 +145,7 @@ export class SearchResult<T extends Doc = any> extends Result {
       });
     }
     this.hits.forEach((hit) => {
-      hit.setInstance(instancesMap.get(Number(hit._id)));
+      hit.setInstance(instancesMap.get(hit._id));
     });
   }
 
