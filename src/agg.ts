@@ -125,7 +125,7 @@ export class MultiBucketAggResult extends AggResult {
     rawData: RawAgg,
     docClsMap: Dictionary<string, DocClass>,
     mapperRegistry: any,
-    private instanceMapper?: InstanceMapper<any, any>,
+    private instanceMapper?: InstanceMapper<any>,
   ) {
     super(aggExpr);
 
@@ -207,7 +207,7 @@ export class MultiBucketAgg extends BucketAgg {
      */
     params?: TermsOptionsShrink,
     private type?: FieldType, // TODO used by def clone
-    protected instanceMapper?: InstanceMapper<any, any>,
+    protected instanceMapper?: InstanceMapper<any>,
   ) {
     super(aggs, params);
   }
@@ -227,7 +227,7 @@ type TermsOptions = {
   size?: number;
   type?: FieldType;
   aggs?: Dictionary<string, Filter>;
-  instanceMapper?: InstanceMapper<any, any>;
+  instanceMapper?: InstanceMapper<any>;
 };
 
 type TermsOptionsShrink = { // TODO not nice hack to differ types

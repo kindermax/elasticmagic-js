@@ -1,4 +1,4 @@
-import { Doc } from '../src/document';
+import { Doc } from '../../src/document';
 
 describe('Doc', () => {
   test('getDocCls', () => {

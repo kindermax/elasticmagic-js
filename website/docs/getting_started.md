@@ -83,7 +83,7 @@ const cluster = new Cluster(client, 'test_order_index');
 // Calling searchQuery method we start creating new query.
 // We using builder pattern, so you can chain any amount of methods
 const query = cluster.searchQuery({ routing: 1 })
-  .source(false)
+  .source(true)
   .filter(
     Bool.must(
       OrderDoc.user_id.in([1]),
@@ -91,12 +91,11 @@ const query = cluster.searchQuery({ routing: 1 })
       OrderDoc.source.not(1),
       OrderDoc.dateCreated.lte(new Date().toISOString())
     )
-  )
-  .limit(0);
+  );
 
 // To make a query to Elasticsearch we calling getResult.
 const result = await query.getResult<OrderDoc>();
-console.log(result.getIds()); // prints [1]
+console.log(result.getIds()); // prints ["1"]
 
 const hit = result.hits[0];
 console.log(hit.user_id); // prints 1

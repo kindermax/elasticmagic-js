@@ -15,14 +15,8 @@ services:
       - ./tsconfig.json:/app/tsconfig.json
     command: |
       sh -c '
-          if [[ "$${ES}" != "false" ]]; then
-            ./scripts/wait_es.sh es6:9200;
-          fi
-          if [[ -n $${TESTS} ]]; then
-            npm run test -- $${TESTS};
-          else
-            npm run test
-          fi;
+          ./scripts/wait_es.sh es6:9200;
+          npm run test
         '
     depends_on:
       - es6
@@ -32,7 +26,22 @@ services:
     command: |
       sh -c "
           ./scripts/wait_es.sh es6:9200
-          npm run test:integ
+          if [[ ! -z $${TEST} ]]; then
+            npm run test:one -- $${TEST};
+          else
+            npm run test:integ
+          fi;
+        "
+
+  test-unit:
+    <<: *test
+    command: |
+      sh -c "
+          if [[ ! -z $${TEST} ]]; then
+            npm run test:one -- $${TEST};
+          else
+            npm run test:unit
+          fi;
         "
 
   es6:

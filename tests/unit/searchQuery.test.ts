@@ -1,7 +1,7 @@
-import * as agg from '../src/agg';
-import { Source } from '../src/expression';
-import { SearchQuery } from '../src/query';
-import { OrderDoc, OrderStatus } from './fixtures';
+import * as agg from '../../src/agg';
+import { Source } from '../../src/expression';
+import { SearchQuery } from '../../src/query';
+import { OrderDoc, OrderStatus } from '../fixtures';
 
 describe('SearchQuery', () => {
   test('collectDocClasses private method', () => {

@@ -105,7 +105,7 @@ export type Query = {
 export type QueryOverride = any | null; // rewrite type
 export type Limit = number | null;
 
-export type InstanceMapper<T1, T2> = (ids: T1[]) => T2;
+export type InstanceMapper<T> = (ids: string[]) => Promise<Map<string, T>>;
 
 // TODO make all fields readonly
 export class SearchQueryContext {
@@ -124,7 +124,7 @@ export class SearchQueryContext {
     public aggregations: Params,
     public docClasses: Readonly<DocClass[]>,
     public docType?: string,
-    public instanceMapper?: InstanceMapper<any, any>,
+    public instanceMapper?: InstanceMapper<any>,
   ) {
 
     const docTypes: string[] = [];
@@ -173,7 +173,7 @@ export class SearchQuery {
   private _searchParams: Params = new Params();
   private _docClass?: DocClass;
   private _docType?: string;
-  private _instanceMapper?: InstanceMapper<any, any>;
+  private _instanceMapper?: InstanceMapper<any>;
 
   constructor(
     searchQueryOptions: ClusterSearchQueryOptions = {},
@@ -302,7 +302,7 @@ export class SearchQuery {
     return this;
   }
 
-  public withInstanceMapper<T1, T2>(instanceMapper: InstanceMapper<T1, T2>): this {
+  public withInstanceMapper<T>(instanceMapper: InstanceMapper<T>): this {
     this._instanceMapper = instanceMapper;
     return this;
   }

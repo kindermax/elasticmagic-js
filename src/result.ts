@@ -22,7 +22,7 @@ function getDocTypeForHit(hit: Hit): string {
   return customDocType ? customDocType[0] : hit._type;
 }
 
-type InstanceMapperDict = Dictionary<string, InstanceMapper<DocClass, any>>;
+type InstanceMapperDict = Dictionary<string, InstanceMapper<any>>;
 
 function isInstanceMapperDict(arg: any): arg is InstanceMapperDict {
   return arg.constructor.name === 'Object';
@@ -36,7 +36,7 @@ class Result {
   }
 }
 
-export class SearchResult<T extends Doc> extends Result {
+export class SearchResult<T extends Doc = any> extends Result {
 
   private queryAggs: Params = new Params();
   private docClsMap: Dictionary<string, DocClass> = {};
@@ -56,7 +56,7 @@ export class SearchResult<T extends Doc> extends Result {
     rawResult: RawResultBody<any>,
     aggregations: Params,
     private docClasses: Readonly<DocClass[]>,
-    instanceMapper?: InstanceMapper<DocClass, any> | InstanceMapperDict, // TODO pass types
+    instanceMapper?: InstanceMapper<any> | InstanceMapperDict, // TODO pass types
   ) {
     super(rawResult);
 
@@ -90,7 +90,7 @@ export class SearchResult<T extends Doc> extends Result {
       // the propblem is when having class type to create instance from it we need to know its type
       // but we have only interface
       // The solution unknown by now
-      this.hits.push(new docCls({ hit, result: this }) as T);
+      this.hits.push(new docCls({ hit, result: this, docType: docCls.docType }) as T);
     });
 
     this.queryAggs.getParamsKvList().forEach((agg: ParamKV) => {
@@ -112,7 +112,56 @@ export class SearchResult<T extends Doc> extends Result {
     return this.aggregations[name];
   }
 
-  public getIds(): number[] {
-    return this.hits.map((hit) => Number(hit._id));
+  public getIds(): string[] {
+    return this.hits.map((hit) => hit._id);
+  }
+
+  /**
+   * Populates docs (hits) with result of instance mapper.
+   */
+  public async populateInstances(docType?: string) {
+    const getHitIds = (docs: Doc[]): string[] => {
+      return docs.map((doc) => doc._id);
+    };
+
+    let instancesMap: Map<string, Doc> = new Map();
+
+    if (docType) {
+      const mapper = this.instanceMappers[docType];
+      if (!mapper) {
+        throw new Error(`no instance mapper for ${docType} doc type`);
+      }
+      instancesMap = await mapper(getHitIds(this.hits));
+    } else {
+      const docTypeDocsMap = this.getDocTypeDocMap();
+      docTypeDocsMap.forEach(async (docs, key) => {
+        const mapper = this.instanceMappers[key];
+        if (!mapper) {
+          throw new Error(`no instance mapper for ${key} doc type`);
+        }
+        const mapped = await mapper(getHitIds(docs));
+        instancesMap = new Map([...instancesMap, ...mapped]);
+      });
+    }
+    this.hits.forEach((hit) => {
+      hit.setInstance(instancesMap.get(hit._id));
+    });
+  }
+
+  private getDocTypeDocMap(): Map<string, Doc[]> {
+    const docTypeDocsMap = new Map();
+    this.hits.forEach((hit) => {
+      const key = hit.docType;
+      if (docTypeDocsMap.get(key) === undefined) {
+        docTypeDocsMap.set(key, []);
+      }
+      docTypeDocsMap.get(key).push(hit);
+    });
+    return docTypeDocsMap;
+  }
+
+  public async getInstances<Inst = any>(): Promise<Inst[]> {
+    await this.populateInstances();
+    return Promise.all(this.hits.map(async (hit) => await hit.getInstance()));
   }
 }

@@ -1,6 +1,6 @@
-import { Bool } from '../src/expression';
-import { SearchQuery } from '../src/query';
-import { OrderDoc, OrderSource, OrderStatus } from './fixtures';
+import { Bool } from '../../src/expression';
+import { SearchQuery } from '../../src/query';
+import { OrderDoc, OrderSource, OrderStatus } from '../fixtures';
 
 describe('SearchQuery compile', () => {
   test('empty search query', () => {

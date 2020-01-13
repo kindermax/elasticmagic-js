@@ -1,6 +1,6 @@
-import { Field, IntegerType } from '../src/document';
-import { Bool, RangeExpr, Term, Terms } from '../src/expression';
-import { OrderDoc } from './fixtures';
+import { Field, IntegerType } from '../../src/document';
+import { Bool, RangeExpr, Term, Terms } from '../../src/expression';
+import { OrderDoc } from '../fixtures';
 
 describe('Field', () => {
   test('accept name as 2 positional arg', () => {
