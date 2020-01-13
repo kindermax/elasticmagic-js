@@ -131,7 +131,6 @@ export class SearchResult<T extends Doc = any> extends Result {
       if (!mapper) {
         throw new Error(`no instance mapper for ${docType} doc type`);
       }
-      // TODO for now works only with Map
       instancesMap = await mapper(getHitIds(this.hits));
     } else {
       const docTypeDocsMap = this.getDocTypeDocMap();

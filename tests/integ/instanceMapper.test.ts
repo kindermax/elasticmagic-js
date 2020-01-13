@@ -63,7 +63,6 @@ describe('Instance Mapper integration', () => {
     const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
       .source(false)
       .withInstanceMapper<Mapped>(async (ids: string[]): Promise<Map<string, Mapped>> => {
-        // TODO maybe accept objects as mappings aswell, if typing works well
         return new Map(ids.map((id) => [id, { id: Number(id),  name: `test_name_${id}`}]));
       })
       .filter(
@@ -95,7 +94,6 @@ describe('Instance Mapper integration', () => {
     const query = cluster.searchQuery({ routing: userId, docClass: OrderDoc })
       .source(false)
       .withInstanceMapper<Mapped>(async (ids: string[]): Promise<Map<string, Mapped>> => {
-        // TODO maybe accept objects as mappings as well, if typing works well
         return new Map(ids.map((id) => [id, { id: Number(id),  name: `test_name_${id}`}]));
       })
       .filter(
