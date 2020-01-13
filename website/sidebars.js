@@ -12,6 +12,7 @@ module.exports = {
       'installation', 
       'querying', 
       'aggregations', 
+      'instance_mapper', 
     ],   
     API: [
       'api',
