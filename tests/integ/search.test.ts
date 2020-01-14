@@ -2,7 +2,7 @@ import { Client } from '@elastic/elasticsearch'; // TODO maybe replace
 import * as agg from '../../src/agg';
 import { Cluster } from '../../src/cluster';
 import { Bool } from '../../src/expression';
-import { SearchQuery } from '../../src/query';
+import { SearchQuery } from '../../src/search';
 import { OrderDoc, OrderSource, OrderStatus } from '../fixtures';
 import { getOrderDocMapping, indexDoc } from './utils';
 

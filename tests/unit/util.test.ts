@@ -1,5 +1,5 @@
 import { Params } from '../../src/expression';
-import { SearchQuery } from '../../src/query';
+import { SearchQuery } from '../../src/search';
 import { cleanParams, collectDocClasses, mergeParams, mustClean } from '../../src/util';
 import { OrderDoc } from '../fixtures';
 

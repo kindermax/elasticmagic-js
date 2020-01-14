@@ -1,5 +1,5 @@
 import { Bool } from '../../src/expression';
-import { SearchQuery } from '../../src/query';
+import { SearchQuery } from '../../src/search';
 import { OrderDoc, OrderSource, OrderStatus } from '../fixtures';
 
 describe('SearchQuery compile', () => {

@@ -187,7 +187,9 @@ export class SearchQuery {
     } = searchQueryOptions;
 
     this.cluster = cluster;
-    this.index = index;
+    if (index) {
+      this.withIndex(index);
+    }
 
     if (docClass) {
       this._docClass = docClass;
@@ -314,6 +316,11 @@ export class SearchQuery {
 
   public withDocType(docType: string): this {
     this._docType = docType;
+    return this;
+  }
+
+  public withIndex(index: Index): this {
+    this.index = index;
     return this;
   }
 
