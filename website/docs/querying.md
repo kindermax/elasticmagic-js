@@ -211,6 +211,3 @@ const result = await query.getResult();
 
 ## Examples
 
-See how methods in nest-js or typeorm is documented
-
-add @publicApi to function docs

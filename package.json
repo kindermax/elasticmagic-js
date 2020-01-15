@@ -20,7 +20,7 @@
     "test:ci": "ES_HOST=localhost jest",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "lint:test": "tslint -c tslint.json 'tests/**/*.ts'",
-    "doc:api:build": "typedoc --out website/docs/api src --readme none --plugin typedoc-plugin-markdown --theme docusaurus2"
+    "doc:api:build": "typedoc --out website/docs/api src --plugin typedoc-plugin-markdown --theme docusaurus2 --readme none --hideBreadcrumbs"
   },
   "dependencies": {
     "lodash.clonedeep": "4.5.0"
