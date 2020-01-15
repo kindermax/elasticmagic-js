@@ -45,7 +45,7 @@ sidebar_label: "Field"
 
 \+ **new Field**(`type`: [FieldType](_document_.fieldtype.md), `name`: string, `parent`: [DocClass](../modules/_document_.md#docclass)): *[Field](_document_.field.md)*
 
-*Defined in [document.ts:33](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L33)*
+*Defined in [document.ts:33](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L33)*
 
 **Parameters:**
 
@@ -63,7 +63,7 @@ Name | Type |
 
 • **name**: *string*
 
-*Defined in [document.ts:37](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L37)*
+*Defined in [document.ts:37](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L37)*
 
 ___
 
@@ -71,7 +71,7 @@ ___
 
 • **parent**: *[DocClass](../modules/_document_.md#docclass)*
 
-*Defined in [document.ts:38](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L38)*
+*Defined in [document.ts:38](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L38)*
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 *Inherited from [Expression](_expression_.expression.md).[queryKey](_expression_.expression.md#querykey)*
 
-*Defined in [expression.ts:16](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L16)*
+*Defined in [expression.ts:16](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L16)*
 
 ___
 
@@ -91,7 +91,7 @@ ___
 
 *Inherited from [Expression](_expression_.expression.md).[queryName](_expression_.expression.md#queryname)*
 
-*Defined in [expression.ts:15](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L15)*
+*Defined in [expression.ts:15](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L15)*
 
 ___
 
@@ -99,7 +99,7 @@ ___
 
 • **type**: *[FieldType](_document_.fieldtype.md)*
 
-*Defined in [document.ts:36](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L36)*
+*Defined in [document.ts:36](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L36)*
 
 ___
 
@@ -109,7 +109,7 @@ ___
 
 *Overrides [Expression](_expression_.expression.md).[visitName](_expression_.expression.md#visitname)*
 
-*Defined in [document.ts:33](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L33)*
+*Defined in [document.ts:33](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L33)*
 
 ## Methods
 
@@ -117,7 +117,7 @@ ___
 
 ▸ **asc**(`opts?`: [SortOpts](../modules/_expression_.md#sortopts)): *[Sort](_expression_.sort.md)*
 
-*Defined in [document.ts:72](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L72)*
+*Defined in [document.ts:72](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L72)*
 
 **Parameters:**
 
@@ -135,7 +135,7 @@ ___
 
 *Overrides [Expression](_expression_.expression.md).[collectDocClasses](_expression_.expression.md#collectdocclasses)*
 
-*Defined in [document.ts:84](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L84)*
+*Defined in [document.ts:84](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L84)*
 
 **Returns:** *Readonly‹[DocClass](../modules/_document_.md#docclass)[]›*
 
@@ -145,7 +145,7 @@ ___
 
 ▸ **desc**(`opts?`: [SortOpts](../modules/_expression_.md#sortopts)): *[Sort](_expression_.sort.md)*
 
-*Defined in [document.ts:76](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L76)*
+*Defined in [document.ts:76](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L76)*
 
 **Parameters:**
 
@@ -161,7 +161,7 @@ ___
 
 ▸ **eq**(`other`: [TermValue](../modules/_expression_.md#termvalue)): *[Term](_expression_.term.md)*
 
-*Defined in [document.ts:51](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L51)*
+*Defined in [document.ts:51](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L51)*
 
 **Parameters:**
 
@@ -177,7 +177,7 @@ ___
 
 ▸ **getType**(): *[FieldType](_document_.fieldtype.md)*
 
-*Defined in [document.ts:80](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L80)*
+*Defined in [document.ts:80](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L80)*
 
 **Returns:** *[FieldType](_document_.fieldtype.md)*
 
@@ -187,7 +187,7 @@ ___
 
 ▸ **gt**(`other`: [RangeValue](../modules/_expression_.md#rangevalue)): *[RangeExpr](_expression_.rangeexpr.md)*
 
-*Defined in [document.ts:60](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L60)*
+*Defined in [document.ts:60](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L60)*
 
 **Parameters:**
 
@@ -203,7 +203,7 @@ ___
 
 ▸ **gte**(`other`: [RangeValue](../modules/_expression_.md#rangevalue)): *[RangeExpr](_expression_.rangeexpr.md)*
 
-*Defined in [document.ts:68](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L68)*
+*Defined in [document.ts:68](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L68)*
 
 **Parameters:**
 
@@ -219,7 +219,7 @@ ___
 
 ▸ **in**(`terms`: [TermValue](../modules/_expression_.md#termvalue)[]): *[Terms](_expression_.terms.md)*
 
-*Defined in [document.ts:43](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L43)*
+*Defined in [document.ts:43](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L43)*
 
 **Parameters:**
 
@@ -235,7 +235,7 @@ ___
 
 ▸ **lt**(`other`: [RangeValue](../modules/_expression_.md#rangevalue)): *[RangeExpr](_expression_.rangeexpr.md)*
 
-*Defined in [document.ts:56](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L56)*
+*Defined in [document.ts:56](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L56)*
 
 **Parameters:**
 
@@ -251,7 +251,7 @@ ___
 
 ▸ **lte**(`other`: [RangeValue](../modules/_expression_.md#rangevalue)): *[RangeExpr](_expression_.rangeexpr.md)*
 
-*Defined in [document.ts:64](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L64)*
+*Defined in [document.ts:64](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L64)*
 
 **Parameters:**
 
@@ -267,7 +267,7 @@ ___
 
 ▸ **not**(`term`: [TermValue](../modules/_expression_.md#termvalue)): *[Bool](_expression_.bool.md)*
 
-*Defined in [document.ts:47](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L47)*
+*Defined in [document.ts:47](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L47)*
 
 **Parameters:**
 

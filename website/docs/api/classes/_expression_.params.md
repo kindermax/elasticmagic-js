@@ -40,7 +40,7 @@ sidebar_label: "Params"
 
 \+ **new Params**(`params?`: [Nullable](../modules/_types_.md#nullable)‹[ParamsType](../modules/_expression_.md#paramstype)›): *[Params](_expression_.params.md)*
 
-*Defined in [expression.ts:30](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L30)*
+*Defined in [expression.ts:30](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L30)*
 
 **Parameters:**
 
@@ -56,7 +56,7 @@ Name | Type |
 
 • **params**: *[ParamsType](../modules/_expression_.md#paramstype)*
 
-*Defined in [expression.ts:29](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L29)*
+*Defined in [expression.ts:29](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L29)*
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 • **paramsKvList**: *[ParamKV](../modules/_expression_.md#paramkv)[]*
 
-*Defined in [expression.ts:30](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L30)*
+*Defined in [expression.ts:30](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L30)*
 
 ___
 
@@ -74,7 +74,7 @@ ___
 
 *Inherited from [Expression](_expression_.expression.md).[queryKey](_expression_.expression.md#querykey)*
 
-*Defined in [expression.ts:16](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L16)*
+*Defined in [expression.ts:16](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L16)*
 
 ___
 
@@ -84,7 +84,7 @@ ___
 
 *Inherited from [Expression](_expression_.expression.md).[queryName](_expression_.expression.md#queryname)*
 
-*Defined in [expression.ts:15](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L15)*
+*Defined in [expression.ts:15](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L15)*
 
 ___
 
@@ -94,7 +94,7 @@ ___
 
 *Overrides [Expression](_expression_.expression.md).[visitName](_expression_.expression.md#visitname)*
 
-*Defined in [expression.ts:28](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L28)*
+*Defined in [expression.ts:28](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L28)*
 
 ## Accessors
 
@@ -102,7 +102,7 @@ ___
 
 • **get length**(): *number*
 
-*Defined in [expression.ts:50](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L50)*
+*Defined in [expression.ts:50](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L50)*
 
 **Returns:** *number*
 
@@ -114,7 +114,7 @@ ___
 
 *Overrides [Expression](_expression_.expression.md).[collectDocClasses](_expression_.expression.md#collectdocclasses)*
 
-*Defined in [expression.ts:46](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L46)*
+*Defined in [expression.ts:46](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L46)*
 
 **Returns:** *Readonly‹[DocClass](../modules/_document_.md#docclass)[]›*
 
@@ -124,7 +124,7 @@ ___
 
 ▸ **getParams**(): *[ParamsType](../modules/_expression_.md#paramstype)*
 
-*Defined in [expression.ts:42](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L42)*
+*Defined in [expression.ts:42](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L42)*
 
 **Returns:** *[ParamsType](../modules/_expression_.md#paramstype)*
 
@@ -134,6 +134,6 @@ ___
 
 ▸ **getParamsKvList**(): *[ParamKV](../modules/_expression_.md#paramkv)[]*
 
-*Defined in [expression.ts:38](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L38)*
+*Defined in [expression.ts:38](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L38)*
 
 **Returns:** *[ParamKV](../modules/_expression_.md#paramkv)[]*

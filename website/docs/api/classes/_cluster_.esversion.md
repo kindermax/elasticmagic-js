@@ -26,7 +26,7 @@ sidebar_label: "EsVersion"
 
 \+ **new EsVersion**(`major`: number, `minor`: number, `patch`: number): *[EsVersion](_cluster_.esversion.md)*
 
-*Defined in [cluster.ts:36](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L36)*
+*Defined in [cluster.ts:36](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L36)*
 
 **Parameters:**
 
@@ -44,7 +44,7 @@ Name | Type |
 
 • **major**: *number*
 
-*Defined in [cluster.ts:37](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L37)*
+*Defined in [cluster.ts:37](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L37)*
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 • **minor**: *number*
 
-*Defined in [cluster.ts:37](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L37)*
+*Defined in [cluster.ts:37](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L37)*
 
 ___
 
@@ -60,4 +60,4 @@ ___
 
 • **patch**: *number*
 
-*Defined in [cluster.ts:37](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L37)*
+*Defined in [cluster.ts:37](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L37)*

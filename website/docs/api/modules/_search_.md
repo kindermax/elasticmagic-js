@@ -51,7 +51,7 @@ sidebar_label: "search"
 
 Ƭ **Aggregations**: *[Dictionary](_types_.md#dictionary)‹string, [AggExpression](../classes/_agg_.aggexpression.md)›*
 
-*Defined in [search.ts:81](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L81)*
+*Defined in [search.ts:81](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L81)*
 
 ___
 
@@ -59,7 +59,7 @@ ___
 
 Ƭ **AggregationsField**: *[PlainObject](_types_.md#plainobject)*
 
-*Defined in [search.ts:79](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L79)*
+*Defined in [search.ts:79](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L79)*
 
 ___
 
@@ -67,7 +67,7 @@ ___
 
 Ƭ **BoolField**: *object*
 
-*Defined in [search.ts:62](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L62)*
+*Defined in [search.ts:62](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L62)*
 
 #### Type declaration:
 
@@ -81,7 +81,7 @@ ___
 
 Ƭ **BoolMustFilter**: *Array‹[MatchFilter](_search_.md#matchfilter) | [MatchPhraseFilter](_search_.md#matchphrasefilter)›*
 
-*Defined in [search.ts:69](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L69)*
+*Defined in [search.ts:69](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L69)*
 
 ___
 
@@ -89,7 +89,7 @@ ___
 
 Ƭ **BoolMustNotFilter**: *Array‹[MatchFilter](_search_.md#matchfilter) | [MatchPhraseFilter](_search_.md#matchphrasefilter)›*
 
-*Defined in [search.ts:70](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L70)*
+*Defined in [search.ts:70](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L70)*
 
 ___
 
@@ -97,7 +97,7 @@ ___
 
 Ƭ **BoolRootField**: *object*
 
-*Defined in [search.ts:72](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L72)*
+*Defined in [search.ts:72](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L72)*
 
 #### Type declaration:
 
@@ -113,7 +113,7 @@ ___
 
 Ƭ **ClusterSearchQueryOptions**: *object & [SearchQueryOptions](_search_.md#searchqueryoptions)*
 
-*Defined in [search.ts:28](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L28)*
+*Defined in [search.ts:28](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L28)*
 
 ___
 
@@ -121,7 +121,7 @@ ___
 
 Ƭ **ExistsFilter**: *object*
 
-*Defined in [search.ts:58](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L58)*
+*Defined in [search.ts:58](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L58)*
 
 #### Type declaration:
 
@@ -133,7 +133,7 @@ ___
 
 Ƭ **ExistsValue**: *string | number | boolean*
 
-*Defined in [search.ts:40](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L40)*
+*Defined in [search.ts:40](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L40)*
 
 ___
 
@@ -141,7 +141,7 @@ ___
 
 Ƭ **FilterRootField**: *[BoolField](_search_.md#boolfield) | [ExistsFilter](_search_.md#existsfilter)[]*
 
-*Defined in [search.ts:67](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L67)*
+*Defined in [search.ts:67](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L67)*
 
 ___
 
@@ -149,7 +149,7 @@ ___
 
 Ƭ **InstanceMapper**: *function*
 
-*Defined in [search.ts:108](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L108)*
+*Defined in [search.ts:108](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L108)*
 
 #### Type declaration:
 
@@ -167,7 +167,7 @@ ___
 
 Ƭ **Limit**: *number | null*
 
-*Defined in [search.ts:106](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L106)*
+*Defined in [search.ts:106](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L106)*
 
 ___
 
@@ -175,7 +175,7 @@ ___
 
 Ƭ **MatchFilter**: *object*
 
-*Defined in [search.ts:42](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L42)*
+*Defined in [search.ts:42](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L42)*
 
 #### Type declaration:
 
@@ -187,7 +187,7 @@ ___
 
 Ƭ **MatchPhraseFilter**: *object*
 
-*Defined in [search.ts:46](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L46)*
+*Defined in [search.ts:46](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L46)*
 
 #### Type declaration:
 
@@ -199,7 +199,7 @@ ___
 
 Ƭ **MatchValue**: *string | number | boolean*
 
-*Defined in [search.ts:38](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L38)*
+*Defined in [search.ts:38](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L38)*
 
 ___
 
@@ -207,7 +207,7 @@ ___
 
 Ƭ **Query**: *object*
 
-*Defined in [search.ts:96](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L96)*
+*Defined in [search.ts:96](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L96)*
 
 #### Type declaration:
 
@@ -227,7 +227,7 @@ ___
 
 Ƭ **QueryOverride**: *any | null*
 
-*Defined in [search.ts:105](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L105)*
+*Defined in [search.ts:105](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L105)*
 
 ___
 
@@ -235,7 +235,7 @@ ___
 
 Ƭ **QueryRootField**: *object*
 
-*Defined in [search.ts:83](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L83)*
+*Defined in [search.ts:83](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L83)*
 
 #### Type declaration:
 
@@ -249,7 +249,7 @@ ___
 
 Ƭ **SearchParams**: *object*
 
-*Defined in [search.ts:33](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L33)*
+*Defined in [search.ts:33](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L33)*
 
 #### Type declaration:
 
@@ -263,7 +263,7 @@ ___
 
 Ƭ **SearchQueryOptions**: *object*
 
-*Defined in [search.ts:22](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L22)*
+*Defined in [search.ts:22](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L22)*
 
 #### Type declaration:
 
@@ -279,7 +279,7 @@ ___
 
 Ƭ **SortMode**: *"min" | "max" | "sum" | "avg" | "median"*
 
-*Defined in [search.ts:89](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L89)*
+*Defined in [search.ts:89](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L89)*
 
 ___
 
@@ -287,7 +287,7 @@ ___
 
 Ƭ **SortObject**: *[Dictionary](_types_.md#dictionary)‹string, [SortOrder](_search_.md#sortorder) | object›*
 
-*Defined in [search.ts:91](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L91)*
+*Defined in [search.ts:91](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L91)*
 
 ___
 
@@ -295,7 +295,7 @@ ___
 
 Ƭ **SortOrder**: *"asc" | "desc"*
 
-*Defined in [search.ts:88](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L88)*
+*Defined in [search.ts:88](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L88)*
 
 ___
 
@@ -303,7 +303,7 @@ ___
 
 Ƭ **SortRootField**: *[SortObject](_search_.md#sortobject)[] | string | "_score"*
 
-*Defined in [search.ts:92](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L92)*
+*Defined in [search.ts:92](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L92)*
 
 ___
 
@@ -311,7 +311,7 @@ ___
 
 Ƭ **TermFilter**: *object*
 
-*Defined in [search.ts:50](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L50)*
+*Defined in [search.ts:50](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L50)*
 
 #### Type declaration:
 
@@ -323,7 +323,7 @@ ___
 
 Ƭ **TermValue**: *string | number | boolean*
 
-*Defined in [search.ts:39](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L39)*
+*Defined in [search.ts:39](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L39)*
 
 ___
 
@@ -331,7 +331,7 @@ ___
 
 Ƭ **TermsFilter**: *object*
 
-*Defined in [search.ts:54](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L54)*
+*Defined in [search.ts:54](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L54)*
 
 #### Type declaration:
 
@@ -343,7 +343,7 @@ ___
 
 ▸ **getDocType**(`docType?`: undefined | string, `docClass?`: [DocClass](_document_.md#docclass)): *string | null*
 
-*Defined in [search.ts:150](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L150)*
+*Defined in [search.ts:150](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L150)*
 
 **Parameters:**
 

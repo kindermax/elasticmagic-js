@@ -36,7 +36,7 @@ sidebar_label: "Doc"
 
 \+ **new Doc**(`opts`: [DocOpts](../modules/_document_.md#docopts)): *[Doc](_document_.doc.md)*
 
-*Defined in [document.ts:102](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L102)*
+*Defined in [document.ts:102](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L102)*
 
 **Parameters:**
 
@@ -52,7 +52,7 @@ Name | Type |
 
 • **_id**: *string*
 
-*Defined in [document.ts:102](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L102)*
+*Defined in [document.ts:102](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L102)*
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 • **docType**: *string*
 
-*Defined in [document.ts:97](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L97)*
+*Defined in [document.ts:97](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L97)*
 
 ___
 
@@ -68,7 +68,7 @@ ___
 
 • **hit**: *[Hit](../modules/_types_.md#hit)*
 
-*Defined in [document.ts:98](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L98)*
+*Defined in [document.ts:98](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L98)*
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 • **instance**: *any*
 
-*Defined in [document.ts:100](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L100)*
+*Defined in [document.ts:100](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L100)*
 
 ___
 
@@ -84,7 +84,7 @@ ___
 
 • **result**: *[SearchResult](_result_.searchresult.md)‹any›*
 
-*Defined in [document.ts:99](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L99)*
+*Defined in [document.ts:99](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L99)*
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 ▪ **docType**: *string*
 
-*Defined in [document.ts:96](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L96)*
+*Defined in [document.ts:96](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L96)*
 
 ## Methods
 
@@ -100,7 +100,7 @@ ___
 
 ▸ **getInstance**(): *Promise‹any›*
 
-*Defined in [document.ts:122](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L122)*
+*Defined in [document.ts:122](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L122)*
 
 Get instance populated by instance mapper.
 
@@ -112,7 +112,7 @@ ___
 
 ▸ **populateFromSource**(): *void*
 
-*Defined in [document.ts:136](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L136)*
+*Defined in [document.ts:136](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L136)*
 
 **Returns:** *void*
 
@@ -122,7 +122,7 @@ ___
 
 ▸ **setInstance**(`instance`: any): *void*
 
-*Defined in [document.ts:132](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L132)*
+*Defined in [document.ts:132](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L132)*
 
 **Parameters:**
 
@@ -138,6 +138,6 @@ ___
 
 ▸ **getDocCls**(): *string*
 
-*Defined in [document.ts:115](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L115)*
+*Defined in [document.ts:115](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L115)*
 
 **Returns:** *string*

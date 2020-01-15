@@ -32,7 +32,7 @@ sidebar_label: "Bucket"
 
 \+ **new Bucket**(`rawData`: [RawAggBucket](../modules/_types_.md#rawaggbucket), `aggExpr`: [BucketAgg](_agg_.bucketagg.md), `parent`: [AggResult](_agg_.aggresult.md), `docClsMap`: [Dictionary](../modules/_types_.md#dictionary)‹string, [DocClass](../modules/_document_.md#docclass)›, `mapperRegistry`: any): *[Bucket](_agg_.bucket.md)*
 
-*Defined in [agg.ts:12](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L12)*
+*Defined in [agg.ts:12](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L12)*
 
 **Parameters:**
 
@@ -52,7 +52,7 @@ Name | Type |
 
 • **aggregations**: *[Dictionary](../modules/_types_.md#dictionary)‹string, [AggResult](_agg_.aggresult.md)›*
 
-*Defined in [agg.ts:12](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L12)*
+*Defined in [agg.ts:12](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L12)*
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 • **docCount**: *number*
 
-*Defined in [agg.ts:11](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L11)*
+*Defined in [agg.ts:11](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L11)*
 
 ___
 
@@ -68,7 +68,7 @@ ___
 
 • **key**: *[BucketKey](../modules/_agg_.md#bucketkey)*
 
-*Defined in [agg.ts:10](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L10)*
+*Defined in [agg.ts:10](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L10)*
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 • **parent**: *[AggResult](_agg_.aggresult.md)*
 
-*Defined in [agg.ts:17](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L17)*
+*Defined in [agg.ts:17](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L17)*
 
 ## Methods
 
@@ -84,7 +84,7 @@ ___
 
 ▸ **getAggregation**(`name`: string): *[AggResult](_agg_.aggresult.md)*
 
-*Defined in [agg.ts:36](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L36)*
+*Defined in [agg.ts:36](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L36)*
 
 **Parameters:**
 
@@ -100,6 +100,6 @@ ___
 
 ▸ **toString**(): *string*
 
-*Defined in [agg.ts:40](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L40)*
+*Defined in [agg.ts:40](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L40)*
 
 **Returns:** *string*

@@ -31,7 +31,7 @@ sidebar_label: "Index"
 
 \+ **new Index**(`name`: string, `cluster`: [Cluster](_cluster_.cluster.md)): *[Index](_cluster_.index.md)*
 
-*Defined in [cluster.ts:17](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L17)*
+*Defined in [cluster.ts:17](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L17)*
 
 **Parameters:**
 
@@ -48,7 +48,7 @@ Name | Type |
 
 • **cluster**: *[Cluster](_cluster_.cluster.md)*
 
-*Defined in [cluster.ts:20](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L20)*
+*Defined in [cluster.ts:20](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L20)*
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 • **name**: *string*
 
-*Defined in [cluster.ts:19](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L19)*
+*Defined in [cluster.ts:19](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L19)*
 
 ## Methods
 
@@ -64,7 +64,7 @@ ___
 
 ▸ **getCluster**(): *[Cluster](_cluster_.cluster.md)*
 
-*Defined in [cluster.ts:31](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L31)*
+*Defined in [cluster.ts:31](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L31)*
 
 **Returns:** *[Cluster](_cluster_.cluster.md)*
 
@@ -74,7 +74,7 @@ ___
 
 ▸ **getName**(): *string*
 
-*Defined in [cluster.ts:27](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L27)*
+*Defined in [cluster.ts:27](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L27)*
 
 **Returns:** *string*
 
@@ -84,7 +84,7 @@ ___
 
 ▸ **searchQuery**(`searchQueryOptions`: [SearchQueryOptions](../modules/_search_.md#searchqueryoptions)): *[SearchQuery](_search_.searchquery.md)*
 
-*Defined in [cluster.ts:23](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L23)*
+*Defined in [cluster.ts:23](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L23)*
 
 **Parameters:**
 

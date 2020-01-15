@@ -37,7 +37,7 @@ sidebar_label: "agg"
 
 Ƭ **BucketKey**: *string | number*
 
-*Defined in [agg.ts:7](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L7)*
+*Defined in [agg.ts:7](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L7)*
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 Ƭ **FilterOptions**: *object*
 
-*Defined in [agg.ts:258](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L258)*
+*Defined in [agg.ts:258](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L258)*
 
 #### Type declaration:
 
@@ -59,7 +59,7 @@ ___
 
 Ƭ **TermsOptions**: *object*
 
-*Defined in [agg.ts:224](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L224)*
+*Defined in [agg.ts:224](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L224)*
 
 #### Type declaration:
 
@@ -81,7 +81,7 @@ ___
 
 Ƭ **TermsOptionsShrink**: *object*
 
-*Defined in [agg.ts:233](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L233)*
+*Defined in [agg.ts:233](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L233)*
 
 #### Type declaration:
 
@@ -97,7 +97,7 @@ ___
 
 ▸ **getType**(`field`: [Field](../classes/_document_.field.md), `type?`: [FieldType](../classes/_document_.fieldtype.md)): *[FieldType](../classes/_document_.fieldtype.md)*
 
-*Defined in [agg.ts:239](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L239)*
+*Defined in [agg.ts:239](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L239)*
 
 **Parameters:**
 
@@ -114,7 +114,7 @@ ___
 
 ▸ **sortByKey**(`collection`: object): *Array‹[KVList](_types_.md#kvlist)‹string››*
 
-*Defined in [agg.ts:79](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L79)*
+*Defined in [agg.ts:79](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L79)*
 
 **Parameters:**
 

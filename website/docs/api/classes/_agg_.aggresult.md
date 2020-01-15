@@ -30,7 +30,7 @@ sidebar_label: "AggResult"
 
 \+ **new AggResult**(`expr`: [BucketAgg](_agg_.bucketagg.md)): *[AggResult](_agg_.aggresult.md)*
 
-*Defined in [agg.ts:47](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L47)*
+*Defined in [agg.ts:47](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L47)*
 
 **Parameters:**
 
@@ -46,7 +46,7 @@ Name | Type |
 
 • **buckets**: *[Bucket](_agg_.bucket.md)[]* =  []
 
-*Defined in [agg.ts:46](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L46)*
+*Defined in [agg.ts:46](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L46)*
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 • **docCount**: *number* = 0
 
-*Defined in [agg.ts:47](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L47)*
+*Defined in [agg.ts:47](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L47)*
 
 ___
 
@@ -62,4 +62,4 @@ ___
 
 • **expr**: *[BucketAgg](_agg_.bucketagg.md)*
 
-*Defined in [agg.ts:48](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L48)*
+*Defined in [agg.ts:48](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L48)*

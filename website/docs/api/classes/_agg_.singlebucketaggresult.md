@@ -35,7 +35,7 @@ sidebar_label: "SingleBucketAggResult"
 
 *Overrides [AggResult](_agg_.aggresult.md).[constructor](_agg_.aggresult.md#constructor)*
 
-*Defined in [agg.ts:89](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L89)*
+*Defined in [agg.ts:89](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L89)*
 
 **Parameters:**
 
@@ -54,7 +54,7 @@ Name | Type |
 
 • **aggregations**: *[Dictionary](../modules/_types_.md#dictionary)‹string, [AggResult](_agg_.aggresult.md)›*
 
-*Defined in [agg.ts:89](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L89)*
+*Defined in [agg.ts:89](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L89)*
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 *Inherited from [AggResult](_agg_.aggresult.md).[buckets](_agg_.aggresult.md#buckets)*
 
-*Defined in [agg.ts:46](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L46)*
+*Defined in [agg.ts:46](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L46)*
 
 ___
 
@@ -74,7 +74,7 @@ ___
 
 *Overrides [AggResult](_agg_.aggresult.md).[docCount](_agg_.aggresult.md#doccount)*
 
-*Defined in [agg.ts:88](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L88)*
+*Defined in [agg.ts:88](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L88)*
 
 ___
 
@@ -84,7 +84,7 @@ ___
 
 *Inherited from [AggResult](_agg_.aggresult.md).[expr](_agg_.aggresult.md#expr)*
 
-*Defined in [agg.ts:48](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L48)*
+*Defined in [agg.ts:48](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L48)*
 
 ## Methods
 
@@ -92,7 +92,7 @@ ___
 
 ▸ **getAggregation**(`name`: string): *[AggResult](_agg_.aggresult.md)*
 
-*Defined in [agg.ts:112](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L112)*
+*Defined in [agg.ts:112](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L112)*
 
 **Parameters:**
 

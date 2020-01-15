@@ -44,7 +44,7 @@ sidebar_label: "expression"
 
 Ƭ **BoolOptions**: *object*
 
-*Defined in [expression.ts:200](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L200)*
+*Defined in [expression.ts:200](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L200)*
 
 #### Type declaration:
 
@@ -68,7 +68,7 @@ ___
 
 Ƭ **FieldQueryValue**: *string | number | boolean | null*
 
-*Defined in [expression.ts:114](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L114)*
+*Defined in [expression.ts:114](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L114)*
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 Ƭ **ISOString**: *string*
 
-*Defined in [expression.ts:165](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L165)*
+*Defined in [expression.ts:165](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L165)*
 
 ___
 
@@ -84,7 +84,7 @@ ___
 
 Ƭ **ParamKV**: *[string, any]*
 
-*Defined in [expression.ts:25](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L25)*
+*Defined in [expression.ts:25](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L25)*
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 Ƭ **ParamsType**: *[Dictionary](_types_.md#dictionary)‹any, any›*
 
-*Defined in [expression.ts:23](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L23)*
+*Defined in [expression.ts:23](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L23)*
 
 ___
 
@@ -100,7 +100,7 @@ ___
 
 Ƭ **RangeOptions**: *object*
 
-*Defined in [expression.ts:168](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L168)*
+*Defined in [expression.ts:168](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L168)*
 
 #### Type declaration:
 
@@ -126,7 +126,7 @@ ___
 
 Ƭ **RangeSettings**: *object*
 
-*Defined in [expression.ts:179](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L179)*
+*Defined in [expression.ts:179](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L179)*
 
 #### Type declaration:
 
@@ -144,7 +144,7 @@ ___
 
 Ƭ **RangeValue**: *number | string | Date | [ISOString](_expression_.md#isostring)*
 
-*Defined in [expression.ts:166](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L166)*
+*Defined in [expression.ts:166](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L166)*
 
 ___
 
@@ -152,7 +152,7 @@ ___
 
 Ƭ **SortOpts**: *object*
 
-*Defined in [expression.ts:236](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L236)*
+*Defined in [expression.ts:236](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L236)*
 
 #### Type declaration:
 
@@ -172,7 +172,7 @@ ___
 
 Ƭ **SourceField**: *boolean | string | [Field](../classes/_document_.field.md) | null*
 
-*Defined in [expression.ts:77](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L77)*
+*Defined in [expression.ts:77](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L77)*
 
 ___
 
@@ -180,7 +180,7 @@ ___
 
 Ƭ **TermField**: *[Dictionary](_types_.md#dictionary)‹string, [TermValue](_expression_.md#termvalue)›*
 
-*Defined in [expression.ts:10](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L10)*
+*Defined in [expression.ts:10](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L10)*
 
 ___
 
@@ -188,7 +188,7 @@ ___
 
 Ƭ **TermValue**: *number | string | boolean*
 
-*Defined in [expression.ts:6](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L6)*
+*Defined in [expression.ts:6](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L6)*
 
 ___
 
@@ -196,7 +196,7 @@ ___
 
 Ƭ **TermsOptions**: *object*
 
-*Defined in [expression.ts:148](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L148)*
+*Defined in [expression.ts:148](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L148)*
 
 #### Type declaration:
 

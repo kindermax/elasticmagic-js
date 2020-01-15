@@ -39,7 +39,7 @@ sidebar_label: "AggExpression"
 
 *Inherited from [ParamsExpression](_expression_.paramsexpression.md).[constructor](_expression_.paramsexpression.md#constructor)*
 
-*Defined in [expression.ts:65](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L65)*
+*Defined in [expression.ts:65](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L65)*
 
 **Parameters:**
 
@@ -55,7 +55,7 @@ Name | Type |
 
 • **aggName**: *any*
 
-*Defined in [agg.ts:53](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L53)*
+*Defined in [agg.ts:53](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L53)*
 
 ___
 
@@ -65,7 +65,7 @@ ___
 
 *Inherited from [ParamsExpression](_expression_.paramsexpression.md).[params](_expression_.paramsexpression.md#params)*
 
-*Defined in [expression.ts:65](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L65)*
+*Defined in [expression.ts:65](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L65)*
 
 ___
 
@@ -75,7 +75,7 @@ ___
 
 *Inherited from [Expression](_expression_.expression.md).[queryKey](_expression_.expression.md#querykey)*
 
-*Defined in [expression.ts:16](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L16)*
+*Defined in [expression.ts:16](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L16)*
 
 ___
 
@@ -85,7 +85,7 @@ ___
 
 *Inherited from [Expression](_expression_.expression.md).[queryName](_expression_.expression.md#queryname)*
 
-*Defined in [expression.ts:15](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L15)*
+*Defined in [expression.ts:15](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L15)*
 
 ___
 
@@ -95,7 +95,7 @@ ___
 
 *Overrides [Expression](_expression_.expression.md).[visitName](_expression_.expression.md#visitname)*
 
-*Defined in [agg.ts:52](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L52)*
+*Defined in [agg.ts:52](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L52)*
 
 ## Methods
 
@@ -103,7 +103,7 @@ ___
 
 ▸ **buildAggResult**(`rawData`: [Dictionary](../modules/_types_.md#dictionary)‹string, any›, `docClsMap`: [Dictionary](../modules/_types_.md#dictionary)‹string, [DocClass](../modules/_document_.md#docclass)›, `mapperRegistry`: any): *[AggResult](_agg_.aggresult.md)*
 
-*Defined in [agg.ts:55](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L55)*
+*Defined in [agg.ts:55](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L55)*
 
 **Parameters:**
 
@@ -125,6 +125,6 @@ ___
 
 *Overrides [Expression](_expression_.expression.md).[collectDocClasses](_expression_.expression.md#collectdocclasses)*
 
-*Defined in [expression.ts:72](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L72)*
+*Defined in [expression.ts:72](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L72)*
 
 **Returns:** *Readonly‹[DocClass](../modules/_document_.md#docclass)[]›*

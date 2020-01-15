@@ -39,7 +39,7 @@ sidebar_label: "MultiBucketAggResult"
 
 *Overrides [AggResult](_agg_.aggresult.md).[constructor](_agg_.aggresult.md#constructor)*
 
-*Defined in [agg.ts:121](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L121)*
+*Defined in [agg.ts:121](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L121)*
 
 **Parameters:**
 
@@ -59,7 +59,7 @@ Name | Type |
 
 • **bucketClass**: *[Bucket](_agg_.bucket.md)* =  Bucket
 
-*Defined in [agg.ts:118](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L118)*
+*Defined in [agg.ts:118](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L118)*
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 *Overrides [AggResult](_agg_.aggresult.md).[buckets](_agg_.aggresult.md#buckets)*
 
-*Defined in [agg.ts:119](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L119)*
+*Defined in [agg.ts:119](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L119)*
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 • **bucketsMap**: *[Dictionary](../modules/_types_.md#dictionary)‹string, [Bucket](_agg_.bucket.md)›*
 
-*Defined in [agg.ts:120](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L120)*
+*Defined in [agg.ts:120](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L120)*
 
 ___
 
@@ -87,7 +87,7 @@ ___
 
 *Inherited from [AggResult](_agg_.aggresult.md).[docCount](_agg_.aggresult.md#doccount)*
 
-*Defined in [agg.ts:47](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L47)*
+*Defined in [agg.ts:47](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L47)*
 
 ___
 
@@ -97,7 +97,7 @@ ___
 
 *Inherited from [AggResult](_agg_.aggresult.md).[expr](_agg_.aggresult.md#expr)*
 
-*Defined in [agg.ts:48](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L48)*
+*Defined in [agg.ts:48](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L48)*
 
 ___
 
@@ -105,7 +105,7 @@ ___
 
 • **instanceMapper**? : *[InstanceMapper](../modules/_search_.md#instancemapper)‹any›*
 
-*Defined in [agg.ts:128](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L128)*
+*Defined in [agg.ts:128](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L128)*
 
 ___
 
@@ -113,7 +113,7 @@ ___
 
 • **mapperRegistry**: *any*
 
-*Defined in [agg.ts:121](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L121)*
+*Defined in [agg.ts:121](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L121)*
 
 ## Methods
 
@@ -121,7 +121,7 @@ ___
 
 ▸ **addBucket**(`bucket`: [Bucket](_agg_.bucket.md)): *void*
 
-*Defined in [agg.ts:167](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L167)*
+*Defined in [agg.ts:167](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L167)*
 
 **Parameters:**
 
@@ -137,7 +137,7 @@ ___
 
 ▸ **getBucket**(`key`: [BucketKey](../modules/_agg_.md#bucketkey)): *[Bucket](_agg_.bucket.md)‹›*
 
-*Defined in [agg.ts:174](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L174)*
+*Defined in [agg.ts:174](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L174)*
 
 **Parameters:**
 

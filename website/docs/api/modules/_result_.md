@@ -32,7 +32,7 @@ sidebar_label: "result"
 
 Ƭ **InstanceMapperDict**: *[Dictionary](_types_.md#dictionary)‹string, [InstanceMapper](_search_.md#instancemapper)‹any››*
 
-*Defined in [result.ts:25](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/result.ts#L25)*
+*Defined in [result.ts:25](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L25)*
 
 ## Variables
 
@@ -40,7 +40,7 @@ sidebar_label: "result"
 
 • **DOC_TYPE_FIELD**: *"_doc_type"* = "_doc_type"
 
-*Defined in [result.ts:8](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/result.ts#L8)*
+*Defined in [result.ts:8](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L8)*
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 • **DOC_TYPE_NAME_FIELD**: *string* =  `${DOC_TYPE_FIELD}.name`
 
-*Defined in [result.ts:9](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/result.ts#L9)*
+*Defined in [result.ts:9](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L9)*
 
 ## Functions
 
@@ -56,7 +56,7 @@ ___
 
 ▸ **docClsMap**(`docClasses`: Readonly‹[DocClass](_document_.md#docclass)[]›): *[Dictionary](_types_.md#dictionary)‹string, [DocClass](_document_.md#docclass)›*
 
-*Defined in [result.ts:11](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/result.ts#L11)*
+*Defined in [result.ts:11](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L11)*
 
 **Parameters:**
 
@@ -72,7 +72,7 @@ ___
 
 ▸ **getDocTypeForHit**(`hit`: [Hit](_types_.md#hit)): *string*
 
-*Defined in [result.ts:19](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/result.ts#L19)*
+*Defined in [result.ts:19](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L19)*
 
 **Parameters:**
 
@@ -88,7 +88,7 @@ ___
 
 ▸ **isInstanceMapperDict**(`arg`: any): *arg is InstanceMapperDict*
 
-*Defined in [result.ts:27](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/result.ts#L27)*
+*Defined in [result.ts:27](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L27)*
 
 **Parameters:**
 

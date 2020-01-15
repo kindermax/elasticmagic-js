@@ -37,7 +37,7 @@ sidebar_label: "Sort"
 
 *Overrides [ParamsExpression](_expression_.paramsexpression.md).[constructor](_expression_.paramsexpression.md#constructor)*
 
-*Defined in [expression.ts:244](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L244)*
+*Defined in [expression.ts:244](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L244)*
 
 **Parameters:**
 
@@ -55,7 +55,7 @@ Name | Type |
 
 • **field**: *[Field](_document_.field.md)*
 
-*Defined in [expression.ts:247](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L247)*
+*Defined in [expression.ts:247](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L247)*
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 • **order**: *"asc" | "desc"*
 
-*Defined in [expression.ts:248](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L248)*
+*Defined in [expression.ts:248](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L248)*
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 *Inherited from [ParamsExpression](_expression_.paramsexpression.md).[params](_expression_.paramsexpression.md#params)*
 
-*Defined in [expression.ts:65](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L65)*
+*Defined in [expression.ts:65](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L65)*
 
 ___
 
@@ -83,7 +83,7 @@ ___
 
 *Inherited from [Expression](_expression_.expression.md).[queryKey](_expression_.expression.md#querykey)*
 
-*Defined in [expression.ts:16](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L16)*
+*Defined in [expression.ts:16](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L16)*
 
 ___
 
@@ -93,7 +93,7 @@ ___
 
 *Inherited from [Expression](_expression_.expression.md).[queryName](_expression_.expression.md#queryname)*
 
-*Defined in [expression.ts:15](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L15)*
+*Defined in [expression.ts:15](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L15)*
 
 ___
 
@@ -103,7 +103,7 @@ ___
 
 *Overrides [QueryExpression](_expression_.queryexpression.md).[visitName](_expression_.queryexpression.md#visitname)*
 
-*Defined in [expression.ts:244](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L244)*
+*Defined in [expression.ts:244](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L244)*
 
 ## Methods
 
@@ -113,6 +113,6 @@ ___
 
 *Overrides [ParamsExpression](_expression_.paramsexpression.md).[collectDocClasses](_expression_.paramsexpression.md#collectdocclasses)*
 
-*Defined in [expression.ts:254](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L254)*
+*Defined in [expression.ts:254](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L254)*
 
 **Returns:** *Readonly‹[DocClass](../modules/_document_.md#docclass)[]›*

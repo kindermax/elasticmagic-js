@@ -33,7 +33,7 @@ sidebar_label: "Literal"
 
 \+ **new Literal**(`obj`: any): *[Literal](_expression_.literal.md)*
 
-*Defined in [expression.ts:57](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L57)*
+*Defined in [expression.ts:57](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L57)*
 
 **Parameters:**
 
@@ -49,7 +49,7 @@ Name | Type |
 
 • **obj**: *any*
 
-*Defined in [expression.ts:59](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L59)*
+*Defined in [expression.ts:59](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L59)*
 
 ___
 
@@ -59,7 +59,7 @@ ___
 
 *Inherited from [Expression](_expression_.expression.md).[queryKey](_expression_.expression.md#querykey)*
 
-*Defined in [expression.ts:16](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L16)*
+*Defined in [expression.ts:16](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L16)*
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 *Inherited from [Expression](_expression_.expression.md).[queryName](_expression_.expression.md#queryname)*
 
-*Defined in [expression.ts:15](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L15)*
+*Defined in [expression.ts:15](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L15)*
 
 ___
 
@@ -79,7 +79,7 @@ ___
 
 *Overrides [Expression](_expression_.expression.md).[visitName](_expression_.expression.md#visitname)*
 
-*Defined in [expression.ts:57](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L57)*
+*Defined in [expression.ts:57](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L57)*
 
 ## Methods
 
@@ -89,6 +89,6 @@ ___
 
 *Inherited from [Expression](_expression_.expression.md).[collectDocClasses](_expression_.expression.md#collectdocclasses)*
 
-*Defined in [expression.ts:18](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L18)*
+*Defined in [expression.ts:18](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L18)*
 
 **Returns:** *Readonly‹[DocClass](../modules/_document_.md#docclass)[]›*

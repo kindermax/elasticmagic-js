@@ -39,7 +39,7 @@ sidebar_label: "Terms"
 
 *Overrides [MultiBucketAgg](_agg_.multibucketagg.md).[constructor](_agg_.multibucketagg.md#constructor)*
 
-*Defined in [agg.ts:244](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L244)*
+*Defined in [agg.ts:244](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L244)*
 
 **Parameters:**
 
@@ -63,7 +63,7 @@ Name | Type |
 
 *Overrides [MultiBucketAgg](_agg_.multibucketagg.md).[aggName](_agg_.multibucketagg.md#aggname)*
 
-*Defined in [agg.ts:244](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L244)*
+*Defined in [agg.ts:244](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L244)*
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 *Inherited from [BucketAgg](_agg_.bucketagg.md).[aggregations](_agg_.bucketagg.md#aggregations)*
 
-*Defined in [agg.ts:68](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L68)*
+*Defined in [agg.ts:68](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L68)*
 
 ___
 
@@ -83,7 +83,7 @@ ___
 
 *Inherited from [MultiBucketAgg](_agg_.multibucketagg.md).[instanceMapper](_agg_.multibucketagg.md#protected-optional-instancemapper)*
 
-*Defined in [agg.ts:210](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L210)*
+*Defined in [agg.ts:210](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L210)*
 
 ___
 
@@ -93,7 +93,7 @@ ___
 
 *Inherited from [ParamsExpression](_expression_.paramsexpression.md).[params](_expression_.paramsexpression.md#params)*
 
-*Defined in [expression.ts:65](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L65)*
+*Defined in [expression.ts:65](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L65)*
 
 ___
 
@@ -103,7 +103,7 @@ ___
 
 *Inherited from [Expression](_expression_.expression.md).[queryKey](_expression_.expression.md#querykey)*
 
-*Defined in [expression.ts:16](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L16)*
+*Defined in [expression.ts:16](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L16)*
 
 ___
 
@@ -113,7 +113,7 @@ ___
 
 *Inherited from [Expression](_expression_.expression.md).[queryName](_expression_.expression.md#queryname)*
 
-*Defined in [expression.ts:15](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L15)*
+*Defined in [expression.ts:15](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L15)*
 
 ___
 
@@ -125,7 +125,7 @@ ___
 
 *Overrides [AggExpression](_agg_.aggexpression.md).[visitName](_agg_.aggexpression.md#visitname)*
 
-*Defined in [agg.ts:65](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L65)*
+*Defined in [agg.ts:65](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L65)*
 
 ## Methods
 
@@ -137,7 +137,7 @@ ___
 
 *Overrides [AggExpression](_agg_.aggexpression.md).[buildAggResult](_agg_.aggexpression.md#buildaggresult)*
 
-*Defined in [agg.ts:215](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/agg.ts#L215)*
+*Defined in [agg.ts:215](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/agg.ts#L215)*
 
 **Parameters:**
 
@@ -159,6 +159,6 @@ ___
 
 *Overrides [Expression](_expression_.expression.md).[collectDocClasses](_expression_.expression.md#collectdocclasses)*
 
-*Defined in [expression.ts:72](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L72)*
+*Defined in [expression.ts:72](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L72)*
 
 **Returns:** *Readonly‹[DocClass](../modules/_document_.md#docclass)[]›*

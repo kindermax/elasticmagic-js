@@ -281,11 +281,11 @@ export class SearchQuery {
   }
 
   /**
-   * Adds `aggregations <https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html>`_
+   * Adds aggregations <https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html> 
    * to the search query.
    *
    * After executing the query you can get aggregation result by its name
-   * calling :meth:`SearchResult.get_aggregation` method.
+   * calling `SearchResult` {@link getAggregation} method.
    *
    * @param aggs objects with aggregations. Can be ``null`` that cleans up previous aggregations.
    */

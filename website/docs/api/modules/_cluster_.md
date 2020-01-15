@@ -22,7 +22,7 @@ sidebar_label: "cluster"
 
 Ƭ **RootRawResult**: *object*
 
-*Defined in [cluster.ts:8](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L8)*
+*Defined in [cluster.ts:8](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L8)*
 
 #### Type declaration:
 

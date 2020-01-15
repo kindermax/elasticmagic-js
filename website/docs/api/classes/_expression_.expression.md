@@ -36,7 +36,7 @@ sidebar_label: "Expression"
 
 • **queryKey**: *string*
 
-*Defined in [expression.ts:16](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L16)*
+*Defined in [expression.ts:16](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L16)*
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 • **queryName**: *string*
 
-*Defined in [expression.ts:15](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L15)*
+*Defined in [expression.ts:15](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L15)*
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 • **visitName**: *string*
 
-*Defined in [expression.ts:14](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L14)*
+*Defined in [expression.ts:14](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L14)*
 
 ## Methods
 
@@ -60,6 +60,6 @@ ___
 
 ▸ **collectDocClasses**(): *Readonly‹[DocClass](../modules/_document_.md#docclass)[]›*
 
-*Defined in [expression.ts:18](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L18)*
+*Defined in [expression.ts:18](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L18)*
 
 **Returns:** *Readonly‹[DocClass](../modules/_document_.md#docclass)[]›*

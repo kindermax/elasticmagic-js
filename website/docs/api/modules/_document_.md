@@ -29,7 +29,7 @@ sidebar_label: "document"
 
 Ƭ **DocClass**: *[Doc](../classes/_document_.doc.md)*
 
-*Defined in [document.ts:146](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L146)*
+*Defined in [document.ts:146](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L146)*
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 Ƭ **DocOpts**: *object*
 
-*Defined in [document.ts:89](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L89)*
+*Defined in [document.ts:89](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L89)*
 
 #### Type declaration:
 
@@ -53,7 +53,7 @@ ___
 
 Ƭ **FieldOpts**: *object*
 
-*Defined in [document.ts:27](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/document.ts#L27)*
+*Defined in [document.ts:27](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/document.ts#L27)*
 
 #### Type declaration:
 

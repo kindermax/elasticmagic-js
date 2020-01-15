@@ -37,7 +37,7 @@ sidebar_label: "Term"
 
 *Overrides [FieldQueryExpression](_expression_.fieldqueryexpression.md).[constructor](_expression_.fieldqueryexpression.md#constructor)*
 
-*Defined in [expression.ts:138](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L138)*
+*Defined in [expression.ts:138](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L138)*
 
 **Parameters:**
 
@@ -56,7 +56,7 @@ Name | Type |
 
 *Inherited from [FieldExpression](_expression_.fieldexpression.md).[field](_expression_.fieldexpression.md#field)*
 
-*Defined in [expression.ts:105](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L105)*
+*Defined in [expression.ts:105](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L105)*
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 *Inherited from [ParamsExpression](_expression_.paramsexpression.md).[params](_expression_.paramsexpression.md#params)*
 
-*Defined in [expression.ts:65](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L65)*
+*Defined in [expression.ts:65](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L65)*
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 *Inherited from [FieldQueryExpression](_expression_.fieldqueryexpression.md).[query](_expression_.fieldqueryexpression.md#query)*
 
-*Defined in [expression.ts:124](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L124)*
+*Defined in [expression.ts:124](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L124)*
 
 ___
 
@@ -86,7 +86,7 @@ ___
 
 *Overrides [FieldQueryExpression](_expression_.fieldqueryexpression.md).[queryKey](_expression_.fieldqueryexpression.md#querykey)*
 
-*Defined in [expression.ts:138](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L138)*
+*Defined in [expression.ts:138](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L138)*
 
 ___
 
@@ -96,7 +96,7 @@ ___
 
 *Overrides [Expression](_expression_.expression.md).[queryName](_expression_.expression.md#queryname)*
 
-*Defined in [expression.ts:137](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L137)*
+*Defined in [expression.ts:137](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L137)*
 
 ___
 
@@ -106,7 +106,7 @@ ___
 
 *Overrides [FieldQueryExpression](_expression_.fieldqueryexpression.md).[visitName](_expression_.fieldqueryexpression.md#visitname)*
 
-*Defined in [expression.ts:136](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L136)*
+*Defined in [expression.ts:136](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L136)*
 
 ## Methods
 
@@ -118,6 +118,6 @@ ___
 
 *Overrides [FieldExpression](_expression_.fieldexpression.md).[collectDocClasses](_expression_.fieldexpression.md#collectdocclasses)*
 
-*Defined in [expression.ts:128](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/expression.ts#L128)*
+*Defined in [expression.ts:128](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L128)*
 
 **Returns:** *Readonly‹[DocClass](../modules/_document_.md#docclass)[]›*

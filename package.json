@@ -20,7 +20,7 @@
     "test:ci": "ES_HOST=localhost jest",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "lint:test": "tslint -c tslint.json 'tests/**/*.ts'",
-    "doc:api:build": "typedoc --out website/docs/api src --plugin typedoc-plugin-markdown --theme docusaurus2 --readme none --hideBreadcrumbs",
+    "doc:api:build": "rm -r website/docs/api/* && typedoc --out website/docs/api src --plugin typedoc-plugin-markdown --theme docusaurus2 --readme none --hideBreadcrumbs && rm website/docs/api/index.md && rm -r website/website",
     "doc:deploy": "GIT_USER=kindritskyiMax CURRENT_BRANCH=master USE_SSH=true npm --prefix website run deploy"
   },
   "dependencies": {

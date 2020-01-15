@@ -37,7 +37,7 @@ sidebar_label: "Cluster"
 
 \+ **new Cluster**(`client`: Client, `indexName?`: undefined | string): *[Cluster](_cluster_.cluster.md)*
 
-*Defined in [cluster.ts:42](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L42)*
+*Defined in [cluster.ts:42](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L42)*
 
 **Parameters:**
 
@@ -54,7 +54,7 @@ Name | Type |
 
 • **client**: *Client*
 
-*Defined in [cluster.ts:45](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L45)*
+*Defined in [cluster.ts:45](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L45)*
 
 ___
 
@@ -62,7 +62,7 @@ ___
 
 • **esVersion**? : *[EsVersion](_cluster_.esversion.md)*
 
-*Defined in [cluster.ts:42](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L42)*
+*Defined in [cluster.ts:42](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L42)*
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 • **index**? : *[Index](_cluster_.index.md)*
 
-*Defined in [cluster.ts:41](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L41)*
+*Defined in [cluster.ts:41](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L41)*
 
 ## Methods
 
@@ -78,7 +78,7 @@ ___
 
 ▸ **doRequest**(`compiledQuery`: [Query](../modules/_search_.md#query), `params`: [SearchParams](../modules/_search_.md#searchparams)): *Promise‹ApiResponse‹[RawResultBody](../modules/_types_.md#rawresultbody)‹any›››*
 
-*Defined in [cluster.ts:92](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L92)*
+*Defined in [cluster.ts:92](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L92)*
 
 Make a request using underlying es client.
 
@@ -97,7 +97,7 @@ ___
 
 ▸ **getEsVersion**(): *Promise‹[EsVersion](_cluster_.esversion.md)›*
 
-*Defined in [cluster.ts:74](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L74)*
+*Defined in [cluster.ts:74](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L74)*
 
 **Returns:** *Promise‹[EsVersion](_cluster_.esversion.md)›*
 
@@ -107,7 +107,7 @@ ___
 
 ▸ **getIndex**(): *[Nullable](../modules/_types_.md#nullable)‹[Index](_cluster_.index.md)›*
 
-*Defined in [cluster.ts:61](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L61)*
+*Defined in [cluster.ts:61](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L61)*
 
 **Returns:** *[Nullable](../modules/_types_.md#nullable)‹[Index](_cluster_.index.md)›*
 
@@ -117,7 +117,7 @@ ___
 
 ▸ **processEsVersionResult**(`rawResult`: [RootRawResult](../modules/_cluster_.md#rootrawresult)): *[EsVersion](_cluster_.esversion.md)*
 
-*Defined in [cluster.ts:80](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L80)*
+*Defined in [cluster.ts:80](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L80)*
 
 **Parameters:**
 
@@ -133,7 +133,7 @@ ___
 
 ▸ **processResult**<**T**>(`rawResultBody`: [RawResultBody](../modules/_types_.md#rawresultbody)‹any›, `searchQueryContext`: [SearchQueryContext](_search_.searchquerycontext.md)): *[SearchResult](_result_.searchresult.md)‹T›*
 
-*Defined in [cluster.ts:114](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L114)*
+*Defined in [cluster.ts:114](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L114)*
 
 returns SearchResult instance with processed raw es response.
 
@@ -156,7 +156,7 @@ ___
 
 ▸ **search**<**T**>(`searchQuery`: [SearchQuery](_search_.searchquery.md)): *Promise‹[SearchResult](_result_.searchresult.md)‹T››*
 
-*Defined in [cluster.ts:130](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L130)*
+*Defined in [cluster.ts:130](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L130)*
 
 run search query against elasticsearch cluster and return processed result.
 
@@ -178,7 +178,7 @@ ___
 
 ▸ **searchQuery**(`searchQueryOptions`: [SearchQueryOptions](../modules/_search_.md#searchqueryoptions)): *[SearchQuery](_search_.searchquery.md)*
 
-*Defined in [cluster.ts:53](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L53)*
+*Defined in [cluster.ts:53](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L53)*
 
 **Parameters:**
 
@@ -194,7 +194,7 @@ ___
 
 ▸ **withIndex**(`index`: string | [Index](_cluster_.index.md)): *this*
 
-*Defined in [cluster.ts:65](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/cluster.ts#L65)*
+*Defined in [cluster.ts:65](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/cluster.ts#L65)*
 
 **Parameters:**
 

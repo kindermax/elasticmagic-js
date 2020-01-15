@@ -43,7 +43,7 @@ sidebar_label: "CompilerVisitor"
 
 • **params**: *[Query](../modules/_search_.md#query)*
 
-*Defined in [compiler.ts:24](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L24)*
+*Defined in [compiler.ts:24](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L24)*
 
 ## Methods
 
@@ -51,7 +51,7 @@ sidebar_label: "CompilerVisitor"
 
 ▸ **compile**(`queryContext`: [SearchQueryContext](_search_.searchquerycontext.md)): *[Query](../modules/_search_.md#query)*
 
-*Defined in [compiler.ts:26](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L26)*
+*Defined in [compiler.ts:26](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L26)*
 
 **Parameters:**
 
@@ -67,7 +67,7 @@ ___
 
 ▸ **getFilteredQuery**(`queryContext`: [SearchQueryContext](_search_.searchquerycontext.md)): *[QueryOverride](../modules/_search_.md#queryoverride)*
 
-*Defined in [compiler.ts:84](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L84)*
+*Defined in [compiler.ts:84](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L84)*
 
 **Parameters:**
 
@@ -83,7 +83,7 @@ ___
 
 ▸ **getQuery**(`queryContext`: [SearchQueryContext](_search_.searchquerycontext.md)): *[QueryOverride](../modules/_search_.md#queryoverride)*
 
-*Defined in [compiler.ts:81](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L81)*
+*Defined in [compiler.ts:81](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L81)*
 
 **Parameters:**
 
@@ -99,7 +99,7 @@ ___
 
 ▸ **visit**(`expression`: any): *any*
 
-*Defined in [compiler.ts:30](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L30)*
+*Defined in [compiler.ts:30](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L30)*
 
 **Parameters:**
 
@@ -115,7 +115,7 @@ ___
 
 ▸ **visitAgg**(`agg`: [AggExpression](_agg_.aggexpression.md)): *any*
 
-*Defined in [compiler.ts:192](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L192)*
+*Defined in [compiler.ts:192](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L192)*
 
 **Parameters:**
 
@@ -131,7 +131,7 @@ ___
 
 ▸ **visitArray**(`expression`: any[]): *any*
 
-*Defined in [compiler.ts:181](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L181)*
+*Defined in [compiler.ts:181](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L181)*
 
 **Parameters:**
 
@@ -147,7 +147,7 @@ ___
 
 ▸ **visitBucketAgg**(`agg`: [BucketAgg](_agg_.bucketagg.md)): *any*
 
-*Defined in [compiler.ts:198](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L198)*
+*Defined in [compiler.ts:198](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L198)*
 
 **Parameters:**
 
@@ -163,7 +163,7 @@ ___
 
 ▸ **visitField**(`field`: [Field](_document_.field.md)): *any*
 
-*Defined in [compiler.ts:173](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L173)*
+*Defined in [compiler.ts:173](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L173)*
 
 **Parameters:**
 
@@ -179,7 +179,7 @@ ___
 
 ▸ **visitFieldQuery**(`expression`: [FieldQueryExpression](_expression_.fieldqueryexpression.md)): *any*
 
-*Defined in [compiler.ts:134](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L134)*
+*Defined in [compiler.ts:134](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L134)*
 
 **Parameters:**
 
@@ -195,7 +195,7 @@ ___
 
 ▸ **visitFilterAgg**(`agg`: [Filter](_agg_.filter.md)): *any*
 
-*Defined in [compiler.ts:208](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L208)*
+*Defined in [compiler.ts:208](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L208)*
 
 **Parameters:**
 
@@ -211,7 +211,7 @@ ___
 
 ▸ **visitLiteral**(`expression`: [Literal](_expression_.literal.md)): *any*
 
-*Defined in [compiler.ts:177](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L177)*
+*Defined in [compiler.ts:177](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L177)*
 
 **Parameters:**
 
@@ -227,7 +227,7 @@ ___
 
 ▸ **visitObject**(`expression`: object): *any*
 
-*Defined in [compiler.ts:185](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L185)*
+*Defined in [compiler.ts:185](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L185)*
 
 **Parameters:**
 
@@ -243,7 +243,7 @@ ___
 
 ▸ **visitParams**(`params`: [Params](_expression_.params.md)): *any*
 
-*Defined in [compiler.ts:165](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L165)*
+*Defined in [compiler.ts:165](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L165)*
 
 **Parameters:**
 
@@ -259,7 +259,7 @@ ___
 
 ▸ **visitQueryExpression**(`expression`: [QueryExpression](_expression_.queryexpression.md)): *any*
 
-*Defined in [compiler.ts:128](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L128)*
+*Defined in [compiler.ts:128](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L128)*
 
 **Parameters:**
 
@@ -275,7 +275,7 @@ ___
 
 ▸ **visitRange**(`expr`: [RangeExpr](_expression_.rangeexpr.md)): *any*
 
-*Defined in [compiler.ts:214](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L214)*
+*Defined in [compiler.ts:214](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L214)*
 
 **Parameters:**
 
@@ -291,7 +291,7 @@ ___
 
 ▸ **visitSearchQueryContext**(`queryContext`: [SearchQueryContext](_search_.searchquerycontext.md)): *[Query](../modules/_search_.md#query)*
 
-*Defined in [compiler.ts:104](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L104)*
+*Defined in [compiler.ts:104](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L104)*
 
 This is where we start building our query
 
@@ -309,7 +309,7 @@ ___
 
 ▸ **visitSort**(`expr`: [Sort](_expression_.sort.md)): *any*
 
-*Defined in [compiler.ts:227](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L227)*
+*Defined in [compiler.ts:227](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L227)*
 
 **Parameters:**
 
@@ -325,7 +325,7 @@ ___
 
 ▸ **visitSource**(`expr`: [Source](_expression_.source.md)): *any*
 
-*Defined in [compiler.ts:244](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L244)*
+*Defined in [compiler.ts:244](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L244)*
 
 **Parameters:**
 
@@ -341,7 +341,7 @@ ___
 
 ▸ **visitTerm**(`term`: [Term](_expression_.term.md)): *any*
 
-*Defined in [compiler.ts:153](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L153)*
+*Defined in [compiler.ts:153](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L153)*
 
 **Parameters:**
 
@@ -357,7 +357,7 @@ ___
 
 ▸ **visitTerms**(`expression`: [Terms](_expression_.terms.md)): *any*
 
-*Defined in [compiler.ts:157](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/compiler.ts#L157)*
+*Defined in [compiler.ts:157](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L157)*
 
 **Parameters:**
 

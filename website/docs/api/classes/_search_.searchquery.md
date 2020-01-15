@@ -64,7 +64,7 @@ sidebar_label: "SearchQuery"
 
 \+ **new SearchQuery**(`searchQueryOptions`: [ClusterSearchQueryOptions](../modules/_search_.md#clustersearchqueryoptions)): *[SearchQuery](_search_.searchquery.md)*
 
-*Defined in [search.ts:176](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L176)*
+*Defined in [search.ts:176](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L176)*
 
 **Parameters:**
 
@@ -80,7 +80,7 @@ Name | Type | Default |
 
 • **_aggregations**: *[Params](_expression_.params.md)* =  new Params()
 
-*Defined in [search.ts:169](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L169)*
+*Defined in [search.ts:169](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L169)*
 
 ___
 
@@ -88,7 +88,7 @@ ___
 
 • **_docClass**? : *[DocClass](../modules/_document_.md#docclass)*
 
-*Defined in [search.ts:174](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L174)*
+*Defined in [search.ts:174](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L174)*
 
 ___
 
@@ -96,7 +96,7 @@ ___
 
 • **_docType**? : *undefined | string*
 
-*Defined in [search.ts:175](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L175)*
+*Defined in [search.ts:175](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L175)*
 
 ___
 
@@ -104,7 +104,7 @@ ___
 
 • **_fields**: *[Field](_document_.field.md)[]* =  []
 
-*Defined in [search.ts:166](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L166)*
+*Defined in [search.ts:166](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L166)*
 
 ___
 
@@ -112,7 +112,7 @@ ___
 
 • **_filters**: *[Expression](_expression_.expression.md)[]* =  []
 
-*Defined in [search.ts:167](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L167)*
+*Defined in [search.ts:167](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L167)*
 
 ___
 
@@ -120,7 +120,7 @@ ___
 
 • **_instanceMapper**? : *[InstanceMapper](../modules/_search_.md#instancemapper)‹any›*
 
-*Defined in [search.ts:176](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L176)*
+*Defined in [search.ts:176](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L176)*
 
 ___
 
@@ -128,7 +128,7 @@ ___
 
 • **_limit**: *[Limit](../modules/_search_.md#limit)* =  null
 
-*Defined in [search.ts:165](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L165)*
+*Defined in [search.ts:165](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L165)*
 
 ___
 
@@ -136,7 +136,7 @@ ___
 
 • **_query**: *[QueryOverride](../modules/_search_.md#queryoverride)* =  null
 
-*Defined in [search.ts:172](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L172)*
+*Defined in [search.ts:172](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L172)*
 
 ___
 
@@ -144,7 +144,7 @@ ___
 
 • **_searchParams**: *[Params](_expression_.params.md)* =  new Params()
 
-*Defined in [search.ts:173](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L173)*
+*Defined in [search.ts:173](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L173)*
 
 ___
 
@@ -152,7 +152,7 @@ ___
 
 • **_sort**: *[Sort](_expression_.sort.md)[]* =  []
 
-*Defined in [search.ts:168](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L168)*
+*Defined in [search.ts:168](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L168)*
 
 ___
 
@@ -160,7 +160,7 @@ ___
 
 • **_source**: *[Source](_expression_.source.md) | null* =  null
 
-*Defined in [search.ts:171](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L171)*
+*Defined in [search.ts:171](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L171)*
 
 ___
 
@@ -168,7 +168,7 @@ ___
 
 • **cluster**? : *[Cluster](_cluster_.cluster.md)*
 
-*Defined in [search.ts:157](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L157)*
+*Defined in [search.ts:157](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L157)*
 
 ___
 
@@ -176,7 +176,7 @@ ___
 
 • **index**? : *[Index](_cluster_.index.md)*
 
-*Defined in [search.ts:163](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L163)*
+*Defined in [search.ts:163](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L163)*
 
 TODO this field needed when SearchQuery created on its own and hence not bound to cluster or query
 * implement check _index_or_cluster
@@ -188,7 +188,7 @@ TODO this field needed when SearchQuery created on its own and hence not bound t
 
 • **get body**(): *[Query](../modules/_search_.md#query)*
 
-*Defined in [search.ts:331](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L331)*
+*Defined in [search.ts:331](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L331)*
 
 **Returns:** *[Query](../modules/_search_.md#query)*
 
@@ -198,7 +198,7 @@ ___
 
 • **get params**(): *[SearchParams](../modules/_search_.md#searchparams)*
 
-*Defined in [search.ts:335](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L335)*
+*Defined in [search.ts:335](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L335)*
 
 **Returns:** *[SearchParams](../modules/_search_.md#searchparams)*
 
@@ -208,7 +208,7 @@ ___
 
 • **get prettyBody**(): *string*
 
-*Defined in [search.ts:339](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L339)*
+*Defined in [search.ts:339](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L339)*
 
 **Returns:** *string*
 
@@ -218,13 +218,13 @@ ___
 
 ▸ **aggregations**(`aggs`: [Nullable](../modules/_types_.md#nullable)‹[Aggregations](../modules/_search_.md#aggregations)›): *this*
 
-*Defined in [search.ts:292](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L292)*
+*Defined in [search.ts:292](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L292)*
 
-Adds `aggregations <https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html>`_
+Adds aggregations <https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html>
 to the search query.
 
 After executing the query you can get aggregation result by its name
-calling :meth:`SearchResult.get_aggregation` method.
+calling `SearchResult` [getAggregation](_result_.searchresult.md#getaggregation) method.
 
 **Parameters:**
 
@@ -240,7 +240,7 @@ ___
 
 ▸ **aggs**(`aggs`: [Nullable](../modules/_types_.md#nullable)‹[Aggregations](../modules/_search_.md#aggregations)›): *this*
 
-*Defined in [search.ts:302](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L302)*
+*Defined in [search.ts:302](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L302)*
 
 **Parameters:**
 
@@ -256,7 +256,7 @@ ___
 
 ▸ **clone**(): *this*
 
-*Defined in [search.ts:351](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L351)*
+*Defined in [search.ts:351](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L351)*
 
 **Returns:** *this*
 
@@ -266,7 +266,7 @@ ___
 
 ▸ **collectDocClasses**(): *Readonly‹[DocClass](../modules/_document_.md#docclass)[]›*
 
-*Defined in [search.ts:381](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L381)*
+*Defined in [search.ts:381](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L381)*
 
 **Returns:** *Readonly‹[DocClass](../modules/_document_.md#docclass)[]›*
 
@@ -276,7 +276,7 @@ ___
 
 ▸ **compile**(): *[Query](../modules/_search_.md#query)*
 
-*Defined in [search.ts:369](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L369)*
+*Defined in [search.ts:369](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L369)*
 
 **Returns:** *[Query](../modules/_search_.md#query)*
 
@@ -286,7 +286,7 @@ ___
 
 ▸ **filter**(...`filters`: [Expression](_expression_.expression.md)[] | [Nullable](../modules/_types_.md#nullable)[]): *this*
 
-*Defined in [search.ts:263](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L263)*
+*Defined in [search.ts:263](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L263)*
 
 Multiple expressions may be specified, so they will be joined together using ``Bool.must`` expression.
 
@@ -304,7 +304,7 @@ ___
 
 ▸ **getQueryContext**(): *[SearchQueryContext](_search_.searchquerycontext.md)*
 
-*Defined in [search.ts:208](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L208)*
+*Defined in [search.ts:208](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L208)*
 
 **Returns:** *[SearchQueryContext](_search_.searchquerycontext.md)*
 
@@ -314,7 +314,7 @@ ___
 
 ▸ **getResult**<**T**>(): *Promise‹[SearchResult](_result_.searchresult.md)‹T››*
 
-*Defined in [search.ts:343](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L343)*
+*Defined in [search.ts:343](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L343)*
 
 **Type parameters:**
 
@@ -328,7 +328,7 @@ ___
 
 ▸ **limit**(`limit`: number): *this*
 
-*Defined in [search.ts:272](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L272)*
+*Defined in [search.ts:272](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L272)*
 
 **Parameters:**
 
@@ -344,7 +344,7 @@ ___
 
 ▸ **orderBy**(...`orders`: [Sort](_expression_.sort.md)[] | [Field](_document_.field.md)[] | [Nullable](../modules/_types_.md#nullable)[]): *this*
 
-*Defined in [search.ts:364](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L364)*
+*Defined in [search.ts:364](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L364)*
 
 **Parameters:**
 
@@ -360,7 +360,7 @@ ___
 
 ▸ **prepareSearchParams**(`params`: [ParamsType](../modules/_expression_.md#paramstype)): *[SearchParams](../modules/_search_.md#searchparams)*
 
-*Defined in [search.ts:374](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L374)*
+*Defined in [search.ts:374](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L374)*
 
 **Parameters:**
 
@@ -376,7 +376,7 @@ ___
 
 ▸ **query**(`query`: [QueryOverride](../modules/_search_.md#queryoverride)): *this*
 
-*Defined in [search.ts:278](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L278)*
+*Defined in [search.ts:278](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L278)*
 
 **Parameters:**
 
@@ -392,7 +392,7 @@ ___
 
 ▸ **sort**(...`orders`: [Sort](_expression_.sort.md)[] | [Field](_document_.field.md)[] | [Nullable](../modules/_types_.md#nullable)[]): *this*
 
-*Defined in [search.ts:355](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L355)*
+*Defined in [search.ts:355](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L355)*
 
 **Parameters:**
 
@@ -408,7 +408,7 @@ ___
 
 ▸ **source**(`fields`: boolean | null | undefined | string | [Field](_document_.field.md) | Array‹string | [Field](_document_.field.md)›, `opts?`: undefined | object): *this*
 
-*Defined in [search.ts:240](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L240)*
+*Defined in [search.ts:240](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L240)*
 
 Controls which fields of the document's ``_source`` field to retrieve.
 
@@ -427,7 +427,7 @@ ___
 
 ▸ **toJSON**(): *[Query](../modules/_search_.md#query)*
 
-*Defined in [search.ts:327](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L327)*
+*Defined in [search.ts:327](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L327)*
 
 **Returns:** *[Query](../modules/_search_.md#query)*
 
@@ -437,7 +437,7 @@ ___
 
 ▸ **withDoc**<**T**>(`docClass`: T): *this*
 
-*Defined in [search.ts:312](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L312)*
+*Defined in [search.ts:312](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L312)*
 
 **Type parameters:**
 
@@ -457,7 +457,7 @@ ___
 
 ▸ **withDocType**(`docType`: string): *this*
 
-*Defined in [search.ts:317](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L317)*
+*Defined in [search.ts:317](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L317)*
 
 **Parameters:**
 
@@ -473,7 +473,7 @@ ___
 
 ▸ **withIndex**(`index`: [Index](_cluster_.index.md)): *this*
 
-*Defined in [search.ts:322](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L322)*
+*Defined in [search.ts:322](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L322)*
 
 **Parameters:**
 
@@ -489,7 +489,7 @@ ___
 
 ▸ **withInstanceMapper**<**T**>(`instanceMapper`: [InstanceMapper](../modules/_search_.md#instancemapper)‹T›): *this*
 
-*Defined in [search.ts:307](https://github.com/kindritskyiMax/elasticmagic-js/blob/c9215ce/src/search.ts#L307)*
+*Defined in [search.ts:307](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L307)*
 
 **Type parameters:**
 
