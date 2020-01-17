@@ -38,7 +38,7 @@ sidebar_label: "Bool"
 
 *Overrides [ParamsExpression](_expression_.paramsexpression.md).[constructor](_expression_.paramsexpression.md#constructor)*
 
-*Defined in [expression.ts:211](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L211)*
+*Defined in [expression.ts:211](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/expression.ts#L211)*
 
 **Parameters:**
 
@@ -56,7 +56,7 @@ Name | Type |
 
 *Inherited from [ParamsExpression](_expression_.paramsexpression.md).[params](_expression_.paramsexpression.md#params)*
 
-*Defined in [expression.ts:65](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L65)*
+*Defined in [expression.ts:65](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/expression.ts#L65)*
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 *Inherited from [Expression](_expression_.expression.md).[queryKey](_expression_.expression.md#querykey)*
 
-*Defined in [expression.ts:16](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L16)*
+*Defined in [expression.ts:16](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/expression.ts#L16)*
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 *Overrides [Expression](_expression_.expression.md).[queryName](_expression_.expression.md#queryname)*
 
-*Defined in [expression.ts:211](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L211)*
+*Defined in [expression.ts:211](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/expression.ts#L211)*
 
 ___
 
@@ -88,7 +88,7 @@ ___
 
 *Overrides [Expression](_expression_.expression.md).[visitName](_expression_.expression.md#visitname)*
 
-*Defined in [expression.ts:99](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L99)*
+*Defined in [expression.ts:99](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/expression.ts#L99)*
 
 ## Methods
 
@@ -100,7 +100,7 @@ ___
 
 *Overrides [Expression](_expression_.expression.md).[collectDocClasses](_expression_.expression.md#collectdocclasses)*
 
-*Defined in [expression.ts:72](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L72)*
+*Defined in [expression.ts:72](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/expression.ts#L72)*
 
 **Returns:** *Readonly‹[DocClass](../modules/_document_.md#docclass)[]›*
 
@@ -110,7 +110,7 @@ ___
 
 ▸ **must**(...`expressions`: [Expression](_expression_.expression.md)[]): *[Expression](_expression_.expression.md)*
 
-*Defined in [expression.ts:217](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L217)*
+*Defined in [expression.ts:217](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/expression.ts#L217)*
 
 **Parameters:**
 
@@ -126,7 +126,7 @@ ___
 
 ▸ **mustNot**(...`expressions`: [Expression](_expression_.expression.md)[]): *[Bool](_expression_.bool.md)*
 
-*Defined in [expression.ts:224](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L224)*
+*Defined in [expression.ts:224](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/expression.ts#L224)*
 
 **Parameters:**
 
@@ -142,7 +142,7 @@ ___
 
 ▸ **should**(...`expressions`: [Expression](_expression_.expression.md)[]): *[Expression](_expression_.expression.md)*
 
-*Defined in [expression.ts:228](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/expression.ts#L228)*
+*Defined in [expression.ts:228](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/expression.ts#L228)*
 
 **Parameters:**
 

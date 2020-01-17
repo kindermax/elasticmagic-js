@@ -57,7 +57,7 @@ sidebar_label: "SearchResult"
 
 *Overrides [Result](_result_.result.md).[constructor](_result_.result.md#constructor)*
 
-*Defined in [result.ts:53](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L53)*
+*Defined in [result.ts:53](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L53)*
 
 **Parameters:**
 
@@ -76,7 +76,7 @@ Name | Type |
 
 • **aggregations**: *[Dictionary](../modules/_types_.md#dictionary)‹string, any›*
 
-*Defined in [result.ts:52](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L52)*
+*Defined in [result.ts:52](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L52)*
 
 ___
 
@@ -84,7 +84,7 @@ ___
 
 • **docClasses**: *Readonly‹[DocClass](../modules/_document_.md#docclass)[]›*
 
-*Defined in [result.ts:58](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L58)*
+*Defined in [result.ts:58](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L58)*
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 • **docClsMap**: *[Dictionary](../modules/_types_.md#dictionary)‹string, [DocClass](../modules/_document_.md#docclass)›*
 
-*Defined in [result.ts:42](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L42)*
+*Defined in [result.ts:42](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L42)*
 
 ___
 
@@ -100,7 +100,7 @@ ___
 
 • **error**: *string | undefined*
 
-*Defined in [result.ts:46](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L46)*
+*Defined in [result.ts:46](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L46)*
 
 ___
 
@@ -108,7 +108,7 @@ ___
 
 • **hits**: *T[]* =  []
 
-*Defined in [result.ts:51](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L51)*
+*Defined in [result.ts:51](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L51)*
 
 ___
 
@@ -116,7 +116,7 @@ ___
 
 • **instanceMappers**: *[InstanceMapperDict](../modules/_result_.md#instancemapperdict)*
 
-*Defined in [result.ts:43](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L43)*
+*Defined in [result.ts:43](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L43)*
 
 ___
 
@@ -124,7 +124,7 @@ ___
 
 • **mapperRegistry**: *any*
 
-*Defined in [result.ts:44](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L44)*
+*Defined in [result.ts:44](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L44)*
 
 ___
 
@@ -132,7 +132,7 @@ ___
 
 • **maxScore**: *number*
 
-*Defined in [result.ts:50](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L50)*
+*Defined in [result.ts:50](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L50)*
 
 ___
 
@@ -140,7 +140,7 @@ ___
 
 • **queryAggs**: *[Params](_expression_.params.md)* =  new Params()
 
-*Defined in [result.ts:41](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L41)*
+*Defined in [result.ts:41](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L41)*
 
 ___
 
@@ -150,7 +150,7 @@ ___
 
 *Inherited from [Result](_result_.result.md).[raw](_result_.result.md#raw)*
 
-*Defined in [result.ts:32](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L32)*
+*Defined in [result.ts:32](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L32)*
 
 ___
 
@@ -158,7 +158,7 @@ ___
 
 • **scrollId**: *number | undefined*
 
-*Defined in [result.ts:53](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L53)*
+*Defined in [result.ts:53](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L53)*
 
 ___
 
@@ -166,7 +166,7 @@ ___
 
 • **timedOut**: *boolean*
 
-*Defined in [result.ts:48](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L48)*
+*Defined in [result.ts:48](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L48)*
 
 ___
 
@@ -174,7 +174,7 @@ ___
 
 • **took**: *number*
 
-*Defined in [result.ts:47](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L47)*
+*Defined in [result.ts:47](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L47)*
 
 ___
 
@@ -182,7 +182,7 @@ ___
 
 • **total**: *number*
 
-*Defined in [result.ts:49](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L49)*
+*Defined in [result.ts:49](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L49)*
 
 ## Accessors
 
@@ -192,7 +192,7 @@ ___
 
 *Inherited from [Result](_result_.result.md).[prettyRaw](_result_.result.md#prettyraw)*
 
-*Defined in [result.ts:34](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L34)*
+*Defined in [result.ts:34](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L34)*
 
 **Returns:** *string*
 
@@ -202,7 +202,7 @@ ___
 
 ▸ **getAggregation**(`name`: string): *[AggResult](_agg_.aggresult.md)*
 
-*Defined in [result.ts:111](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L111)*
+*Defined in [result.ts:111](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L111)*
 
 **Parameters:**
 
@@ -218,7 +218,7 @@ ___
 
 ▸ **getDocTypeDocMap**(): *Map‹string, [Doc](_document_.doc.md)[]›*
 
-*Defined in [result.ts:151](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L151)*
+*Defined in [result.ts:151](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L151)*
 
 **Returns:** *Map‹string, [Doc](_document_.doc.md)[]›*
 
@@ -228,7 +228,7 @@ ___
 
 ▸ **getIds**(): *string[]*
 
-*Defined in [result.ts:115](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L115)*
+*Defined in [result.ts:115](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L115)*
 
 **Returns:** *string[]*
 
@@ -238,7 +238,7 @@ ___
 
 ▸ **getInstances**<**Inst**>(): *Promise‹Inst[]›*
 
-*Defined in [result.ts:163](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L163)*
+*Defined in [result.ts:163](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L163)*
 
 **Type parameters:**
 
@@ -252,7 +252,7 @@ ___
 
 ▸ **populateInstances**(`docType?`: undefined | string): *Promise‹void›*
 
-*Defined in [result.ts:122](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L122)*
+*Defined in [result.ts:122](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L122)*
 
 Populates docs (hits) with result of instance mapper.
 

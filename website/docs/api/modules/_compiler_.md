@@ -20,7 +20,7 @@ sidebar_label: "compiler"
 
 ▸ **isField**(`x`: any): *x is Field*
 
-*Defined in [compiler.ts:19](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/compiler.ts#L19)*
+*Defined in [compiler.ts:19](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/compiler.ts#L19)*
 
 **Parameters:**
 

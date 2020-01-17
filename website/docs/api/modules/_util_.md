@@ -28,7 +28,7 @@ sidebar_label: "util"
 
 ▸ **arrayKVToDict**<**T**>(`array`: any[][]): *T*
 
-*Defined in [util.ts:5](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/util.ts#L5)*
+*Defined in [util.ts:5](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/util.ts#L5)*
 
 **Type parameters:**
 
@@ -48,7 +48,7 @@ ___
 
 ▸ **cleanParams**(`params?`: [Nullable](_types_.md#nullable)‹[ParamsType](_expression_.md#paramstype)›): *[ParamsType](_expression_.md#paramstype)*
 
-*Defined in [util.ts:16](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/util.ts#L16)*
+*Defined in [util.ts:16](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/util.ts#L16)*
 
 TODO add tests
 Filter keys having null or undefined values
@@ -67,7 +67,7 @@ ___
 
 ▸ **collectDocClasses**(`expr?`: [Expression](../classes/_expression_.expression.md) | [Expression](../classes/_expression_.expression.md)[] | [ParamsType](_expression_.md#paramstype) | [FieldQueryValue](_expression_.md#fieldqueryvalue)): *Readonly‹[DocClass](_document_.md#docclass)[]›*
 
-*Defined in [util.ts:55](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/util.ts#L55)*
+*Defined in [util.ts:55](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/util.ts#L55)*
 
 **Parameters:**
 
@@ -83,7 +83,7 @@ ___
 
 ▸ **flatMap**(`f`: function, `arr`: any[]): *any[]*
 
-*Defined in [util.ts:77](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/util.ts#L77)*
+*Defined in [util.ts:77](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/util.ts#L77)*
 
 **Parameters:**
 
@@ -107,7 +107,7 @@ ___
 
 ▸ **isArray**<**T**>(`x`: any): *x is T[]*
 
-*Defined in [util.ts:28](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/util.ts#L28)*
+*Defined in [util.ts:28](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/util.ts#L28)*
 
 **Type parameters:**
 
@@ -127,7 +127,7 @@ ___
 
 ▸ **isBoolean**(`x`: any): *x is boolean*
 
-*Defined in [util.ts:36](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/util.ts#L36)*
+*Defined in [util.ts:36](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/util.ts#L36)*
 
 **Parameters:**
 
@@ -143,7 +143,7 @@ ___
 
 ▸ **isExpression**(`x`: any): *x is Expression*
 
-*Defined in [util.ts:44](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/util.ts#L44)*
+*Defined in [util.ts:44](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/util.ts#L44)*
 
 **Parameters:**
 
@@ -159,7 +159,7 @@ ___
 
 ▸ **isNullOrUndef**(`x`: any): *x is null | undefined*
 
-*Defined in [util.ts:48](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/util.ts#L48)*
+*Defined in [util.ts:48](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/util.ts#L48)*
 
 **Parameters:**
 
@@ -175,7 +175,7 @@ ___
 
 ▸ **isObject**(`x`: any): *x is object*
 
-*Defined in [util.ts:40](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/util.ts#L40)*
+*Defined in [util.ts:40](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/util.ts#L40)*
 
 **Parameters:**
 
@@ -191,7 +191,7 @@ ___
 
 ▸ **isString**(`x`: any): *x is string*
 
-*Defined in [util.ts:32](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/util.ts#L32)*
+*Defined in [util.ts:32](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/util.ts#L32)*
 
 **Parameters:**
 
@@ -207,7 +207,7 @@ ___
 
 ▸ **mergeParams**(`currentParams`: [Params](../classes/_expression_.params.md), `newParams`: [Params](../classes/_expression_.params.md)): *[Params](../classes/_expression_.params.md)*
 
-*Defined in [util.ts:73](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/util.ts#L73)*
+*Defined in [util.ts:73](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/util.ts#L73)*
 
 **Parameters:**
 
@@ -224,7 +224,7 @@ ___
 
 ▸ **mustClean**(`arg`: any[] | [Nullable](_types_.md#nullable)): *boolean*
 
-*Defined in [util.ts:81](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/util.ts#L81)*
+*Defined in [util.ts:81](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/util.ts#L81)*
 
 **Parameters:**
 
@@ -240,7 +240,7 @@ ___
 
 ▸ **uniqueArray**<**T**>(`items`: T[]): *T[]*
 
-*Defined in [util.ts:52](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/util.ts#L52)*
+*Defined in [util.ts:52](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/util.ts#L52)*
 
 **Type parameters:**
 

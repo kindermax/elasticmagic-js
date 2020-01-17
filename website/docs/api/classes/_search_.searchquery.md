@@ -32,9 +32,7 @@ sidebar_label: "SearchQuery"
 
 ### Accessors
 
-* [body](_search_.searchquery.md#body)
 * [params](_search_.searchquery.md#params)
-* [prettyBody](_search_.searchquery.md#prettybody)
 
 ### Methods
 
@@ -53,6 +51,7 @@ sidebar_label: "SearchQuery"
 * [sort](_search_.searchquery.md#sort)
 * [source](_search_.searchquery.md#source)
 * [toJSON](_search_.searchquery.md#tojson)
+* [toPrettyJSON](_search_.searchquery.md#toprettyjson)
 * [withDoc](_search_.searchquery.md#withdoc)
 * [withDocType](_search_.searchquery.md#withdoctype)
 * [withIndex](_search_.searchquery.md#withindex)
@@ -64,7 +63,7 @@ sidebar_label: "SearchQuery"
 
 \+ **new SearchQuery**(`searchQueryOptions`: [ClusterSearchQueryOptions](../modules/_search_.md#clustersearchqueryoptions)): *[SearchQuery](_search_.searchquery.md)*
 
-*Defined in [search.ts:176](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L176)*
+*Defined in [search.ts:176](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L176)*
 
 **Parameters:**
 
@@ -80,7 +79,7 @@ Name | Type | Default |
 
 • **_aggregations**: *[Params](_expression_.params.md)* =  new Params()
 
-*Defined in [search.ts:169](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L169)*
+*Defined in [search.ts:169](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L169)*
 
 ___
 
@@ -88,7 +87,7 @@ ___
 
 • **_docClass**? : *[DocClass](../modules/_document_.md#docclass)*
 
-*Defined in [search.ts:174](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L174)*
+*Defined in [search.ts:174](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L174)*
 
 ___
 
@@ -96,7 +95,7 @@ ___
 
 • **_docType**? : *undefined | string*
 
-*Defined in [search.ts:175](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L175)*
+*Defined in [search.ts:175](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L175)*
 
 ___
 
@@ -104,7 +103,7 @@ ___
 
 • **_fields**: *[Field](_document_.field.md)[]* =  []
 
-*Defined in [search.ts:166](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L166)*
+*Defined in [search.ts:166](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L166)*
 
 ___
 
@@ -112,7 +111,7 @@ ___
 
 • **_filters**: *[Expression](_expression_.expression.md)[]* =  []
 
-*Defined in [search.ts:167](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L167)*
+*Defined in [search.ts:167](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L167)*
 
 ___
 
@@ -120,7 +119,7 @@ ___
 
 • **_instanceMapper**? : *[InstanceMapper](../modules/_search_.md#instancemapper)‹any›*
 
-*Defined in [search.ts:176](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L176)*
+*Defined in [search.ts:176](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L176)*
 
 ___
 
@@ -128,7 +127,7 @@ ___
 
 • **_limit**: *[Limit](../modules/_search_.md#limit)* =  null
 
-*Defined in [search.ts:165](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L165)*
+*Defined in [search.ts:165](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L165)*
 
 ___
 
@@ -136,7 +135,7 @@ ___
 
 • **_query**: *[QueryOverride](../modules/_search_.md#queryoverride)* =  null
 
-*Defined in [search.ts:172](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L172)*
+*Defined in [search.ts:172](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L172)*
 
 ___
 
@@ -144,7 +143,7 @@ ___
 
 • **_searchParams**: *[Params](_expression_.params.md)* =  new Params()
 
-*Defined in [search.ts:173](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L173)*
+*Defined in [search.ts:173](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L173)*
 
 ___
 
@@ -152,7 +151,7 @@ ___
 
 • **_sort**: *[Sort](_expression_.sort.md)[]* =  []
 
-*Defined in [search.ts:168](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L168)*
+*Defined in [search.ts:168](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L168)*
 
 ___
 
@@ -160,7 +159,7 @@ ___
 
 • **_source**: *[Source](_expression_.source.md) | null* =  null
 
-*Defined in [search.ts:171](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L171)*
+*Defined in [search.ts:171](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L171)*
 
 ___
 
@@ -168,7 +167,7 @@ ___
 
 • **cluster**? : *[Cluster](_cluster_.cluster.md)*
 
-*Defined in [search.ts:157](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L157)*
+*Defined in [search.ts:157](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L157)*
 
 ___
 
@@ -176,7 +175,7 @@ ___
 
 • **index**? : *[Index](_cluster_.index.md)*
 
-*Defined in [search.ts:163](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L163)*
+*Defined in [search.ts:163](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L163)*
 
 TODO this field needed when SearchQuery created on its own and hence not bound to cluster or query
 * implement check _index_or_cluster
@@ -184,33 +183,15 @@ TODO this field needed when SearchQuery created on its own and hence not bound t
 
 ## Accessors
 
-###  body
-
-• **get body**(): *[Query](../modules/_search_.md#query)*
-
-*Defined in [search.ts:331](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L331)*
-
-**Returns:** *[Query](../modules/_search_.md#query)*
-
-___
-
 ###  params
 
 • **get params**(): *[SearchParams](../modules/_search_.md#searchparams)*
 
-*Defined in [search.ts:335](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L335)*
+*Defined in [search.ts:370](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L370)*
+
+Returns params query will be executed with
 
 **Returns:** *[SearchParams](../modules/_search_.md#searchparams)*
-
-___
-
-###  prettyBody
-
-• **get prettyBody**(): *string*
-
-*Defined in [search.ts:339](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L339)*
-
-**Returns:** *string*
 
 ## Methods
 
@@ -218,7 +199,7 @@ ___
 
 ▸ **aggregations**(`aggs`: [Nullable](../modules/_types_.md#nullable)‹[Aggregations](../modules/_search_.md#aggregations)›): *this*
 
-*Defined in [search.ts:292](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L292)*
+*Defined in [search.ts:292](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L292)*
 
 Adds aggregations <https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html>
 to the search query.
@@ -240,13 +221,15 @@ ___
 
 ▸ **aggs**(`aggs`: [Nullable](../modules/_types_.md#nullable)‹[Aggregations](../modules/_search_.md#aggregations)›): *this*
 
-*Defined in [search.ts:302](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L302)*
+*Defined in [search.ts:307](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L307)*
+
+An alias for `aggregations` method.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`aggs` | [Nullable](../modules/_types_.md#nullable)‹[Aggregations](../modules/_search_.md#aggregations)› |
+Name | Type | Description |
+------ | ------ | ------ |
+`aggs` | [Nullable](../modules/_types_.md#nullable)‹[Aggregations](../modules/_search_.md#aggregations)› | objects with aggregations. Can be ``null`` that cleans up previous aggregations.  |
 
 **Returns:** *this*
 
@@ -256,7 +239,7 @@ ___
 
 ▸ **clone**(): *this*
 
-*Defined in [search.ts:351](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L351)*
+*Defined in [search.ts:389](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L389)*
 
 **Returns:** *this*
 
@@ -266,7 +249,7 @@ ___
 
 ▸ **collectDocClasses**(): *Readonly‹[DocClass](../modules/_document_.md#docclass)[]›*
 
-*Defined in [search.ts:381](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L381)*
+*Defined in [search.ts:419](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L419)*
 
 **Returns:** *Readonly‹[DocClass](../modules/_document_.md#docclass)[]›*
 
@@ -276,7 +259,7 @@ ___
 
 ▸ **compile**(): *[Query](../modules/_search_.md#query)*
 
-*Defined in [search.ts:369](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L369)*
+*Defined in [search.ts:407](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L407)*
 
 **Returns:** *[Query](../modules/_search_.md#query)*
 
@@ -286,9 +269,9 @@ ___
 
 ▸ **filter**(...`filters`: [Expression](_expression_.expression.md)[] | [Nullable](../modules/_types_.md#nullable)[]): *this*
 
-*Defined in [search.ts:263](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L263)*
+*Defined in [search.ts:263](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L263)*
 
-Multiple expressions may be specified, so they will be joined together using ``Bool.must`` expression.
+Multiple expressions may be specified, so they will be joined together using `Bool.must expression.
 
 **Parameters:**
 
@@ -304,7 +287,7 @@ ___
 
 ▸ **getQueryContext**(): *[SearchQueryContext](_search_.searchquerycontext.md)*
 
-*Defined in [search.ts:208](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L208)*
+*Defined in [search.ts:208](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L208)*
 
 **Returns:** *[SearchQueryContext](_search_.searchquerycontext.md)*
 
@@ -314,7 +297,7 @@ ___
 
 ▸ **getResult**<**T**>(): *Promise‹[SearchResult](_result_.searchresult.md)‹T››*
 
-*Defined in [search.ts:343](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L343)*
+*Defined in [search.ts:381](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L381)*
 
 **Type parameters:**
 
@@ -328,7 +311,7 @@ ___
 
 ▸ **limit**(`limit`: number): *this*
 
-*Defined in [search.ts:272](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L272)*
+*Defined in [search.ts:272](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L272)*
 
 **Parameters:**
 
@@ -344,7 +327,7 @@ ___
 
 ▸ **orderBy**(...`orders`: [Sort](_expression_.sort.md)[] | [Field](_document_.field.md)[] | [Nullable](../modules/_types_.md#nullable)[]): *this*
 
-*Defined in [search.ts:364](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L364)*
+*Defined in [search.ts:402](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L402)*
 
 **Parameters:**
 
@@ -360,7 +343,7 @@ ___
 
 ▸ **prepareSearchParams**(`params`: [ParamsType](../modules/_expression_.md#paramstype)): *[SearchParams](../modules/_search_.md#searchparams)*
 
-*Defined in [search.ts:374](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L374)*
+*Defined in [search.ts:412](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L412)*
 
 **Parameters:**
 
@@ -376,7 +359,7 @@ ___
 
 ▸ **query**(`query`: [QueryOverride](../modules/_search_.md#queryoverride)): *this*
 
-*Defined in [search.ts:278](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L278)*
+*Defined in [search.ts:278](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L278)*
 
 **Parameters:**
 
@@ -392,7 +375,7 @@ ___
 
 ▸ **sort**(...`orders`: [Sort](_expression_.sort.md)[] | [Field](_document_.field.md)[] | [Nullable](../modules/_types_.md#nullable)[]): *this*
 
-*Defined in [search.ts:355](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L355)*
+*Defined in [search.ts:393](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L393)*
 
 **Parameters:**
 
@@ -408,7 +391,7 @@ ___
 
 ▸ **source**(`fields`: boolean | null | undefined | string | [Field](_document_.field.md) | Array‹string | [Field](_document_.field.md)›, `opts?`: undefined | object): *this*
 
-*Defined in [search.ts:240](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L240)*
+*Defined in [search.ts:240](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L240)*
 
 Controls which fields of the document's ``_source`` field to retrieve.
 
@@ -427,9 +410,23 @@ ___
 
 ▸ **toJSON**(): *[Query](../modules/_search_.md#query)*
 
-*Defined in [search.ts:327](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L327)*
+*Defined in [search.ts:362](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L362)*
+
+Compiles query and returns it as json object
 
 **Returns:** *[Query](../modules/_search_.md#query)*
+
+___
+
+###  toPrettyJSON
+
+▸ **toPrettyJSON**(): *string*
+
+*Defined in [search.ts:377](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L377)*
+
+Compiles query and returns it as formatted json string
+
+**Returns:** *string*
 
 ___
 
@@ -437,7 +434,10 @@ ___
 
 ▸ **withDoc**<**T**>(`docClass`: T): *this*
 
-*Defined in [search.ts:312](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L312)*
+*Defined in [search.ts:333](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L333)*
+
+Adds doc class to query. Elasticmagic will figure out instance of what doc class to create
+from elasticsearch response.
 
 **Type parameters:**
 
@@ -445,9 +445,9 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`docClass` | T |
+Name | Type | Description |
+------ | ------ | ------ |
+`docClass` | T | doc class  |
 
 **Returns:** *this*
 
@@ -457,13 +457,16 @@ ___
 
 ▸ **withDocType**(`docType`: string): *this*
 
-*Defined in [search.ts:317](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L317)*
+*Defined in [search.ts:344](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L344)*
+
+Adds doc type to query. Elasticmagic will figure out instance of what doc type to create
+from elasticsearch response.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`docType` | string |
+Name | Type | Description |
+------ | ------ | ------ |
+`docType` | string | doc type  |
 
 **Returns:** *this*
 
@@ -473,13 +476,15 @@ ___
 
 ▸ **withIndex**(`index`: [Index](_cluster_.index.md)): *this*
 
-*Defined in [search.ts:322](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L322)*
+*Defined in [search.ts:354](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L354)*
+
+Adds index to query. Elasticmagic will make a query to this index.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`index` | [Index](_cluster_.index.md) |
+Name | Type | Description |
+------ | ------ | ------ |
+`index` | [Index](_cluster_.index.md) | index instance  |
 
 **Returns:** *this*
 
@@ -489,7 +494,14 @@ ___
 
 ▸ **withInstanceMapper**<**T**>(`instanceMapper`: [InstanceMapper](../modules/_search_.md#instancemapper)‹T›): *this*
 
-*Defined in [search.ts:307](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/search.ts#L307)*
+*Defined in [search.ts:322](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/search.ts#L322)*
+
+Adds instance mapper - an asyncronous functions which accepts ids from elasticsearch and
+allows to map these ids to T generic type.
+
+Instance mapper is lazy so as long as you
+not calling `await getInstance()` on doc instance
+or `await getInstances()` on SearchResult instance the result will not be computed.
 
 **Type parameters:**
 
@@ -497,8 +509,8 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`instanceMapper` | [InstanceMapper](../modules/_search_.md#instancemapper)‹T› |
+Name | Type | Description |
+------ | ------ | ------ |
+`instanceMapper` | [InstanceMapper](../modules/_search_.md#instancemapper)‹T› | async function accepting ids from elasticsearch and returning Map of id => T generic type.  |
 
 **Returns:** *this*

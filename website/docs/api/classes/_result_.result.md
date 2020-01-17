@@ -30,7 +30,7 @@ sidebar_label: "Result"
 
 \+ **new Result**(`raw`: [RawResultBody](../modules/_types_.md#rawresultbody)‹any›): *[Result](_result_.result.md)*
 
-*Defined in [result.ts:31](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L31)*
+*Defined in [result.ts:31](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L31)*
 
 **Parameters:**
 
@@ -46,7 +46,7 @@ Name | Type |
 
 • **raw**: *[RawResultBody](../modules/_types_.md#rawresultbody)‹any›*
 
-*Defined in [result.ts:32](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L32)*
+*Defined in [result.ts:32](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L32)*
 
 ## Accessors
 
@@ -54,6 +54,6 @@ Name | Type |
 
 • **get prettyRaw**(): *string*
 
-*Defined in [result.ts:34](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/result.ts#L34)*
+*Defined in [result.ts:34](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/result.ts#L34)*
 
 **Returns:** *string*
