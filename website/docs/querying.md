@@ -160,10 +160,8 @@ To see the json that Elasticmagic will generate to you:
 
 ```javascript
 console.log(query.toJSON());
-// or with getter property
-console.log(query.body);
 // or JSON.stringified and formatted string
-console.log(query.prettyBody);
+console.log(query.toPrettyJSON());
 ```
 
 ##### Cloning query

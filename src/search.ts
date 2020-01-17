@@ -257,7 +257,7 @@ export class SearchQuery {
   }
 
   /**
-   * Multiple expressions may be specified, so they will be joined together using ``Bool.must`` expression.
+   * Multiple expressions may be specified, so they will be joined together using `Bool.must expression.
    * @param filters
    */
   public filter(...filters: Expression[] | Nullable[]): this {
@@ -299,44 +299,82 @@ export class SearchQuery {
     return this;
   }
 
+  /**
+   * An alias for `aggregations` method.
+   *
+   * @param aggs objects with aggregations. Can be ``null`` that cleans up previous aggregations.
+   */
   public aggs(aggs: Nullable<Aggregations>): this {
     this.aggregations(aggs);
     return this;
   }
 
+  /**
+   * Adds instance mapper - an asyncronous functions which accepts ids from elasticsearch and
+   * allows to map these ids to T generic type.
+   *
+   * Instance mapper is lazy so as long as you
+   * not calling `await getInstance()` on doc instance
+   * or `await getInstances()` on SearchResult instance the result will not be computed.
+   *
+   * @param instanceMapper async function accepting ids from elasticsearch and returning Map of id => T generic type.
+   */
   public withInstanceMapper<T>(instanceMapper: InstanceMapper<T>): this {
     this._instanceMapper = instanceMapper;
     return this;
   }
 
+  /**
+   * Adds doc class to query. Elasticmagic will figure out instance of what doc class to create
+   * from elasticsearch response.
+   *
+   * @param docClass doc class
+   */
   public withDoc<T extends DocClass>(docClass: T): this {
     this._docClass = docClass;
     return this;
   }
 
+  /**
+   * Adds doc type to query. Elasticmagic will figure out instance of what doc type to create
+   * from elasticsearch response.
+   *
+   * @param docType doc type
+   */
   public withDocType(docType: string): this {
     this._docType = docType;
     return this;
   }
 
+  /**
+   * Adds index to query. Elasticmagic will make a query to this index.
+   *
+   * @param index index instance
+   */
   public withIndex(index: Index): this {
     this.index = index;
     return this;
   }
 
+  /**
+   * Compiles query and returns it as json object
+   */
   public toJSON(): Query {
     return this.compile();
   }
 
-  public get body(): Query {
-    return this.toJSON();
-  }
 
+  /**
+   * Returns params query will be executed with
+   */
   public get params(): SearchParams {
     return this.prepareSearchParams(cleanParams(this._searchParams.getParams()));
   }
 
-  public get prettyBody(): string {
+  /**
+   * Compiles query and returns it as formatted json string
+   */
+  public toPrettyJSON(): string {
     return JSON.stringify(this.compile(), null, 2);
   }
 
