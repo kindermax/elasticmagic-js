@@ -129,7 +129,7 @@ export class Cluster {
    */
   public async search<T extends Doc>(searchQuery: SearchQuery): Promise<SearchResult<T>> {
     const rawResultResponse: ApiResponse<RawResultBody<any>> = await this.doRequest(
-      searchQuery.body,
+      searchQuery.toJSON(),
       searchQuery.params,
     );
     return this.processResult<T>(

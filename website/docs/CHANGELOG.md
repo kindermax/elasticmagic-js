@@ -5,6 +5,8 @@ title: Changelog
 ## 0.0.6
 
 * Added `withIndex` method to `SearchQuery` - allows to specify index for onlt one query. In the contrast `withIndex` method on `Cluster` will override index for all search queries.
+* Deleted `body` and `prettyBody` getters from `SearchQuery` - this is done in order to allow passing compiler version as an argument when multiple elasticsearch versions support will be implemented.
+* Added `toPrettyJSON` method to `SearchQuery` - was known as `pretyBody` getter. The reason is same as above.
 
 ## 0.0.5
 Added instance mapper support

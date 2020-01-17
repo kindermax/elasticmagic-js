@@ -5,13 +5,13 @@ import { OrderDoc, OrderSource, OrderStatus } from '../fixtures';
 describe('SearchQuery compile', () => {
   test('empty search query', () => {
     const searchQuery = new SearchQuery({});
-    expect(searchQuery.body).toStrictEqual({});
+    expect(searchQuery.toJSON()).toStrictEqual({});
   });
 
   test('with terms expression in bool must', () => {
     const searchQuery = new SearchQuery({});
     const query = searchQuery.filter(Bool.must(OrderDoc.userId.in([1])));
-    expect(query.body).toStrictEqual({
+    expect(query.toJSON()).toStrictEqual({
       query: {
         bool: {
           filter: {
@@ -27,7 +27,7 @@ describe('SearchQuery compile', () => {
   test('with terms expression without bool must', () => {
     const searchQuery = new SearchQuery({});
     const query = searchQuery.filter(OrderDoc.userId.in([1]));
-    expect(query.body).toStrictEqual({
+    expect(query.toJSON()).toStrictEqual({
       query: {
         bool: {
           filter: {
@@ -49,7 +49,7 @@ describe('SearchQuery compile', () => {
           OrderDoc.status.in([OrderStatus.new, OrderStatus.paid]),
         ),
       );
-    expect(query.body).toStrictEqual({
+    expect(query.toJSON()).toStrictEqual({
       query: {
         bool: {
           filter: {
@@ -75,7 +75,7 @@ describe('SearchQuery compile', () => {
           OrderDoc.source.not(OrderSource.mobile),
         ),
       );
-    expect(query.body).toStrictEqual({
+    expect(query.toJSON()).toStrictEqual({
       query: {
         bool: {
           filter: {
@@ -108,7 +108,7 @@ describe('SearchQuery compile', () => {
           OrderDoc.dateCreated.lte(now),
         ),
       );
-    expect(query.body).toStrictEqual({
+    expect(query.toJSON()).toStrictEqual({
       query: {
         bool: {
           filter: {
@@ -140,7 +140,7 @@ describe('SearchQuery compile', () => {
     const searchQuery = new SearchQuery({});
     const query = searchQuery.source(false);
 
-    expect(query.body).toStrictEqual({ _source: false });
+    expect(query.toJSON()).toStrictEqual({ _source: false });
   });
 
   test('with expressions and _source field', () => {
@@ -155,7 +155,7 @@ describe('SearchQuery compile', () => {
       )
       .source(false);
 
-    expect(query.body).toStrictEqual({
+    expect(query.toJSON()).toStrictEqual({
       query: {
         bool: {
           filter: {
@@ -181,7 +181,7 @@ describe('SearchQuery compile', () => {
     const searchQuery = new SearchQuery({});
     const query = searchQuery.limit(0);
 
-    expect(query.body).toStrictEqual({ size: 0 });
+    expect(query.toJSON()).toStrictEqual({ size: 0 });
   });
 
   test('with expressions and size field', () => {
@@ -196,7 +196,7 @@ describe('SearchQuery compile', () => {
       )
       .limit(0);
 
-    expect(query.body).toStrictEqual({
+    expect(query.toJSON()).toStrictEqual({
       query: {
         bool: {
           filter: {
@@ -230,7 +230,7 @@ describe('SearchQuery compile', () => {
         ),
       )
       .limit(0);
-    expect(query.body).toStrictEqual({
+    expect(query.toJSON()).toStrictEqual({
       query: {
         bool: {
           filter: {
@@ -287,20 +287,20 @@ describe('SearchQuery compile', () => {
       )
       .limit(0);
     const original = query.clone().sort(OrderDoc.userId.desc());
-    expect(original.body.sort).toStrictEqual([{
+    expect(original.toJSON().sort).toStrictEqual([{
         user_id: 'desc',
     }]);
 
     original.orderBy(null);
-    expect(original.body).not.toHaveProperty('sort');
+    expect(original.toJSON()).not.toHaveProperty('sort');
 
     original.orderBy(OrderDoc.userId);
-    expect(original.body.sort).toStrictEqual(['user_id']);
+    expect(original.toJSON().sort).toStrictEqual(['user_id']);
 
     const cloned = query.clone().orderBy(OrderDoc.userId.asc());
     query.clone().orderBy(OrderDoc.userId.asc());
     query.clone().orderBy(OrderDoc.userId.asc());
-    expect(cloned.body.sort).toStrictEqual([{
+    expect(cloned.toJSON().sort).toStrictEqual([{
         user_id: 'asc',
     }]);
   });
@@ -317,7 +317,7 @@ describe('SearchQuery compile', () => {
       )
       .limit(0);
 
-    expect(query.body).not.toHaveProperty('_source');
+    expect(query.toJSON()).not.toHaveProperty('_source');
   });
 
   test('valid query with fields in _source field', () => {
@@ -335,8 +335,8 @@ describe('SearchQuery compile', () => {
       )
       .limit(0);
 
-    expect(query.body).toHaveProperty('_source');
-    expect(query.body._source).toStrictEqual(['user_id', 'status']);
+    expect(query.toJSON()).toHaveProperty('_source');
+    expect(query.toJSON()._source).toStrictEqual(['user_id', 'status']);
   });
 
   test('valid query with all fields and exclude is list of string in _source field', () => {
@@ -345,8 +345,8 @@ describe('SearchQuery compile', () => {
         exclude: ['status'],
       });
 
-    expect(query.body).toHaveProperty('_source');
-    expect(query.body._source).toStrictEqual({exclude: ['status']});
+    expect(query.toJSON()).toHaveProperty('_source');
+    expect(query.toJSON()._source).toStrictEqual({exclude: ['status']});
   });
 
   test('valid query with all fields include and exclude is list of string in _source field', () => {
@@ -356,8 +356,8 @@ describe('SearchQuery compile', () => {
         include: [OrderDoc.userId],
       });
 
-    expect(query.body).toHaveProperty('_source');
-    expect(query.body._source).toStrictEqual({exclude: ['status'], include: ['user_id']});
+    expect(query.toJSON()).toHaveProperty('_source');
+    expect(query.toJSON()._source).toStrictEqual({exclude: ['status'], include: ['user_id']});
   });
 
   test('valid query with all fields and empty exclude in _source field', () => {
@@ -374,7 +374,7 @@ describe('SearchQuery compile', () => {
       )
       .limit(0);
 
-    expect(query.body).toHaveProperty('_source');
-    expect(query.body._source).toStrictEqual({});
+    expect(query.toJSON()).toHaveProperty('_source');
+    expect(query.toJSON()._source).toStrictEqual({});
   });
 });

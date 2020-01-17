@@ -51,7 +51,7 @@ describe('Aggregations compile', () => {
         }),
       })
       .limit(0);
-    expect(query.body).toStrictEqual({
+    expect(query.toJSON()).toStrictEqual({
       query: {
         bool: {
           filter: {
@@ -171,7 +171,7 @@ describe('Aggregations compile', () => {
         }),
       });
 
-    expect(query.body).toStrictEqual({
+    expect(query.toJSON()).toStrictEqual({
       aggregations: {
         usersOrders: {
           terms: {
@@ -183,6 +183,6 @@ describe('Aggregations compile', () => {
     });
 
     query.aggs(null);
-    expect(query.body).not.toHaveProperty('aggregations');
+    expect(query.toJSON()).not.toHaveProperty('aggregations');
   });
 });

@@ -105,9 +105,6 @@ We can check what query Elasticmagic will build for us.
 
 ```javascript
 console.log(query.toJSON()) 
-// or alias 
-console.log(query.body)
-
 // to see prettified query
-console.log(query.prettyQuery)
+console.log(query.toPrettyJSON());
 ```
