@@ -27,6 +27,9 @@ properties: {
     }, 
     manufactured_at: {
         type: 'date',
+    },   
+    manufacturer_id: {
+        type: 'integer',
     }, 
     for_games: {
         type: 'boolean',
@@ -66,6 +69,7 @@ class LaptopDoc extends Doc {
   public static model = new Field(StringType, 'model', Laptop);
   public static cpu = new Field(IntegerType, 'cpu', Laptop);
   public static price = new Field(FloatType, 'price', Laptop);
+  public static manufacturerId = new Field(IntegerType, 'manufacturer_id', Laptop);
   public static manufacturedAt = new Field(DateType, 'manufactured_at', Laptop);
   public static forGames = new Field(BooleanType, 'for_games', Laptop);
 } 
@@ -74,7 +78,7 @@ class LaptopDoc extends Doc {
 If you planning to retreiveing source from document you have to declare instance properties.
 
 Instance properies will be populated from `_source` field in `hit` object of the result, so
-they former must be in same case as fields in Elasticsearch;
+the former must be in same case as fields in Elasticsearch;
 
 Conventionaly, you can declare instance properties below static properties.
 
@@ -96,16 +100,20 @@ class LaptopDoc extends Doc {
   public static model = new Field(StringType, 'model', Laptop);
   public static cpu = new Field(IntegerType, 'cpu', Laptop);
   public static price = new Field(FloatType, 'price', Laptop);
+  public static manufacturerId = new Field(IntegerType, 'manufacturer_id', Laptop);
   public static manufacturedAt = new Field(DateType, 'manufactured_at', Laptop);
   public static forGames = new Field(BooleanType, 'for_games', Laptop);
 
   public model?: string;
   public cpu?: number;
   public price?: number;
+  public manufactured_id?: number;
   public manufactured_at?: string; // ISO format string
   public for_games?: boolean;
 } 
 ```
+
+##### Creating search query
 
 Now you are ready to start building search query.
 
@@ -115,6 +123,9 @@ Now you are ready to start building search query.
 * `new Cluster(...).searchQuery()` - will created SearchQuery instance bounded to `Cluster`.  
 * `new Index(...).searchQuery()` - will created SearchQuery instance bounded to `Index`.  
 
+Prefered way is to call `.searchQuery()` on `index` or `cluster`;
+
+##### Adding filters
 
 Each static propery of type `Field` has a list of methods used to build query. Its same as [TODO link to es docs]().
 
@@ -155,6 +166,8 @@ console.log(query.body);
 console.log(query.prettyBody);
 ```
 
+##### Cloning query
+
 `SearchQuery` instance is mutable so each chained method changes its state.
 
 If you want to start building another one query based on one you've already created, just call `.clone()` method on `SearchQuery` instance.
@@ -185,8 +198,9 @@ If you want to make a query to particular index, call `.withIndex(<index_name_or
 
 If you want to specify different index for only one search query, you can call `.withIndex(<index_instance>)` on `SearchQuery`. It will change index only for this query.
 
+##### Making a request to Elasticsearch
 
-Let't make a query
+Let's make a query
 
 ```javascript
 import { Client } from '@elastic/elasticsearch';
@@ -206,8 +220,3 @@ const query = cluster.searchQuery()
 const result = await query.getResult();
 
 ```
-
-#### Index
-
-## Examples
-
