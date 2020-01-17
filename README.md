@@ -22,7 +22,7 @@ Supports Elasticsearch version 6.x
 
 **Docs** - [https://elasticmagic.js.org/](https://elasticmagic.js.org/)
 
-**Changelog** - [https://elasticmagic.js.org/docs/changelog.html](elasticmagic.js.org/docs/changelog.html)
+**Changelog** - [https://elasticmagic.js.org/docs/changelog.html](elasticmagic.js.org/docs/changelog)
 
 ## Installation
 
