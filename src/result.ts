@@ -1,7 +1,7 @@
 import { AggResult, BucketAgg } from './agg';
 import { Doc, DocClass } from './document';
 import { ParamKV, Params } from './expression';
-import { InstanceMapper } from './query';
+import { InstanceMapper } from './search';
 import { Dictionary, Hit, RawResultBody } from './types';
 import { arrayKVToDict } from './util';
 

@@ -1,8 +1,9 @@
 import { ApiResponse, Client } from '@elastic/elasticsearch';
 import { Doc } from './document';
-import { Query, SearchParams, SearchQuery, SearchQueryContext, SearchQueryOptions } from './query';
+import { Query, SearchParams, SearchQuery, SearchQueryContext, SearchQueryOptions } from './search';
 import { SearchResult } from './result';
 import { Nullable, RawResultBody } from './types';
+import { isString } from './util';
 
 type RootRawResult = {
   name: string;
@@ -61,8 +62,13 @@ export class Cluster {
     return this.index;
   }
 
-  public addIndex(name: string) {
-    this.index = new Index(name, this);
+  public withIndex(index: string | Index): this {
+    if (isString(index)) {
+      this.index = new Index(index, this);
+    } else {
+      this.index = index;
+    }
+    return this;
   }
 
   public async getEsVersion(): Promise<EsVersion> {

@@ -7,7 +7,9 @@ import {
   DateType,
   Doc,
   Field,
+  FloatType,
   IntegerType,
+  StringType,
 } from './document';
 import {
   Bool,
@@ -17,7 +19,7 @@ import {
 } from './expression';
 import {
   SearchQuery,
-} from './query';
+} from './search';
 
 export {
   Cluster,
@@ -32,4 +34,6 @@ export {
   RangeExpr,
   Term,
   Terms,
+  FloatType,
+  StringType,
 };

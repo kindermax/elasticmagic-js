@@ -187,7 +187,9 @@ export class SearchQuery {
     } = searchQueryOptions;
 
     this.cluster = cluster;
-    this.index = index;
+    if (index) {
+      this.withIndex(index);
+    }
 
     if (docClass) {
       this._docClass = docClass;
@@ -279,11 +281,11 @@ export class SearchQuery {
   }
 
   /**
-   * Adds `aggregations <https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html>`_
+   * Adds aggregations <https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html> 
    * to the search query.
    *
    * After executing the query you can get aggregation result by its name
-   * calling :meth:`SearchResult.get_aggregation` method.
+   * calling `SearchResult` {@link getAggregation} method.
    *
    * @param aggs objects with aggregations. Can be ``null`` that cleans up previous aggregations.
    */
@@ -314,6 +316,11 @@ export class SearchQuery {
 
   public withDocType(docType: string): this {
     this._docType = docType;
+    return this;
+  }
+
+  public withIndex(index: Index): this {
+    this.index = index;
     return this;
   }
 

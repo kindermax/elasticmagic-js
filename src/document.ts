@@ -20,6 +20,10 @@ export class BooleanType extends FieldType {}
 
 export class DateType extends FieldType {}
 
+export class FloatType extends FieldType {}
+
+export class StringType extends FieldType {}
+
 export type FieldOpts = {
   name?: string;
   parent?: DocClass;

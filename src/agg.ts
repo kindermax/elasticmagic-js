@@ -1,6 +1,6 @@
 import { DocClass, Field, FieldType } from './document';
 import { Expression, ParamKV, Params, ParamsExpression, ParamsType } from './expression';
-import { InstanceMapper } from './query';
+import { InstanceMapper } from './search';
 import { Dictionary, KVList, RawAgg, RawAggBucket } from './types';
 import { isObject } from './util';
 

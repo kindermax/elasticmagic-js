@@ -2,6 +2,9 @@
 id: changelog
 title: Changelog
 ---
+## 0.0.6
+
+* Added `withIndex` method to `SearchQuery` - allows to specify index for onlt one query. In the contrast `withIndex` method on `Cluster` will override index for all search queries.
 
 ## 0.0.5
 Added instance mapper support
