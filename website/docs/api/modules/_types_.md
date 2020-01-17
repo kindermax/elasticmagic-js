@@ -31,7 +31,7 @@ sidebar_label: "types"
 
 Ƭ **BucketFields**: *object*
 
-*Defined in [types.ts:25](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/types.ts#L25)*
+*Defined in [types.ts:25](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/types.ts#L25)*
 
 #### Type declaration:
 
@@ -43,7 +43,7 @@ ___
 
 Ƭ **Dictionary**: *object*
 
-*Defined in [types.ts:3](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/types.ts#L3)*
+*Defined in [types.ts:3](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/types.ts#L3)*
 
 #### Type declaration:
 
@@ -53,7 +53,7 @@ ___
 
 Ƭ **Hit**: *object*
 
-*Defined in [types.ts:15](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/types.ts#L15)*
+*Defined in [types.ts:15](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/types.ts#L15)*
 
 #### Type declaration:
 
@@ -77,7 +77,7 @@ ___
 
 Ƭ **KVList**: *[T1, T2]*
 
-*Defined in [types.ts:6](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/types.ts#L6)*
+*Defined in [types.ts:6](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/types.ts#L6)*
 
 ___
 
@@ -85,7 +85,7 @@ ___
 
 Ƭ **Nullable**: *T | null | undefined*
 
-*Defined in [types.ts:1](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/types.ts#L1)*
+*Defined in [types.ts:1](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/types.ts#L1)*
 
 ___
 
@@ -93,7 +93,7 @@ ___
 
 Ƭ **PlainObject**: *object*
 
-*Defined in [types.ts:8](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/types.ts#L8)*
+*Defined in [types.ts:8](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/types.ts#L8)*
 
 #### Type declaration:
 
@@ -105,7 +105,7 @@ ___
 
 Ƭ **RawAgg**: *object*
 
-*Defined in [types.ts:34](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/types.ts#L34)*
+*Defined in [types.ts:34](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/types.ts#L34)*
 
 #### Type declaration:
 
@@ -121,7 +121,7 @@ ___
 
 Ƭ **RawAggBucket**: *object & [RawAggBucketChild](_types_.md#rawaggbucketchild)*
 
-*Defined in [types.ts:29](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/types.ts#L29)*
+*Defined in [types.ts:29](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/types.ts#L29)*
 
 ___
 
@@ -129,7 +129,7 @@ ___
 
 Ƭ **RawAggBucketChild**: *[Dictionary](_types_.md#dictionary)‹string, [BucketFields](_types_.md#bucketfields) | [Dictionary](_types_.md#dictionary)‹string, [BucketFields](_types_.md#bucketfields)››*
 
-*Defined in [types.ts:27](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/types.ts#L27)*
+*Defined in [types.ts:27](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/types.ts#L27)*
 
 ___
 
@@ -137,7 +137,7 @@ ___
 
 Ƭ **RawAggs**: *[Dictionary](_types_.md#dictionary)‹string, [RawAgg](_types_.md#rawagg)›*
 
-*Defined in [types.ts:39](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/types.ts#L39)*
+*Defined in [types.ts:39](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/types.ts#L39)*
 
 ___
 
@@ -145,7 +145,7 @@ ___
 
 Ƭ **RawResultBody**: *[SearchResponseBody](_types_.md#searchresponsebody)‹T›*
 
-*Defined in [types.ts:60](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/types.ts#L60)*
+*Defined in [types.ts:60](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/types.ts#L60)*
 
 ___
 
@@ -153,7 +153,7 @@ ___
 
 Ƭ **SearchResponseBody**: *object*
 
-*Defined in [types.ts:41](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/types.ts#L41)*
+*Defined in [types.ts:41](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/types.ts#L41)*
 
 #### Type declaration:
 
@@ -191,7 +191,7 @@ ___
 
 ▸ **isPlainObject**(`obj`: any): *obj is PlainObject*
 
-*Defined in [types.ts:10](https://github.com/kindritskyiMax/elasticmagic-js/blob/3a76a7e/src/types.ts#L10)*
+*Defined in [types.ts:10](https://github.com/kindritskyiMax/elasticmagic-js/blob/34d4703/src/types.ts#L10)*
 
 **Parameters:**
 
