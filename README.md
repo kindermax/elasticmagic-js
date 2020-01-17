@@ -102,7 +102,7 @@ const query = cluster.searchQuery({ routing: 1 })
   .source(true)
   .filter(
     Bool.must(
-      OrderDoc.user_id.in([1]),
+      OrderDoc.userId.in([1]),
       OrderDoc.status.in([1, 2]),
       OrderDoc.source.not(1),
       OrderDoc.dateCreated.lte(new Date().toISOString())
